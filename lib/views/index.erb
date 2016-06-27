@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Pokedex!</title>
+  </head>
+
+  <body>
+    <h3>Here are some random Pokemon to try!</h3>
+
+    <% @total.each do |number, name| %>
+      <a href="<%= number %>"><%= name %></a>
+      <br>
+    <% end %>
+  </body>
+</html>

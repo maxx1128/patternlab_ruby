@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Pokemon #<%= @id %>: <%= @name %></title>
+  </head>
+
+  <body>
+    <h1>#<%= @id %>: <%= @name %></h1>
+    <img src="<%= @sprite_img_url %>">
+    <p>Types:</p>
+    <ul>
+      <% @types.each do |type| %>
+        <li><%= type %></li>
+      <% end %>
+    </ul>
+
+    <p>
+      <a href="/<%= @prev_id %>">Previous Pokemon</a>
+    </p>
+
+    <p>
+      <a href="/<%= @next_id %>">Next Pokemon</a>
+    </p>
+
+    <p>
+      <a href="/">Home</a>
+    </p>
+</body>
+</html>
