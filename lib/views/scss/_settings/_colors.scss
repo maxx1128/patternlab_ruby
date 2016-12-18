@@ -1,0 +1,25 @@
+@import '../_tools/_colors.scss';
+
+/*
+
+  All color palettes
+
+*/
+
+$g-color--shade: 25%;
+
+$g-color--primary         : #6ab8cc;
+$g-color--primary-light   : tint($g-color--primary, $g-color--shade);
+$g-color--primary-dark    : shade($g-color--primary, $g-color--shade);
+
+$g-color--secondary       : #b0ba52;
+$g-color--secondary-light : tint($g-color--secondary, $g-color--shade);
+$g-color--secondary-dark  : shade($g-color--secondary, $g-color--shade);
+
+$g-color--action          : #ff826e;
+$g-color--action-light    : tint($g-color--action, $g-color--shade);
+$g-color--action-dark     : shade($g-color--action, $g-color--shade);
+
+$g-color--mono            : #cbcbcb;
+$g-color--mono-light      : #fefefe;
+$g-color--mono-dark       : #111;

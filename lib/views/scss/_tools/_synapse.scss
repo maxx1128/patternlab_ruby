@@ -1,0 +1,405 @@
+// Function to get deeper map values in the mixin
+// Used to get setting values in the mixin
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map-get($map, $key);
+  }
+  @return $map;
+}
+
+@function map-check($m, $a) {
+  @if map-has-key($m, $a) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+// For prepending items to the start of a list
+@function prepend($list, $value) {
+  @return join($value, $list);
+}
+
+// Function to add generated map values for padding and margin to the utilities map
+@function map-set($name, $property, $value, $map) {
+  $new: (
+    $name: (
+      num: 1,
+      property: $property,
+      value: $value
+    )
+  );
+  @return map-merge($map, $new);
+}
+
+// Function to add complex generated map values for padding and margin to the utilities map
+@function map-set-2($name, $property-1, $value-1, $property-2, $value-2, $map) {
+  $new: (
+    $name: (
+      num: 2,
+      property-1: $property-1,
+      value-1: $value-1,
+      property-2: $property-2,
+      value-2: $value-2
+    )
+  );
+  @return map-merge($map, $new);
+}
+
+// Adds values to beginning of list
+@function prepend($list, $value) {
+  @return join($value, $list);
+}
+
+// List of all basic utilities, easy to edit.
+// The same of each sub-map is the utility name to reference in the mixin
+// The properties and values are the utilities' CSS components
+$utilities-list: (
+    block: (
+      num: 1,
+      property: display,
+      value: block
+    ),
+    inline-b: (
+      num: 1,
+      property: display,
+      value: inline-block
+    ),
+    inline: (
+      num: 1,
+      property: display,
+      value: inline
+    ),
+    align-c: (
+      num: 1,
+      property: text-align,
+      value: center
+    ),
+    align-l: (
+      num: 1,
+      property: text-align,
+      value: left
+    ),
+    align-r: (
+      num: 1,
+      property: text-align,
+      value: right
+    ),
+    float-r: (
+      num: 1,
+      property: float,
+      value: right
+    ),
+    float-l: (
+      num: 1,
+      property: float,
+      value: left
+    ),
+    float-n: (
+      num: 1,
+      property: float,
+      value: none
+    ),
+    border-b: (
+      num: 1,
+      property: box-sizing,
+      value: border-box
+    ),
+    center-m: (
+      num: 2,
+      property-1: margin-left,
+      value-1: auto,
+      property-2: margin-right,
+      value-2: auto
+    ),
+    hide: (
+      num: 1,
+      property: display,
+      value: none
+    )
+  );
+
+// Get a list of spacing variables from the settings
+$spacing: map-get($synapse, spaceUnits);
+$spacing: prepend($spacing, 0);
+// $new-list: prepend($list, a);
+$full-spacing: $spacing;
+
+// Loop through the spacing settings and generate all the utilities
+// for padding and margin placement
+@each $size in $spacing {
+  $i: (index($spacing, $size) - 1);
+
+  $utilities-list: map-set(pad-#{$i}, padding, $size, $utilities-list);
+  $utilities-list: map-set(pad-t-#{$i}, padding-top, $size, $utilities-list);
+  $utilities-list: map-set(pad-r-#{$i}, padding-right, $size, $utilities-list);
+  $utilities-list: map-set(pad-b-#{$i}, padding-bottom, $size, $utilities-list);
+  $utilities-list: map-set(pad-l-#{$i}, padding-left, $size, $utilities-list);
+  $utilities-list: map-set-2(pad-tr-#{$i}, padding-top, $size, padding-right, $size, $utilities-list);
+  $utilities-list: map-set-2(pad-tl-#{$i}, padding-top, $size, padding-left, $size, $utilities-list);
+  $utilities-list: map-set-2(pad-br-#{$i}, padding-bottom, $size, padding-right, $size, $utilities-list);
+  $utilities-list: map-set-2(pad-bl-#{$i}, padding-bottom, $size, padding-left, $size, $utilities-list);
+  $utilities-list: map-set-2(pad-vert-#{$i}, padding-top, $size, padding-bottom, $size, $utilities-list);
+  $utilities-list: map-set-2(pad-sides-#{$i}, padding-left, $size, padding-right, $size, $utilities-list);
+
+  $utilities-list: map-set(marg-#{$i}, margin, $size, $utilities-list);
+  $utilities-list: map-set(marg-t-#{$i}, margin-top, $size, $utilities-list);
+  $utilities-list: map-set(marg-r-#{$i}, margin-right, $size, $utilities-list);
+  $utilities-list: map-set(marg-b-#{$i}, margin-bottom, $size, $utilities-list);
+  $utilities-list: map-set(marg-l-#{$i}, margin-left, $size, $utilities-list);
+  $utilities-list: map-set-2(marg-tr-#{$i}, margin-top, $size, margin-right, $size, $utilities-list);
+  $utilities-list: map-set-2(marg-tl-#{$i}, margin-top, $size, margin-left, $size, $utilities-list);
+  $utilities-list: map-set-2(marg-br-#{$i}, margin-bottom, $size, margin-right, $size, $utilities-list);
+  $utilities-list: map-set-2(marg-bl-#{$i}, margin-bottom, $size, margin-left, $size, $utilities-list);
+  $utilities-list: map-set-2(marg-vert-#{$i}, margin-top, $size, margin-bottom, $size, $utilities-list);
+  $utilities-list: map-set-2(marg-sides-#{$i}, margin-left, $size, margin-right, $size, $utilities-list);
+
+}
+
+@mixin column-basics($breakpoint-width, $width-per, $utilities, $offset, $columns, $total-columns) {
+
+  @if ($columns == $total-columns) {
+    width: 100%;
+  } @elseif ($columns != 0) {
+    width: $width-per;
+  }
+
+  @if ($utilities != '') {
+    @for $i from 1 through length($utilities) {
+      $utility-name: nth($utilities, $i);
+
+      @if (map-check($utilities-list, $utility-name) == true) {
+        $num: map-deep-get($utilities-list, $utility-name, 'num');
+
+        @if ($num == 1) {
+          $property: map-deep-get($utilities-list, $utility-name, 'property');
+          $value: map-deep-get($utilities-list, $utility-name, 'value');
+
+          #{$property}: $value;
+        } @elseif ($num == 2) {
+          $property-1: map-deep-get($utilities-list, $utility-name, 'property-1');
+          $value-1: map-deep-get($utilities-list, $utility-name, 'value-1');
+          $property-2: map-deep-get($utilities-list, $utility-name, 'property-2');
+          $value-2: map-deep-get($utilities-list, $utility-name, 'value-2');
+
+          #{$property-1}: $value-1;
+          #{$property-2}: $value-2;
+        }
+
+
+      } @elseif  (map-check($utilities-list, $utility-name) == false) {
+        @include synapse-custom($utility-name);
+      }
+    }
+  }
+
+  @if ($offset != 0) {
+    margin-left: percentage($offset / $total-columns);
+  }
+}
+
+// Setup for the actual synapse mixin
+@mixin syn($breakpoint, $columns, $offset, $utilities: none) {
+  // The width of the breakpoint specificied
+  $breakpoint-width: map-deep-get($synapse, 'layouts', $breakpoint);
+  // The total number of columns from the settings
+  $total-columns: map-get($synapse, 'columns');
+  $width-per: percentage($columns / $total-columns);
+
+  // Sets up the media query and adds the basic grid properties and
+  // width based on the number of columns in the mixin
+  @if ($breakpoint-width == 0) {
+    @include column-basics($breakpoint-width, $width-per, $utilities, $offset, $columns, $total-columns);
+  } @else {
+    @media screen and (min-width: $breakpoint-width) {
+      @include column-basics($breakpoint-width, $width-per, $utilities, $offset, $columns, $total-columns);
+    }
+  }
+}
+
+@mixin generate-grid-classes($row-pad, $col-pad, $max-width: 0) {
+  $syn-layouts: map-get($synapse, layouts);
+  $syn-columns: map-get($synapse, columns);
+  $syn-row-padding: nth($syn-spacing, $row-pad);
+  $syn-col-padding: nth($syn-spacing, $col-pad);
+
+
+  .syn-row {
+    width: 100%;
+    max-width: $max-width;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+
+    
+    @if ($syn-row-padding != 0) {
+      padding-left: $syn-row-padding;
+      padding-right: $syn-row-padding;
+    }
+    
+    &:after {
+      visibility: hidden;
+      display: block;
+      font-size: 0;
+      content: " ";
+      clear: both;
+      height: 0;
+    }
+  }
+  
+  .syn-col {
+    width: 100%;
+    float: left;
+    display: block;
+    box-sizing: border-box;
+    
+    @if ($syn-col-padding != 0) {
+      box-sizing: border-box;
+      padding-left: $syn-col-padding;
+      padding-right: $syn-col-padding;
+    }
+  }
+
+  @each $label, $size in $syn-layouts {
+    
+    @if ($size == 0) {
+      @for $i from 1 through ($syn-columns) {
+        .syn-#{$label}-#{$i} {
+          width: percentage($i/$syn-columns);
+        }
+        .syn-offset-#{$label}-#{$i} {
+          margin-left: percentage($i/$syn-columns);
+        }
+      }
+    } @else {
+      @media screen and (min-width: $size) {
+        @for $i from 1 through ($syn-columns) {
+          .syn-#{$label}-#{$i} {
+            width: percentage($i/$syn-columns);
+          }
+          
+          .syn-#{$label}-offset-#{$i} {
+            margin-left: percentage($i/$syn-columns);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin generate-padding() {
+  @for $i from 1 through (length($spacing) + 1) {
+    $i: $i - 1;
+    $space: null;
+
+    @if ($i == 0) {
+      $space: 0;
+    } @else {
+      $space: nth($spacing, $i);
+    }
+
+    .syn-pad-#{$i} {
+      padding: #{$space};
+    }
+
+    .syn-pad-top-#{$i} {
+      padding-top: #{$space};
+    }
+
+    .syn-pad-right-#{$i} {
+      padding-right: #{$space};
+    }
+
+    .syn-pad-bottom-#{$i} {
+      padding-bottom: #{$space};
+    }
+
+    .syn-pad-left-#{$i} {
+      padding-left: #{$space};
+    }
+
+    .syn-pad-vert-#{$i} {
+      padding-bottom: #{$space};
+      padding-top: #{$space};
+    }
+
+    .syn-pad-sides-#{$i} {
+      padding-left: #{$space};
+      padding-right: #{$space};
+    }
+  }
+}
+
+@mixin generate-margin() {
+  @for $i from 1 through (length($spacing) + 1) {
+    $i: $i - 1;
+    $space: null;
+
+    @if ($i == 0) {
+      $space: 0;
+    } @else {
+      $space: nth($spacing, $i);
+    }
+
+    .syn-marg-#{$i} {
+      margin: #{$space};
+    }
+
+    .syn-marg-top-#{$i} {
+      margin-top: #{$space};
+    }
+
+    .syn-marg-right-#{$i} {
+      margin-right: #{$space};
+    }
+
+    .syn-marg-bottom-#{$i} {
+      margin-bottom: #{$space};
+    }
+
+    .syn-marg-left-#{$i} {
+      margin-left: #{$space};
+    }
+
+    .syn-marg-vert-#{$i} {
+      margin-bottom: #{$space};
+      margin-top: #{$space};
+    }
+
+    .syn-marg-sides-#{$i} {
+      margin-left: #{$space};
+      margin-right: #{$space};
+    }
+  }
+}
+
+
+
+
+
+/*
+
+  Configuration for Synapse in this project below
+
+*/
+
+
+@mixin synapse-custom($var) {
+/*
+  @if ($var == 'big-font') {
+    font-weight: 700;
+    font-style: italic;
+  } @elseif ($var == 'small-font') {
+    font-weight: 300;
+    text-decoration: underline;
+    font-style: none;
+  }
+*/
+}
+
+
+
+
+// @include generate-padding();
+// @include generate-margin();
+// @include generate-grid-classes();

@@ -1,0 +1,62 @@
+$type-elements: h1, h2, h3, h4, h5, h6, p, small, tiny;
+
+h1, h2, h3, h4, h5, h6 { font-family: $g-type--family-header }
+
+h1 {
+  margin: $g-type--marg-h1;
+
+  font-size: $g-type--size-h1;
+  line-height: $g-type--lh-h1;
+}
+
+h2 {
+  margin: $g-type--marg-h2;
+
+  font-size: $g-type--size-h2;
+  line-height: $g-type--lh-h2;
+}
+
+h3 {
+  margin: $g-type--marg-h3;
+
+  font-size: $g-type--size-h3;
+  line-height: $g-type--lh-h3;
+}
+
+h4 {
+  margin: $g-type--marg-h4;
+
+  font-size: $g-type--size-h4;
+  line-height: $g-type--lh-h4;
+}
+
+h5 {
+  margin: $g-type--marg-h5;
+
+  font-size: $g-type--size-h5;
+  line-height: $g-type--lh-h5;
+}
+
+h6 {
+  margin: $g-type--marg-h6;
+
+  font-size: $g-type--size-h6;
+  line-height: $g-type--lh-h6;
+}
+
+p {
+  margin: $g-type--marg-p;
+
+  font-size: $g-type--size-p;
+  line-height: $g-type--lh-p;
+}
+
+small {
+  margin: $g-type--marg-small;
+
+  font-size: $g-type--size-small;
+  line-height: $g-type--lh-small;
+}
+
+
+

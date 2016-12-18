@@ -2,20 +2,25 @@ require "sinatra"
 require 'sinatra/reloader' if development?
 require 'httparty'
 require "erb"
+require 'sass'
 
-require_relative "functions"
+require_relative "./functions"
+
+
+get '/css/:stylesheet.css' do |stylesheet|
+  scss :"scss/#{stylesheet}"
+end
+
+
+
 
 total_pokemon = 721
 
 random_poke = {}
-random_poke_num = 5
+random_poke_num = math 2,3
 i = 0
 
-def math(num1, num2)
-  return num1 + num2
-end
-
-while i <= random_poke_num
+while i < random_poke_num
   pokemon = Random.rand(total_pokemon)
   pokemon_json = get_data("http://pokeapi.co/api/v2/pokemon/#{pokemon}")
   pokemon_name = pokemon_json["name"]
@@ -24,17 +29,15 @@ while i <= random_poke_num
   i += 1
 end
 
+
+
+
 get '/' do
   @total = random_poke
   erb :index
 end
 
-
 get '/:pokemon_id' do
-  math1 = math 3,5
-  math2 = math 5,2
-  math3 = math 4,8
-
   pokemon_id = params[:pokemon_id].to_i
   prev_id = pokemon_id - 1
   next_id = pokemon_id + 1
@@ -44,10 +47,12 @@ get '/:pokemon_id' do
 
   # parsed_pokemon_data = get_data("http://pokeapi.co/api/v2/pokemon/#{pokemon_id}")
 
-
   @name = parsed_pokemon_data["name"].split.map(&:capitalize).join(' ')
   @id = pokemon_id
-  @sprite_img_url =  "http://pokeapi.co//media//sprites//pokemon//#{pokemon_id}.png"
+
+  @sprite_url_regular = parsed_pokemon_data["sprites"]["front_default"]
+  @sprite_url_shiny = parsed_pokemon_data["sprites"]["front_shiny"]
+
   @types = parsed_pokemon_data["types"].map { |type_data| type_data["type"]["name"].split.map(&:capitalize).join(' ') }
 
   @prev_id = prev_id
@@ -55,4 +60,3 @@ get '/:pokemon_id' do
 
   erb :pokemon
 end
-

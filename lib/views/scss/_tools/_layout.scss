@@ -1,0 +1,70 @@
+/*
+
+  Mixins needed for controlling grid dimensions and responsive styles, as well as layout-related styles
+
+*/
+
+
+
+// Mixin to use with the breakpoint map, sets any styles to be used above a certain screen width
+@mixin larger-than($point-name) {
+  $width: map-get($breakpoint-map, $point-name);
+
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+// Mixin to use with the breakpoint map, sets any styles to be used below a certain screen width. Try to use the larger-than mixin unless it can't be avoided.
+@mixin smaller-than($point-name) {
+  $width: map-get($breakpoint-map, $point-name);
+
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+
+
+
+
+// The fix-cell and flex-cell mixins included components of the fix-flex mixin, which is used for items with a fixed width on one side and flexible on the other.
+// $fix-direction - If the fixed element is on the left or right side
+// $fix-width - The width of the fixed element
+// $fix-margin - The margin length between the two items
+// EX: @include fix-flex('left', 2em, 10px);
+@mixin fix-flex($fix-direction, $fix-width, $fix-margin) {
+  display: table;
+  width: 100%;
+  @if $fix-direction == 'left' {
+    & > :first-child {
+      @include fix-cell($fix-direction, $fix-width);
+      margin-right: $fix-margin;
+    }
+    & > :last-child {
+      @include flex-cell;
+    }
+  } @else {
+    & > :first-child {
+      @include flex-cell;
+  }
+
+    & > :last-child {
+      @include fix-cell($fix-direction, $fix-width);
+      margin-left: $fix-margin;
+    }
+  }
+}
+
+// Mixin dependency for Fix-Flex
+@mixin fix-cell($fix-direction, $fix-width) {
+  width: $fix-width;
+  display: block;
+  max-width: none;
+}
+// Mixin dependency for Fix-Fle
+@mixin flex-cell {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+}

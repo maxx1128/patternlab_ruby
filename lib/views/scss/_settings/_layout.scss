@@ -1,0 +1,24 @@
+/*
+
+  All layout variables, such as spacing, layering, and others. Not grid ones, which refer to screen sizes and dimensions.
+
+*/
+
+
+// All spacing units
+$g-layout--spc          : em(16px);
+
+$g-layout--spc-4x       : decimal-round(($g-layout--spc * 4), 2);
+$g-layout--spc-2x       : decimal-round(($g-layout--spc * 2), 2);
+
+$g-layout--spc-half     : decimal-round(($g-layout--spc / 2), 2);
+$g-layout--spc-quart    : decimal-round(($g-layout--spc / 4), 2);
+
+
+// Z-index variables
+$g-layout--z-bottomless : -9999;
+$g-layout--z            : 1;
+$g-layout--z-dropdown   : 3000;
+$g-layout--z-overlay    : overlay;
+$g-layout--z-modal      : modal;
+

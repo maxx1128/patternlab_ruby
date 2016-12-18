@@ -1,11 +1,15 @@
 <html>
   <head>
     <title>Pokemon #<%= @id %>: <%= @name %></title>
+    <link rel="stylesheet" href="css/main.css">
   </head>
 
   <body>
     <h1>#<%= @id %>: <%= @name %></h1>
-    <img src="<%= @sprite_img_url %>">
+
+    <img src="<%= @sprite_url_regular %>">
+    <img src="<%= @sprite_url_shiny %>">
+    
     <p>Types:</p>
     <ul>
       <% @types.each do |type| %>

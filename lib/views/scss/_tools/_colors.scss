@@ -1,0 +1,37 @@
+/*
+
+  Mixins and functions related to controlling and adjusting colors
+
+*/
+
+
+// For making contrasting font colors with backgrounds
+@mixin contra-color($color, $light: color(mono, light), $dark: color(mono, dark)) {
+   background-color: $color;
+   
+   @if (lightness($color) > 50) {
+      color: $dark;
+   } @else {
+      color: $light;
+   }
+};
+
+
+
+/// Slightly lighten a color
+/// @access public
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+/// Slightly darken a color
+/// @access public
+/// @param {Color} $color - color to shade
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}

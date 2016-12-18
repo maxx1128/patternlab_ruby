@@ -1,0 +1,26 @@
+/*
+
+  All variables related to the grid, including breakpoints
+
+*/
+
+// The breakpoints for triggering different styles
+$g-grid--small-bp  : em(480px);
+$g-grid--medium-bp : em(787px);
+$g-grid--large-bp  : em(900px);
+
+// The max-width for containers and other max-widths
+$g-grid--max-width : em(1200px);
+
+
+// Synapse configuration
+$synapse: (
+  columns: 12,
+  layouts: (
+        xs :  0,
+        sm :  $g-grid--small-bp,
+        md :  $g-grid--medium-bp,
+        lg :  $g-grid--large-bp
+    ),
+  spaceUnits: ($g-layout--spc-quart, $g-layout--spc-half, $g-layout--spc, $g-layout--spc-2x, $g-layout--spc-4x)
+);

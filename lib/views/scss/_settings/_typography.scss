@@ -1,0 +1,59 @@
+@import '../_tools/_modular-scale.scss';
+
+/*
+
+  All typography variables
+
+*/
+
+// Modular Scale variables
+$g-modular-scale--base  : $g-layout--spc;
+$g-modular-scale--ratio : 1.25; // Major third
+
+
+// Font families
+$g-type--family-base   : 'Lucida Grande', Verdana, Arial, sans-serif;
+$g-type--family-header : 'Futura', Helvetica, Arial, sans-serif;
+$g-type--family-mono   : 'add monospace here';
+
+
+// Font sizes
+$g-type--size-h1    : modular-scale(6);
+$g-type--size-h2    : modular-scale(5);
+$g-type--size-h3    : modular-scale(4);
+$g-type--size-h4    : modular-scale(3);
+$g-type--size-h5    : modular-scale(2);
+$g-type--size-h6    : modular-scale(1);
+$g-type--size-p     : modular-scale(0);
+$g-type--size-small : modular-scale(-1);
+
+
+// Font line heights
+$g-type--lh-h1    : modular-scale(2);
+$g-type--lh-h2    : modular-scale(2);
+$g-type--lh-h3    : modular-scale(2);
+$g-type--lh-h4    : modular-scale(2);
+$g-type--lh-h5    : modular-scale(2);
+$g-type--lh-h6    : modular-scale(2);
+$g-type--lh-p     : modular-scale(2);
+$g-type--lh-small : modular-scale(1);
+
+
+// Font margins
+$g-type--marg-h1    : $g-layout--spc-half 0;
+$g-type--marg-h2    : $g-layout--spc-half 0;
+$g-type--marg-h3    : $g-layout--spc-half 0;
+$g-type--marg-h4    : $g-layout--spc-half 0;
+$g-type--marg-h5    : $g-layout--spc-half 0;
+$g-type--marg-h6    : $g-layout--spc-half 0;
+$g-type--marg-p     : 0 0 $g-layout--spc 0;
+$g-type--marg-small : $g-layout--spc-half 0;
+
+
+// Font weights
+$g-type--weight-bold  : 700;
+$g-type--weight-base  : 400;
+$g-type--weight-light : 100;
+
+
+

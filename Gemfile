@@ -8,3 +8,6 @@ gem 'sinatra-contrib'
 
 # We're using this for API calls
 gem 'httparty'
+
+# Basic sass styles
+gem 'sass'

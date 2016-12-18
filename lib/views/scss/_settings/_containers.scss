@@ -1,0 +1,31 @@
+/*
+
+  Styles for containers to enforce common textures among container elements
+
+*/
+
+// Borders
+$g-cont--border       : 2px solid $g-color--primary;
+$g-cont--border-dark  : 2px solid $g-color--primary-dark;
+
+
+// Border radiuses
+$g-cont--radius       : $g-layout--spc-half;
+$g-cont--radius-large : $g-layout--spc;
+
+
+// Box shadows
+$g-cont--shadow       : 0 0 $g-layout--spc $g-color--mono-dark;
+
+
+// Background colors
+$g-cont--bg           : $g-color--primary;
+$g-cont--bg-light     : $g-color--mono-light;
+$g-cont--bg-dark      : $g-color--mono-dark;
+
+
+// Container paddings
+$g-cont--pad          : $g-layout--spc;
+$g-cont--pad-half     : $g-layout--spc-half;
+$g-cont--pad-large    : $g-layout--spc-2x;
+
