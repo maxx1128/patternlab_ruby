@@ -5,24 +5,63 @@
   </head>
 
   <body>
-    <h1>#<%= @id %>: <%= @name %></h1>
+    
+    <h1>
+      #<%= @id %>: <%= @name %>
+    </h1>
+
+    <ul>
+      <% @abilities.each do |item| %>
+        <li>
+          <%= item["ability"]["name"] %> (<%= item["is_hidden"] %>) - <%= item["description"] %>
+        </li>
+      <% end %>
+    </ul>
 
     <img src="<%= @sprite_url_regular %>">
     <img src="<%= @sprite_url_shiny %>">
     
-    <p>Types:</p>
+    <p>
+      Types:
+    </p>
     <ul>
       <% @types.each do |type| %>
-        <li><%= type %></li>
+        <li>
+          <a href="/type/<%= type %>">
+            <%= type %>
+          </a>
+        </li>
       <% end %>
     </ul>
 
     <p>
-      <a href="/<%= @prev_id %>">Previous Pokemon</a>
+      Games:
+    </p>
+    <ul>
+      <% @games.each do |game| %>
+        <li>
+          <%= game %>
+        </li>
+      <% end %>
+    </ul>
+
+    <p>
+      Stats:
+    </p>
+    <ul>
+      <% @full_stats.each do |name, value| %>
+        <li>
+          <%= name %>: <%= value %>
+        </li>
+      <% end %>
+    </ul>
+
+    <p>
+      <a href="/pokemon/<%= @prev_id %>">Previous Pokemon</a>
     </p>
 
     <p>
-      <a href="/<%= @next_id %>">Next Pokemon</a>
+      <a href="/pokemon/<%= @next_id %>">Next Pokemon</a>
     </p>
 
     <p>

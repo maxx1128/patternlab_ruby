@@ -37,10 +37,20 @@ get '/' do
   erb :index
 end
 
-get '/:pokemon_id' do
-  pokemon_id = params[:pokemon_id].to_i
-  prev_id = pokemon_id - 1
-  next_id = pokemon_id + 1
+
+get '/type/:type' do
+  type = params[:type]
+  pokemon = HTTParty.get("http://pokeapi.co/api/v2/type/#{type}")
+  parsed_pokemon_data = JSON.parse(pokemon.body)
+
+  @type = type
+
+  erb :type
+end
+
+
+get '/pokemon/:pokemon_id' do
+  pokemon_id = params[:pokemon_id]
   # Why doesn't the get_data function work here instead?
   pokemon = HTTParty.get("http://pokeapi.co/api/v2/pokemon/#{pokemon_id}")
   parsed_pokemon_data = JSON.parse(pokemon.body)
@@ -48,15 +58,46 @@ get '/:pokemon_id' do
   # parsed_pokemon_data = get_data("http://pokeapi.co/api/v2/pokemon/#{pokemon_id}")
 
   @name = parsed_pokemon_data["name"].split.map(&:capitalize).join(' ')
-  @id = pokemon_id
+  @id = parsed_pokemon_data["id"]
+
 
   @sprite_url_regular = parsed_pokemon_data["sprites"]["front_default"]
   @sprite_url_shiny = parsed_pokemon_data["sprites"]["front_shiny"]
 
+
   @types = parsed_pokemon_data["types"].map { |type_data| type_data["type"]["name"].split.map(&:capitalize).join(' ') }
 
-  @prev_id = prev_id
-  @next_id = next_id
+
+  stats = parsed_pokemon_data["stats"].map { |type_data| type_data["base_stat"].to_s }
+  stat_names = parsed_pokemon_data["stats"].map { |type_data| type_data["stat"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ") }
+  @full_stats = Hash[stat_names.reverse.zip stats.reverse]
+
+
+  @abilities = parsed_pokemon_data["abilities"];
+
+  @abilities.each_with_index do |item, i|
+    name = item["ability"]["name"]
+    ability_api = HTTParty.get("http://pokeapi.co/api/v2/ability/#{name}")
+    parsed_ability_data = JSON.parse(ability_api.body)
+
+    ability_descr = parsed_ability_data["effect_entries"][0]["short_effect"]
+    puts ability_descr
+    puts i
+
+    @abilities[i]["ability"]["name"] = @abilities[i]["ability"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ")
+
+    @abilities[i]["description"] = ability_descr
+  end
+
+
+  @games = parsed_pokemon_data["game_indices"].map { |type_data| type_data["version"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ") }
+
+
+  pokemon_num = parsed_pokemon_data["id"]
+  @prev_id = pokemon_num - 1
+  @next_id = pokemon_num + 1
 
   erb :pokemon
 end
+
+
