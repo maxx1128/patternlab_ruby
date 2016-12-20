@@ -96,6 +96,7 @@ get '/pokemon/:pokemon_id' do
   pokemon_species = HTTParty.get("http://pokeapi.co/api/v2/pokemon-species/#{pokemon_id}")
   parsed_pokemon_species_data = JSON.parse(pokemon_species.body)
 
+
   @descriptions_english = []
   descriptions_full = parsed_pokemon_species_data["flavor_text_entries"]
   descriptions_number = 0;
@@ -104,12 +105,27 @@ get '/pokemon/:pokemon_id' do
 
     if item["language"]["name"] == "en"
 
-      @descriptions_english[descriptions_number] = { "game" => item["version"]["name"], "flavor_text" => item["flavor_text"].sub('\n', ' ') }
+      @descriptions_english[descriptions_number] = { "game" => item["version"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" "), "flavor_text" => item["flavor_text"].sub('\n', ' ') }
       descriptions_number += 1
     end
   end
 
   @descriptions_english.reverse!
+
+
+  # Create different overall color schemes for each?
+  @color = parsed_pokemon_species_data["color"]["name"]
+
+
+  @growth_rate = parsed_pokemon_species_data["growth_rate"]["name"]
+
+  # Evolution logic below
+  evolution_api = parsed_pokemon_species_data["evolution_chain"]["url"]
+  pokemon_evolution = HTTParty.get(evolution_api)
+  parsed_pokemon_evolution_data = JSON.parse(pokemon_evolution.body)
+
+  @evolution_start = parsed_pokemon_evolution_data["chain"]["species"]["name"]
+  @evolution_chain = parsed_pokemon_evolution_data["chain"]["evolves_to"]
 
 
   erb :pokemon

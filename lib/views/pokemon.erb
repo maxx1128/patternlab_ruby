@@ -10,6 +10,14 @@
       #<%= @id %>: <%= @name %>
     </h1>
 
+    <h4>
+      Color: <%= @color %>
+    </h4>
+
+    <h4>
+      Growth Rate: <%= @growth_rate %>
+    </h4>
+
     <ul>
       <% @abilities.each do |item| %>
         <li>
@@ -22,15 +30,23 @@
     <img src="<%= @sprite_url_shiny %>">
 
     <p>
-      Descriptions:
+      Evolutions
     </p>
-    <ul>
-      <% @descriptions_english.each do |item| %>
-        <li>
-          <%= item["game"] %>: <%= item["flavor_text"] %>
-        </li>
+
+    1: <%= @evolution_start %>
+
+    <br>
+
+    <% @evolution_chain.each do |item| %>
+      2: <%= item['species']['name'] %>
+
+      <br>
+
+      <% item['evolves_to'].each do |item2| %>
+
+        3: <%= item2['species']['name'] %>
       <% end %>
-    </ul>
+    <% end %>
 
     <p>
       Types:
@@ -55,6 +71,18 @@
         </li>
       <% end %>
     </ul>
+
+    <p>
+      Descriptions:
+    </p>
+    <ul>
+      <% @descriptions_english.each do |item| %>
+        <li>
+          <strong><%= item["game"] %>:</strong> <%= item["flavor_text"] %>
+        </li>
+      <% end %>
+    </ul>
+
 
     <p>
       <a href="/pokemon/<%= @prev_id %>">Previous Pokemon</a>
