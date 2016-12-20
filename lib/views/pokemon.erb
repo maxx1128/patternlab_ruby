@@ -20,7 +20,18 @@
 
     <img src="<%= @sprite_url_regular %>">
     <img src="<%= @sprite_url_shiny %>">
-    
+
+    <p>
+      Descriptions:
+    </p>
+    <ul>
+      <% @descriptions_english.each do |item| %>
+        <li>
+          <%= item["game"] %>: <%= item["flavor_text"] %>
+        </li>
+      <% end %>
+    </ul>
+
     <p>
       Types:
     </p>

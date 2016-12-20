@@ -81,8 +81,6 @@ get '/pokemon/:pokemon_id' do
     parsed_ability_data = JSON.parse(ability_api.body)
 
     ability_descr = parsed_ability_data["effect_entries"][0]["short_effect"]
-    puts ability_descr
-    puts i
 
     @abilities[i]["ability"]["name"] = @abilities[i]["ability"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ")
 
@@ -90,12 +88,30 @@ get '/pokemon/:pokemon_id' do
   end
 
 
-  @games = parsed_pokemon_data["game_indices"].map { |type_data| type_data["version"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ") }
-
-
   pokemon_num = parsed_pokemon_data["id"]
   @prev_id = pokemon_num - 1
   @next_id = pokemon_num + 1
+
+
+  @games = parsed_pokemon_data["game_indices"].map { |type_data| type_data["version"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ") }
+
+
+  pokemon_species = HTTParty.get("http://pokeapi.co/api/v2/pokemon-species/#{pokemon_id}")
+  parsed_pokemon_species_data = JSON.parse(pokemon_species.body)
+
+  @descriptions_english = []
+  descriptions_full = parsed_pokemon_species_data["flavor_text_entries"]
+  descriptions_number = 0;
+
+  descriptions_full.each_with_index do |item|
+
+    if item["language"]["name"] == "en"
+
+      @descriptions_english[descriptions_number] = { "game" => item["version"]["name"], "flavor_text" => item["flavor_text"].sub('\n', ' ') }
+      descriptions_number += 1
+    end
+  end
+
 
   erb :pokemon
 end
