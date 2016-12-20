@@ -93,9 +93,6 @@ get '/pokemon/:pokemon_id' do
   @next_id = pokemon_num + 1
 
 
-  @games = parsed_pokemon_data["game_indices"].map { |type_data| type_data["version"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ") }
-
-
   pokemon_species = HTTParty.get("http://pokeapi.co/api/v2/pokemon-species/#{pokemon_id}")
   parsed_pokemon_species_data = JSON.parse(pokemon_species.body)
 
@@ -111,6 +108,8 @@ get '/pokemon/:pokemon_id' do
       descriptions_number += 1
     end
   end
+
+  @descriptions_english.reverse!
 
 
   erb :pokemon
