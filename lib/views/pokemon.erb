@@ -33,18 +33,20 @@
       Evolutions
     </p>
 
-    1: <%= @evolution_start %>
+    1: <a href="/pokemon/<%= @evolution_start %>"><%= @evolution_start %></a>
 
     <br>
 
     <% @evolution_chain.each do |item| %>
-      2: <%= item['species']['name'] %>
+      2: <a href="/pokemon/<%= item['species']['name'] %>"><%= item['species']['name'] %></a> via <%= item['evolution_details'][0]['trigger']['name'] %>
+
+      
 
       <br>
 
       <% item['evolves_to'].each do |item2| %>
 
-        3: <%= item2['species']['name'] %>
+        3: <a href="/pokemon/<%= item2['species']['name'] %>"><%= item2['species']['name'] %></a> via <%= item2['evolution_details'][0]['trigger']['name'] %>
       <% end %>
     <% end %>
 
