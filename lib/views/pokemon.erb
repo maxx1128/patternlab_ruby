@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Pokemon #<%= @id %>: <%= @name %></title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
   </head>
 
   <body>
@@ -11,7 +11,7 @@
     </h1>
 
     <h4>
-      Color: <%= @color %>
+      Color: <a href="/color/<%= @color %>"><%= @color %></a>
     </h4>
 
     <h4>
@@ -19,9 +19,17 @@
     </h4>
 
     <ul>
-      <% @abilities.each do |item| %>
+      <% @abilities.reverse.each do |item| %>
         <li>
-          <%= item["ability"]["name"] %> (<%= item["is_hidden"] %>) - <%= item["description"] %>
+          <a href="/ability/<%= item["id"] %>">
+            <%= item["ability"]["name"] %>
+          </a> - <%= item["description"] %> 
+
+          <% if item["is_hidden"] %>
+            <strong>
+              (Hidden ability)
+            </strong>
+          <% end %>
         </li>
       <% end %>
     </ul>
@@ -316,7 +324,7 @@
     <ul>
       <% @types.each do |type| %>
         <li>
-          <a href="/type/<%= type %>">
+          <a href="/type/<%= type.downcase %>">
             <%= type %>
           </a>
         </li>
@@ -338,10 +346,13 @@
       Descriptions:
     </p>
     <ul>
-      <% @descriptions_english.each do |item| %>
-        <li>
-          <strong><%= item["game"] %>:</strong> <%= item["flavor_text"] %>
-        </li>
+      <% @descriptions_full.reverse.each do |descr| %>
+        <% if descr["language"]["name"] == "en" %>
+          
+          <li>
+            <strong><%= descr["version"]["name"].capitalize.sub('-', ' ') %>:</strong> <%= descr["flavor_text"] %>
+          </li>
+        <% end %>
       <% end %>
     </ul>
 

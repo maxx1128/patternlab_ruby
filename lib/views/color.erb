@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Type: <%= @color.capitalize %></title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+  </head>
+
+  <body>
+    <h1>
+      Color Listing: <%= @color.capitalize %>
+    </h1>
+
+    <ul>
+      <% @pokemon.each do |entry| %>
+
+        <% if entry['url'].split("/")[6].to_i < 722 %>
+          <li>
+            <a href="/pokemon/<%= entry['url'].split("/")[6].to_i %>">
+              <%= entry['name'].capitalize.sub('-', ' ') %> - <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%= entry['url'].split("/")[6].to_i %>.png" alt="">
+            </a>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+
+  </body>
+</html>

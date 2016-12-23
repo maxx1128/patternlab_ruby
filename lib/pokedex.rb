@@ -41,11 +41,40 @@ end
 get '/type/:type' do
   type = params[:type]
   pokemon = HTTParty.get("http://pokeapi.co/api/v2/type/#{type}")
-  parsed_pokemon_data = JSON.parse(pokemon.body)
+  parsed_type_data = JSON.parse(pokemon.body)
 
   @type = type
 
+  @pokemon = parsed_type_data['pokemon']
+
   erb :type
+end
+
+
+get '/color/:color' do
+  color = params[:color]
+  pokemon = HTTParty.get("http://pokeapi.co/api/v2/pokemon-color/#{color}")
+  parsed_color_data = JSON.parse(pokemon.body)
+
+  @color = color
+
+  @pokemon = parsed_color_data['pokemon_species']
+
+  erb :color
+end
+
+
+get '/ability/:ability' do
+  ability = params[:ability]
+  pokemon = HTTParty.get("http://pokeapi.co/api/v2/ability/#{ability}")
+  parsed_ability_data = JSON.parse(pokemon.body)
+
+  @ability = parsed_ability_data['name']
+  @ability_descr = parsed_ability_data['effect_entries']
+
+  @pokemon = parsed_ability_data['pokemon']
+
+  erb :ability
 end
 
 
@@ -85,6 +114,7 @@ get '/pokemon/:pokemon_id' do
     @abilities[i]["ability"]["name"] = @abilities[i]["ability"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ")
 
     @abilities[i]["description"] = ability_descr
+    @abilities[i]["id"] = item["ability"]["url"].split("/")[6].to_i
   end
 
 
@@ -96,21 +126,8 @@ get '/pokemon/:pokemon_id' do
   pokemon_species = HTTParty.get("http://pokeapi.co/api/v2/pokemon-species/#{pokemon_id}")
   parsed_pokemon_species_data = JSON.parse(pokemon_species.body)
 
-
   @descriptions_english = []
-  descriptions_full = parsed_pokemon_species_data["flavor_text_entries"]
-  descriptions_number = 0;
-
-  descriptions_full.each_with_index do |item|
-
-    if item["language"]["name"] == "en"
-
-      @descriptions_english[descriptions_number] = { "game" => item["version"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" "), "flavor_text" => item["flavor_text"].sub('\n', ' ') }
-      descriptions_number += 1
-    end
-  end
-
-  @descriptions_english.reverse!
+  @descriptions_full = parsed_pokemon_species_data["flavor_text_entries"]
 
 
   # Create different overall color schemes for each?
