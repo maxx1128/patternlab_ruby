@@ -1,7 +1,8 @@
-require "sinatra"
+require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'httparty'
-require "erb"
+require 'liquid'
+require 'erb'
 require 'sass'
 
 require_relative "./functions"
@@ -16,25 +17,16 @@ end
 
 total_pokemon = 721
 
-random_poke = {}
-random_poke_num = math 2,3
-i = 0
-
-while i < random_poke_num
-  pokemon = Random.rand(total_pokemon)
-  pokemon_json = get_data("http://pokeapi.co/api/v2/pokemon/#{pokemon}")
-  pokemon_name = pokemon_json["name"]
-
-  random_poke[pokemon] = pokemon_name
-  i += 1
-end
-
-
 
 
 get '/' do
-  @total = random_poke
-  erb :index
+
+
+  @title = 'Welcome to the Pokedex!'
+
+  erb :index, {
+    :layout => :'templates/layout',
+  }
 end
 
 
@@ -47,7 +39,12 @@ get '/type/:type' do
 
   @pokemon = parsed_type_data['pokemon']
 
-  erb :type
+
+  @title = "#{@type.capitalize} Pokemon!"
+
+  erb :type, {
+    :layout => :'templates/layout',
+  }
 end
 
 
@@ -60,7 +57,12 @@ get '/color/:color' do
 
   @pokemon = parsed_color_data['pokemon_species']
 
-  erb :color
+
+  @title = "#{@color.capitalize} Pokemon!"
+
+  erb :color, {
+    :layout => :'templates/layout',
+  }
 end
 
 
@@ -74,7 +76,12 @@ get '/ability/:ability' do
 
   @pokemon = parsed_ability_data['pokemon']
 
-  erb :ability
+
+  @title = "Ability: #{@ability.capitalize}"
+
+  erb :ability, {
+    :layout => :'templates/layout',
+  }
 end
 
 
@@ -145,7 +152,11 @@ get '/pokemon/:pokemon_id' do
   @evolution_chain = parsed_pokemon_evolution_data["chain"]["evolves_to"]
 
 
-  erb :pokemon
+  @title = "##{@id}: #{@name}"
+
+  erb :pokemon, {
+    :layout => :'templates/layout',
+  }
 end
 
 

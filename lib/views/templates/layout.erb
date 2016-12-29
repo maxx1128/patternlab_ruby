@@ -1,11 +1,12 @@
 <html>
   <head>
-    <title>Pokedex!</title>
+    <title><%= @title %></title>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
   </head>
 
   <body>
-    <h3>Hello <%= @string %></h3>
+    
+    <%= yield %>
 
   </body>
 </html>

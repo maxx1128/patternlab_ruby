@@ -11,3 +11,6 @@ gem 'httparty'
 
 # Basic sass styles
 gem 'sass'
+
+# Liquid templating
+gem 'liquid'

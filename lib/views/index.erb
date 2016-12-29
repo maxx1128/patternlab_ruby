@@ -1,15 +1,6 @@
-<html>
-  <head>
-    <title>Pokedex!</title>
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
-  </head>
 
-  <body>
-    <h3>Here are some random Pokemon to try!</h3>
+<h1>
+  Search for a Pokemon!
+</h1>
 
-    <% @total.each do |number, name| %>
-      <a href="/pokemon/<%= number %>"><%= name %></a>
-      <br>
-    <% end %>
-  </body>
-</html>
+<%= @json_data %>
