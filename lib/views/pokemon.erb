@@ -1,18 +1,18 @@
 
 <h1>
-  #<%= @id %>: <%= @name %>
+  #<%= @full_data["id"] %>: <%= @full_data["poke_name"] %>
 </h1>
 
 <h4>
-  Color: <a href="/color/<%= @color %>"><%= @color %></a>
+  Color: <a href="/color/<%= @full_data["color"] %>"><%= @full_data["color"] %></a>
 </h4>
 
 <h4>
-  Growth Rate: <%= @growth_rate %>
+  Growth Rate: <%= @full_data["growth_rate"] %>
 </h4>
 
 <ul>
-  <% @abilities.reverse.each do |item| %>
+  <% @full_data["abilities"].reverse.each do |item| %>
     <li>
       <a href="/ability/<%= item["id"] %>">
         <%= item["ability"]["name"] %>
@@ -27,18 +27,18 @@
   <% end %>
 </ul>
 
-<img src="<%= @sprite_url_regular %>">
-<img src="<%= @sprite_url_shiny %>">
+<img src="<%= @full_data["sprite_url_regular"] %>">
+<img src="<%= @full_data["sprite_url_shiny"] %>">
 
 <p>
   Evolutions
 </p>
 
-1: <a href="/pokemon/<%= @evolution_start %>"><%= @evolution_start %></a>
+1: <a href="/pokemon/<%= @full_data["evolution_start"] %>"><%= @full_data["evolution_start"] %></a>
 
 <br>
 
-<% @evolution_chain.each do |item| %>
+<% @full_data["evolution_chain"].each do |item| %>
   2: <a href="/pokemon/<%= item['species']['name'] %>"><%= item['species']['name'] %></a>
 
     <% if item['evolution_details'][0]['trigger']['name'] == 'level-up' %>
@@ -315,7 +315,7 @@
   Types:
 </p>
 <ul>
-  <% @types.each do |type| %>
+  <% @full_data["types"].each do |type| %>
     <li>
       <a href="/type/<%= type.downcase %>">
         <%= type %>
@@ -328,7 +328,7 @@
   Stats:
 </p>
 <ul>
-  <% @full_stats.each do |name, value| %>
+  <% @full_data["full_stats"].each do |name, value| %>
     <li>
       <%= name %>: <%= value %>
     </li>
@@ -339,7 +339,7 @@
   Descriptions:
 </p>
 <ul>
-  <% @descriptions_full.reverse.each do |descr| %>
+  <% @full_data["descriptions_full"].reverse.each do |descr| %>
     <% if descr["language"]["name"] == "en" %>
       
       <li>
@@ -351,11 +351,11 @@
 
 
 <p>
-  <a href="/pokemon/<%= @prev_id %>">Previous Pokemon</a>
+  <a href="/pokemon/<%= @full_data["prev_id"] %>">Previous Pokemon</a>
 </p>
 
 <p>
-  <a href="/pokemon/<%= @next_id %>">Next Pokemon</a>
+  <a href="/pokemon/<%= @full_data["next_id"] %>">Next Pokemon</a>
 </p>
 
 <p>

@@ -3,4 +3,9 @@
   Search for a Pokemon!
 </h1>
 
-<%= @json_data %>
+<form action="/search" method="POST">
+
+  <input type="text" name="poke_search">
+
+  <input type="submit" class="button" value="Search Pokedex">
+</form>
