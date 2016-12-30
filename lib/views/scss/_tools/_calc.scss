@@ -28,6 +28,15 @@
 }
 
 
+// Converts pixel values to rem values
+@function rem($pixels, $context: 16) {
+    
+  $rem: (strip-unit($pixels)/$context) * 1rem;
+
+  @return $rem;
+}
+
+
 /// Replace `$search` with `$replace` in `$string`
 /// @author Hugo Giraudel
 /// @param {String} $string - Initial string

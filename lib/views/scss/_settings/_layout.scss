@@ -4,21 +4,45 @@
 
 */
 
+// For pulling specific spacing values
+// Can be used for margins or padding
+@function spacing($space: 'base') {
+  @if map-has-key($spacing-map, $space) {
+    @return map-get($spacing-map, $space);
+  }
+}
 
-// All spacing units
-$g-layout--spc          : em(16px);
-
-$g-layout--spc-4x       : decimal-round(($g-layout--spc * 4), 2);
-$g-layout--spc-2x       : decimal-round(($g-layout--spc * 2), 2);
-
-$g-layout--spc-half     : decimal-round(($g-layout--spc / 2), 2);
-$g-layout--spc-quart    : decimal-round(($g-layout--spc / 4), 2);
+// For pulling z-index values
+@function z-index($index: 'base') {
+  @if map-has-key($z-layers, $index) {
+    @return map-get($z-layers, $index);
+  }
+}
 
 
-// Z-index variables
-$g-layout--z-bottomless : -9999;
-$g-layout--z            : 1;
-$g-layout--z-dropdown   : 3000;
-$g-layout--z-overlay    : overlay;
-$g-layout--z-modal      : modal;
+
+$g-base-spacing: em(16px);
+
+$spacing-map: (
+  quad   : decimal-round(($g-base-spacing * 4), 2),
+  triple : decimal-round(($g-base-spacing * 3), 2),
+  double : decimal-round(($g-base-spacing * 2), 2),
+  
+  base   : decimal-round($g-base-spacing, 2),
+  
+  half   : decimal-round(($g-base-spacing / 2), 2),
+  third  : decimal-round(($g-base-spacing / 3), 2),
+  quart  : decimal-round(($g-base-spacing / 4), 2)
+);
+
+
+
+$z-layers: (
+  bottomless-pit: -9999,
+  default: 1,
+  dropdown: 3000,
+  overlay: 4000,
+  modal: 4001
+);
+
 

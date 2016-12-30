@@ -4,28 +4,42 @@
 
 */
 
-// Borders
-$g-cont--border       : 2px solid $g-color--primary;
-$g-cont--border-dark  : 2px solid $g-color--primary-dark;
+// Function for getting container-specific styles
+@function container($style, $type: 'base') {
+  @if map-has-key($containers-map, $style) {
+    @return map-get(map-get($containers-map, $style), $type);
+  }
+}
 
 
-// Border radiuses
-$g-cont--radius       : $g-layout--spc-half;
-$g-cont--radius-large : $g-layout--spc;
+$containers-map: (
+  border: (
+    base: 1px solid color(primary),
+    dark: 1px solid color(primary, dark),
 
+    thick: spacing(third) solid color(primary),
+    thick-dark: spacing(third) solid color(primary, dark)
+  ),
 
-// Box shadows
-$g-cont--shadow       : 0 0 $g-layout--spc $g-color--mono-dark;
+  border-radius: (
+    base: spacing(half),
+    large: spacing()
+  ),
 
+  box-shadow: (
+    base: 0 0 spacing() color(mono, dark)
+  ),
 
-// Background colors
-$g-cont--bg           : $g-color--primary;
-$g-cont--bg-light     : $g-color--mono-light;
-$g-cont--bg-dark      : $g-color--mono-dark;
+  background-color: (
+    light: color(mono, light),
+    base: color(primary),
+    dark: color(primary, dark)
+  ),
 
-
-// Container paddings
-$g-cont--pad          : $g-layout--spc;
-$g-cont--pad-half     : $g-layout--spc-half;
-$g-cont--pad-large    : $g-layout--spc-2x;
+  padding: (
+    half: spacing(half),
+    base: spacing(),
+    large: spacing(double)
+  )
+);
 

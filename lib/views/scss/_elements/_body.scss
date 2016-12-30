@@ -1,4 +1,13 @@
 html,
-body { box-sizing: border-box; }
+body {
+  box-sizing: border-box;
 
-body { padding: $g-layout--spc; }
+  color: color(mono, dark);
+
+  background-color: color(mono, light);
+}
+
+body {
+  padding: spacing();
+}
+

@@ -4,13 +4,23 @@
 
 */
 
-// The breakpoints for triggering different styles
-$g-grid--small-bp  : em(480px);
-$g-grid--medium-bp : em(787px);
-$g-grid--large-bp  : em(900px);
+// For pulling specific breakpoint width values out.
+// Not for adding breakpoint styles.
+@function breakpoint($width) {
+  @if map-has-key($breakpoint-map, $width) {
+    @return map-get($breakpoint-map, $width);
+  }
+}
 
-// The max-width for containers and other max-widths
-$g-grid--max-width : em(1200px);
+
+
+// Map for the breakpoints and max width
+$breakpoint-map: (
+  sm: rem(480px),
+  md: rem(787px),
+  lg: rem(900px),
+  max-width: rem(1200px)
+);
 
 
 // Synapse configuration
@@ -18,9 +28,10 @@ $synapse: (
   columns: 12,
   layouts: (
         xs :  0,
-        sm :  $g-grid--small-bp,
-        md :  $g-grid--medium-bp,
-        lg :  $g-grid--large-bp
+        sm :  breakpoint(sm),
+        md :  breakpoint(md),
+        lg :  breakpoint(lg)
     ),
-  spaceUnits: ($g-layout--spc-quart, $g-layout--spc-half, $g-layout--spc, $g-layout--spc-2x, $g-layout--spc-4x)
+
+  spaceUnits: (spacing(quart), spacing(half), spacing(), spacing(double), spacing(quad))
 );
