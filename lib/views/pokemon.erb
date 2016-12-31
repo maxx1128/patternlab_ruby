@@ -27,8 +27,38 @@
   <% end %>
 </ul>
 
+<p>
+  Types:
+</p>
+<ul>
+  <% @full_data["types"].each do |type| %>
+    <li>
+      <a href="/type/<%= type.downcase %>">
+        <%= type %>
+      </a>
+    </li>
+  <% end %>
+</ul>
+
+
 <img src="<%= @full_data["sprite_url_regular"] %>">
 <img src="<%= @full_data["sprite_url_shiny"] %>">
+
+
+<p>
+  Descriptions:
+</p>
+<ul>
+  <% @full_data["descriptions_full"].reverse.each do |descr| %>
+    <% if descr["language"]["name"] == "en" %>
+      
+      <li>
+        <strong><%= descr["version"]["name"].capitalize.sub('-', ' ') %>:</strong> <%= descr["flavor_text"] %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+
 
 <div class="pd-evolutions">
 
@@ -70,20 +100,6 @@
 </div>
 
 
-
-<p>
-  Types:
-</p>
-<ul>
-  <% @full_data["types"].each do |type| %>
-    <li>
-      <a href="/type/<%= type.downcase %>">
-        <%= type %>
-      </a>
-    </li>
-  <% end %>
-</ul>
-
 <p>
   Stats:
 </p>
@@ -95,19 +111,6 @@
   <% end %>
 </ul>
 
-<p>
-  Descriptions:
-</p>
-<ul>
-  <% @full_data["descriptions_full"].reverse.each do |descr| %>
-    <% if descr["language"]["name"] == "en" %>
-      
-      <li>
-        <strong><%= descr["version"]["name"].capitalize.sub('-', ' ') %>:</strong> <%= descr["flavor_text"] %>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
 
 
 <p>
