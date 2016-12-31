@@ -30,286 +30,46 @@
 <img src="<%= @full_data["sprite_url_regular"] %>">
 <img src="<%= @full_data["sprite_url_shiny"] %>">
 
-<p>
-  Evolutions
-</p>
+<div class="pd-evolutions">
 
-1: <a href="/pokemon/<%= @full_data["evolution_start"] %>"><%= @full_data["evolution_start"] %></a>
+  <h4 class="pd-evolutions__title">
+    Evolutions
+  </h4>
 
-<br>
+  <div class="pd-evolutions__chain">
+    <div class="pd-evolutions__chainItem">
 
-<% @full_data["evolution_chain"].each do |item| %>
-  2: <a href="/pokemon/<%= item['species']['name'] %>"><%= item['species']['name'] %></a>
+      <img class="pd-evolutions__chainItem__img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%= @full_data["evolution_start_id"] %>.png">
 
-    <% if item['evolution_details'][0]['trigger']['name'] == 'level-up' %>
+      <span class="pd-evolutions__chainItem__descr">
+        <a href="/pokemon/<%= @full_data["evolution_start"] %>">
+          <%= @full_data["evolution_start"].capitalize %>
+        </a>
+      </span>     
+    </div>
+  </div>
+
+  <div class="pd-evolutions__chain">
       
-      Level up 
-      
+    <%= erb :'includes/evolution_chain', :locals => {
+      :evolution_data => @full_data["evolution_chain"]
+    } %>
+
+  </div>
+
+
+  <div class="pd-evolutions__chain">
+    <% @full_data["evolution_chain"].each do |item| %>
+        
+      <%= erb :'includes/evolution_chain', :locals => {
+        :evolution_data => item['evolves_to']
+      } %>
+
     <% end %>
+  </div>
+</div>
 
-    
 
-    <% if item['evolution_details'][0]['trigger']['name'] == 'trade' %>
-      
-      Trade 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['trade_species'] %>
-      
-      with <%= item['evolution_details'][0]['trade_species']['name'] %> 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['min_level'] %>
-      
-      on level <%= item['evolution_details'][0]['min_level'] %> 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['min_happiness'] %>
-      
-      with happiness 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['min_beauty'] %>
-      
-      with max beauty 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['held_item'] %>
-      
-      while holding <%= item['evolution_details'][0]['held_item']['name'] %> 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['item'] %>
-      
-      with <%= item['evolution_details'][0]['item']['name'] %> 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['time_of_day'] != "" %>
-      
-      at <%= item['evolution_details'][0]['time_of_day'] %> 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['gender'] %>
-
-      <% if item['evolution_details'][0]['gender'] == 1 %>
-
-        if female 
-
-      <% elsif item['evolution_details'][0]['gender'] == 2 %>
-
-        if male 
-
-      <% end %>
-      
-    <% end %>
-
-
-
-    <% if item['evolution_details'][0]['relative_physical_stats'] %>
-
-      <% if item['evolution_details'][0]['relative_physical_stats'] == 1 %>
-
-        with higher attack than defense 
-
-      <% elsif item['evolution_details'][0]['relative_physical_stats'] == -1 %>
-
-        with higher defense than attack 
-
-      <% elsif item['evolution_details'][0]['relative_physical_stats'] == 0 %>
-
-        with equal attack and defense 
-
-      <% end %>
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['location'] %>
-      
-      at <%= item['evolution_details'][0]['location']['name'] %> 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['known_move'] %>
-      
-      while knowing <%= item['evolution_details'][0]['known_move']['name'] %> 
-      
-    <% end %>
-
-    
-
-    <% if item['evolution_details'][0]['min_affection'] %>
-      
-      with <%= item['evolution_details'][0]['min_affection'] %> affection hearts 
-      
-    <% end %>
-
-  
-
-  <br>
-
-  <% item['evolves_to'].each do |item2| %>
-
-    3: <a href="/pokemon/<%= item2['species']['name'] %>"><%= item2['species']['name'] %></a>
-
-      <% if item2['evolution_details'][0]['trigger']['name'] == 'level-up' %>
-      
-        Level up 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['trigger']['name'] == 'trade' %>
-        
-        Trade 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['trade_species'] %>
-        
-        with <%= item2['evolution_details'][0]['trade_species']['name'] %> 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['min_level'] %>
-        
-        on level <%= item2['evolution_details'][0]['min_level'] %> 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['min_happiness'] %>
-        
-        with happiness 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['min_beauty'] %>
-        
-        with max beauty 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['held_item'] %>
-        
-        while holding <%= item2['evolution_details'][0]['held_item']['name'] %> 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['item'] %>
-        
-        with <%= item2['evolution_details'][0]['item']['name'] %> 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['time_of_day'] != "" %>
-        
-        at <%= item2['evolution_details'][0]['time_of_day'] %> 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['gender'] %>
-
-        <% if item2['evolution_details'][0]['gender'] == 1 %>
-
-          if female 
-
-        <% elsif item2['evolution_details'][0]['gender'] == 2 %>
-
-          if male 
-
-        <% end %>
-        
-      <% end %>
-
-
-
-      <% if item2['evolution_details'][0]['relative_physical_stats'] %>
-
-        <% if item2['evolution_details'][0]['relative_physical_stats'] == 1 %>
-
-          with higher attack than defense 
-
-        <% elsif item2['evolution_details'][0]['relative_physical_stats'] == -1 %>
-
-          with higher defense than attack 
-
-        <% elsif item2['evolution_details'][0]['relative_physical_stats'] == 0 %>
-
-          with equal attack and defense 
-
-        <% end %>
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['location'] %>
-        
-        at <%= item2['evolution_details'][0]['location']['name'] %> 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['known_move'] %>
-        
-        while knowing <%= item2['evolution_details'][0]['known_move']['name'] %> 
-        
-      <% end %>
-
-      
-
-      <% if item2['evolution_details'][0]['min_affection'] %>
-        
-        with <%= item2['evolution_details'][0]['min_affection'] %> affection hearts 
-        
-      <% end %>
-  <% end %>
-<% end %>
 
 <p>
   Types:

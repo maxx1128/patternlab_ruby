@@ -1,0 +1,37 @@
+// This is the chain of a pokemon's evolutions, from start to end
+
+// The wrapper for each whole evolution
+.pd-evolutions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+// The title above the evolution chain pokemon
+.pd-evolutions__title {
+  flex: 1 1 100%;
+
+  text-align: center;
+}
+
+
+// Each stage in a pokemon's evolution, with up to three. Can have multiple in each one, which are lined up vertically.
+.pd-evolutions__chain {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+
+  padding-right: spacing(double);
+
+  &:last-of-type { padding-right: 0; }
+}
+
+// Each individual pokemon in the chain, includes their image and description
+.pd-evolutions__chainItem {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  text-align: center;
+}

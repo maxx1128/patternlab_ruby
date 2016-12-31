@@ -14,6 +14,7 @@ end
 
 
 
+# Keep the API request here, put the specific selecting and filtering in the functions file?
 def get_pokemon_data(poke_id)
 
   pokemon = HTTParty.get("http://pokeapi.co/api/v2/pokemon/#{poke_id}")
@@ -74,6 +75,7 @@ def get_pokemon_data(poke_id)
   parsed_pokemon_evolution_data = JSON.parse(pokemon_evolution.body)
 
   evolution_start = parsed_pokemon_evolution_data["chain"]["species"]["name"]
+  evolution_start_id = parsed_pokemon_evolution_data["chain"]["species"]["url"].split("/")[6].to_i
   evolution_chain = parsed_pokemon_evolution_data["chain"]["evolves_to"]
 
 
@@ -92,6 +94,7 @@ def get_pokemon_data(poke_id)
     "color" => color,
     "growth_rate" => growth_rate,
     "evolution_start" => evolution_start,
+    "evolution_start_id" => evolution_start_id,
     "evolution_chain" => evolution_chain
   }
 
