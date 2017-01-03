@@ -4,20 +4,20 @@
 .pd-l-information {
   @include clearfix();
   @include syn(xs, 12, 0, ('float-l'));
-  @include syn(md, 8, 0, (''));
+  @include syn(md, 8, 0, ('marg-b-5'));
 }
 
 // The normal and shiny sprites
 .pd-l-images {
   @include clearfix();
   @include syn(xs, 12, 0, ('float-l'));
-  @include syn(md, 4, 0, (''));
+  @include syn(md, 4, 0, ('marg-b-5'));
 }
 
 // The entry info from each generation's available pokedex
 .pd-l-entries {
   @include clearfix();
-  @include syn(xs, 12, 0, ('marg-t-1'));
+  @include syn(xs, 12, 0, ('marg-t-4'));
   @include syn(md, 10, 1, ('float-l'));
 }
 
@@ -38,5 +38,16 @@
 // The bottom nav to next Pokemon or the homepage
 .pd-l-bottomNav {
   @include clearfix();
-  @include syn(xs, 12, 0, ('float-l'));
+  @include syn(xs, 12, 0, (float-l marg-t-4));
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  & > * {
+    flex: 1 1 auto;
+    display: inline;
+
+    text-align: center;
+  }
 }

@@ -51,9 +51,18 @@
 
 
 <div class="pd-l-images">
+  <h5 class="pd-image__title">
+    Normal Sprite:
+  </h5>
+  <img class="pd-image__img" src="<%= @full_data["sprite_url_regular"] %>">
 
-  <img src="<%= @full_data["sprite_url_regular"] %>">
-  <img src="<%= @full_data["sprite_url_shiny"] %>">
+
+  <% if @full_data["sprite_url_shiny"] %>
+    <h5 class="pd-image__title">
+      Shiny Sprite:
+    </h5>
+    <img class="pd-image__img" src="<%= @full_data["sprite_url_shiny"] %>">
+  <% end %>
 </div>
 
 
@@ -64,7 +73,7 @@
     <div class="pd-evolutions">
 
     <h4 class="pd-evolutions__title">
-      Evolutions
+      Evolution Chain
     </h4>
 
     <div class="pd-evolutions__chain">
@@ -79,6 +88,7 @@
         </span>     
       </div>
     </div>
+
 
     <div class="pd-evolutions__chain">
         
@@ -113,7 +123,7 @@
   <ul>
     <% @full_data["full_stats"].each do |name, value| %>
       <li>
-        <%= name %>: <%= value %>
+        <%= name %>: <strong><%= value %></strong>
       </li>
     <% end %>
   </ul>
@@ -145,14 +155,18 @@
 <div class="pd-l-bottomNav">
 
   <p>
-    <a href="/pokemon/<%= @full_data["prev_id"] %>">Previous Pokemon</a>
-  </p>
-
-  <p>
-    <a href="/pokemon/<%= @full_data["next_id"] %>">Next Pokemon</a>
+    <% if @full_data["id"] > 1 %>
+      <a href="/pokemon/<%= @full_data["prev_id"] %>">Previous Pokemon</a>
+    <% end %>
   </p>
 
   <p>
     <a href="/">Home</a>
+  </p>
+
+  <p>
+    <% if @full_data["id"] < @total_pokemon %>
+      <a href="/pokemon/<%= @full_data["next_id"] %>">Next Pokemon</a>
+    <% end %>
   </p>
 </div>

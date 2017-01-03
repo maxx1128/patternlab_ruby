@@ -177,6 +177,7 @@ get '/pokemon/:pokemon_id' do
   pokemon_id = params[:pokemon_id]
 
   @full_data = get_pokemon_data(pokemon_id)
+  @total_pokemon = total_pokemon
 
   id = @full_data["id"]
   poke_name = @full_data["poke_name"]
