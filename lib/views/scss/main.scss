@@ -12,6 +12,7 @@
 @import
 '_tools/_colors.scss',
 '_tools/_layout.scss',
+'_tools/_mixins.scss',
 '_tools/_selectors.scss',
 '_tools/_synapse.scss';
 
@@ -23,4 +24,8 @@
 '_elements/_typography.scss';
 
 @import
+'_layouts/_pokemon.scss';
+
+@import
+'_components/_entries.scss',
 '_components/_evolutionChain.scss';

@@ -3,124 +3,151 @@
   #<%= @full_data["id"] %>: <%= @full_data["poke_name"] %>
 </h1>
 
-<h4>
-  Color: <a href="/color/<%= @full_data["color"] %>"><%= @full_data["color"] %></a>
-</h4>
 
-<h4>
-  Growth Rate: <%= @full_data["growth_rate"] %>
-</h4>
+<div class="pd-l-information">
 
-<ul>
-  <% @full_data["abilities"].reverse.each do |item| %>
-    <li>
-      <a href="/ability/<%= item["id"] %>">
-        <%= item["ability"]["name"] %>
-      </a> - <%= item["description"] %> 
-
-      <% if item["is_hidden"] %>
-        <strong>
-          (Hidden ability)
-        </strong>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
-
-<p>
-  Types:
-</p>
-<ul>
-  <% @full_data["types"].each do |type| %>
-    <li>
-      <a href="/type/<%= type.downcase %>">
-        <%= type %>
-      </a>
-    </li>
-  <% end %>
-</ul>
-
-
-<img src="<%= @full_data["sprite_url_regular"] %>">
-<img src="<%= @full_data["sprite_url_shiny"] %>">
-
-
-<p>
-  Descriptions:
-</p>
-<ul>
-  <% @full_data["descriptions_full"].reverse.each do |descr| %>
-    <% if descr["language"]["name"] == "en" %>
-      
+  <p>
+    Types:
+  </p>
+  <ul>
+    <% @full_data["types"].each do |type| %>
       <li>
-        <strong><%= descr["version"]["name"].capitalize.sub('-', ' ') %>:</strong> <%= descr["flavor_text"] %>
+        <a href="/type/<%= type.downcase %>">
+          <%= type %>
+        </a>
       </li>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
+
+  <p>
+    Color: <a href="/color/<%= @full_data["color"] %>"><%= @full_data["color"] %></a>
+  </p>
+
+  <ul>
+    <% @full_data["abilities"].reverse.each do |item| %>
+      <li>
+        <a href="/ability/<%= item["id"] %>">
+          <%= item["ability"]["name"] %>
+        </a> - <%= item["description"] %> 
+
+        <% if item["is_hidden"] %>
+          <strong>
+            (Hidden ability)
+          </strong>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <p>
+    Growth Rate: <%= @full_data["growth_rate"] %>
+  </p>
+</div>
 
 
-<div class="pd-evolutions">
+<div class="pd-l-images">
 
-  <h4 class="pd-evolutions__title">
-    Evolutions
-  </h4>
+  <img src="<%= @full_data["sprite_url_regular"] %>">
+  <img src="<%= @full_data["sprite_url_shiny"] %>">
+</div>
 
-  <div class="pd-evolutions__chain">
-    <div class="pd-evolutions__chainItem">
 
-      <img class="pd-evolutions__chainItem__img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%= @full_data["evolution_start_id"] %>.png">
+<div class="pd-l-evolutions">
 
-      <span class="pd-evolutions__chainItem__descr">
-        <a href="/pokemon/<%= @full_data["evolution_start"] %>">
-          <%= @full_data["evolution_start"].capitalize %>
-        </a>
-      </span>     
+  <div>
+
+    <div class="pd-evolutions">
+
+    <h4 class="pd-evolutions__title">
+      Evolutions
+    </h4>
+
+    <div class="pd-evolutions__chain">
+      <div class="pd-evolutions__chainItem">
+
+        <img class="pd-evolutions__chainItem__img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%= @full_data["evolution_start_id"] %>.png">
+
+        <span class="pd-evolutions__chainItem__descr">
+          <a href="/pokemon/<%= @full_data["evolution_start"] %>">
+            <%= @full_data["evolution_start"].capitalize %>
+          </a>
+        </span>     
+      </div>
     </div>
-  </div>
 
-  <div class="pd-evolutions__chain">
-      
-    <%= erb :'includes/evolution_chain', :locals => {
-      :evolution_data => @full_data["evolution_chain"]
-    } %>
-
-  </div>
-
-
-  <div class="pd-evolutions__chain">
-    <% @full_data["evolution_chain"].each do |item| %>
+    <div class="pd-evolutions__chain">
         
       <%= erb :'includes/evolution_chain', :locals => {
-        :evolution_data => item['evolves_to']
+        :evolution_data => @full_data["evolution_chain"]
       } %>
 
-    <% end %>
+    </div>
+
+
+    <div class="pd-evolutions__chain">
+      <% @full_data["evolution_chain"].each do |item| %>
+          
+        <%= erb :'includes/evolution_chain', :locals => {
+          :evolution_data => item['evolves_to']
+        } %>
+
+      <% end %>
+    </div>
+
+  </div>
+
   </div>
 </div>
 
 
-<p>
-  Stats:
-</p>
-<ul>
-  <% @full_data["full_stats"].each do |name, value| %>
-    <li>
-      <%= name %>: <%= value %>
-    </li>
+<div class="pd-l-stats">
+
+  <p>
+    Stats:
+  </p>
+  <ul>
+    <% @full_data["full_stats"].each do |name, value| %>
+      <li>
+        <%= name %>: <%= value %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
+<div class="pd-l-entries">
+
+  <h3 class="pd-entry__title">
+    Pokedex Entries
+  </h3>
+
+  <% @full_data["descriptions_full"].reverse.each do |descr| %>
+    <% if descr["language"]["name"] == "en" %>
+
+      <div class="pd-entry pd-entry--<%= descr['version']['name'] %>">
+        <div class="pd-entry__game">
+          <%= descr["version"]["name"].capitalize.sub('-', ' ') %>
+        </div>
+        <div class="pd-entry__info">
+          <%= descr["flavor_text"] %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
-</ul>
+</div>
 
 
+<div class="pd-l-bottomNav">
 
-<p>
-  <a href="/pokemon/<%= @full_data["prev_id"] %>">Previous Pokemon</a>
-</p>
+  <p>
+    <a href="/pokemon/<%= @full_data["prev_id"] %>">Previous Pokemon</a>
+  </p>
 
-<p>
-  <a href="/pokemon/<%= @full_data["next_id"] %>">Next Pokemon</a>
-</p>
+  <p>
+    <a href="/pokemon/<%= @full_data["next_id"] %>">Next Pokemon</a>
+  </p>
 
-<p>
-  <a href="/">Home</a>
-</p>
+  <p>
+    <a href="/">Home</a>
+  </p>
+</div>

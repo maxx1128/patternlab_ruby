@@ -1,0 +1,82 @@
+// The pokedex entries info from each pokemon's page
+// Is the game and entry from that game
+
+
+$entry-colors: (
+  red: #ff4136,
+  blue: #0074d9,
+  yellow: #f9a602,
+  gold: #ec9707,
+  silver: #9897a9,
+  crystal: #281e5d,
+  ruby: #900503,
+  sapphire: #52b2c0,
+  emerald: #038911,
+  firered: #9a0f02,
+  leafgreen: #2ecc40,
+  diamond: #141e3c,
+  pearl: #59788d,
+  platinum: #6a6880,
+  heartgold: #e4b103,
+  soulsilver: #7d7c9c,
+  white: #aaa,
+  black: #111,
+  white-2: #c5c5d0,
+  black-2: #3d3934,
+  x: #710193,
+  y: #630536,
+  omega-ruby: #5f1914,
+  alpha-sapphire: #026063
+);
+
+@each $version, $color in $entry-colors {
+
+  .pd-entry--#{$version} {
+    
+    border-bottom: 1px solid $color;
+
+    .pd-entry__game {
+      color: #efe;
+
+      background-color: $color;
+    }
+
+    .pd-entry__info { color: $color; }
+  }
+}
+
+
+
+
+// Each entries' container
+.pd-entry {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: spacing() 0;
+  margin-bottom: spacing(half);
+}
+
+// The title for the list of entries
+.pd-entry__title {
+  margin: spacing() 0 0;
+
+  text-align: center;
+}
+
+// The game for each entry
+.pd-entry__game {
+  flex: 0 0 rem(55px);
+  margin-right: spacing();
+  padding: spacing(half) spacing();
+  border-radius: container(border-radius);
+
+  text-align: center;
+  font-family: type(font-family, mono);
+}
+
+// The information in each entry
+.pd-entry__info {
+  flex: 1 1 auto;
+}
+

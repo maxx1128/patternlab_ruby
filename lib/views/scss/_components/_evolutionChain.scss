@@ -2,6 +2,7 @@
 
 // The wrapper for each whole evolution
 .pd-evolutions {
+  @include clearfix();
   display: flex;
   flex-wrap: wrap;
   align-items: center;
