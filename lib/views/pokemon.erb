@@ -6,22 +6,31 @@
 
 <div class="pd-l-information">
 
-  <p>
-    Types:
-  </p>
-  <ul>
-    <% @full_data["types"].each do |type| %>
-      <li>
-        <a href="/type/<%= type.downcase %>">
-          <%= type %>
-        </a>
-      </li>
-    <% end %>
-  </ul>
+  <h4>
+    Basic info
+  </h4>
 
   <p>
-    Color: <a href="/color/<%= @full_data["color"] %>"><%= @full_data["color"] %></a>
+    <strong>Types:</strong> 
+    <% @full_data["types"].each_with_index do |type, index| %>
+      <a href="/type/<%= type.downcase %>"><%= type %></a><% if index < (@full_data["types"].size - 1) %>, <% end %>
+    <% end %>
   </p>
+
+  <p>
+    <strong>Color:</strong> 
+    <a href="/color/<%= @full_data["color"] %>">
+      <%= @full_data["color"].capitalize %>  
+    </a>
+  </p>
+
+  <p>
+    <strong>Growth Rate:</strong> <%= @full_data["growth_rate"].capitalize.sub('-', ' ') %>
+  </p>
+
+  <h5>
+    Abilities
+  </h5>
 
   <ul>
     <% @full_data["abilities"].reverse.each do |item| %>
@@ -38,10 +47,6 @@
       </li>
     <% end %>
   </ul>
-
-  <p>
-    Growth Rate: <%= @full_data["growth_rate"] %>
-  </p>
 </div>
 
 
