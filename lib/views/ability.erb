@@ -1,6 +1,6 @@
 
   <h1>
-    Ability Listing: <%= @ability.capitalize %>
+    Ability Listing: <%= @ability.capitalize.sub('-', ' ') %>
   </h1>
 
   <% @ability_descr.each do |item| %>
@@ -16,21 +16,25 @@
     <% end %>
   <% end %>
 
-  <ul>
+
+  <div class="pd-archiveItem__group">
+
     <% @pokemon.each do |entry| %>
 
-      <li>
-        <a href="/pokemon/<%= entry['pokemon']['url'].split("/")[6].to_i %>">
-          <%= entry['pokemon']['name'].capitalize.sub('-', ' ') %> - <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%= entry['pokemon']['url'].split("/")[6].to_i %>.png" alt="">
-        </a>
+      <%
+        if entry['is_hidden']
+          @hidden_ability = "Hidden Ability"
+        else
+          @hidden_ability = "null"
+        end
+      %>
 
-        <br>
-        <br>
-
-        <% if entry['is_hidden'] %>
-          Hidden ability
-        <% end %>
-      </li>
-
+      <%= erb :'includes/archive_item', :locals => {
+        :link => "/pokemon/#{entry['pokemon']['url'].split('/')[6].to_i}",
+        :img_url => "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/#{entry['pokemon']['url'].split('/')[6].to_i}.png" ,
+        :title => entry['pokemon']['name'].capitalize.sub('-', ' '),
+        :subheading => @hidden_ability
+      } %>
     <% end %>
-  </ul>
+
+  </div>

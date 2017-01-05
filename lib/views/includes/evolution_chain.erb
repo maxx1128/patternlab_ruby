@@ -133,6 +133,13 @@
       <% end %>
 
 
+      <% if item['evolution_details'][0]['party_species'] %>
+        
+        with <%= item['evolution_details'][0]['party_species']['name'].sub('-', ' ') %> in party
+        
+      <% end %>
+
+
 
       <% if item['evolution_details'][0]['min_affection'] %>
         

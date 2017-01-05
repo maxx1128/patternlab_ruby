@@ -159,13 +159,13 @@ get '/ability/:ability' do
   pokemon = HTTParty.get("http://pokeapi.co/api/v2/ability/#{ability}")
   parsed_ability_data = JSON.parse(pokemon.body)
 
-  @ability = parsed_ability_data['name']
+  @ability = parsed_ability_data['name'].capitalize.sub('-', ' ')
   @ability_descr = parsed_ability_data['effect_entries']
 
   @pokemon = parsed_ability_data['pokemon']
 
 
-  @title = "Ability: #{@ability.capitalize}"
+  @title = "Ability: #{@ability}"
 
   erb :ability, {
     :layout => :'templates/layout',
@@ -197,18 +197,7 @@ post '/search' do
 
   pokemon_id = params[:poke_search]
 
-  @full_data = get_pokemon_data(pokemon_id)
-
-  id = @full_data["id"]
-  poke_name = @full_data["poke_name"]
-
-  puts poke_name
-
-  @title = "##{id}: #{poke_name}"
-
-  erb :pokemon, {
-    :layout => :'templates/layout',
-  }
+  redirect '/pokemon/' + pokemon_id
 end
 
 
