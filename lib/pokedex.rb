@@ -32,7 +32,7 @@ def get_pokemon_data(poke_id)
 
 
   stats = parsed_pokemon_data["stats"].map { |type_data| type_data["base_stat"].to_s }
-  stat_names = parsed_pokemon_data["stats"].map { |type_data| type_data["stat"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ") }
+  stat_names = parsed_pokemon_data["stats"].map { |type_data| type_data["stat"]["name"].gsub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ") }
   full_stats = Hash[stat_names.reverse.zip stats.reverse]
 
 
@@ -45,7 +45,7 @@ def get_pokemon_data(poke_id)
 
     ability_descr = parsed_ability_data["effect_entries"][0]["short_effect"]
 
-    abilities[i]["ability"]["name"] = abilities[i]["ability"]["name"].sub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ")
+    abilities[i]["ability"]["name"] = abilities[i]["ability"]["name"].gsub('-', ' ').split(/ |\_/).map(&:capitalize).join(" ")
 
     abilities[i]["description"] = ability_descr
     abilities[i]["id"] = item["ability"]["url"].split("/")[6].to_i
@@ -161,7 +161,7 @@ get '/ability/:ability' do
   pokemon = HTTParty.get("http://pokeapi.co/api/v2/ability/#{ability}")
   parsed_ability_data = JSON.parse(pokemon.body)
 
-  @ability = parsed_ability_data['name'].capitalize.sub('-', ' ')
+  @ability = parsed_ability_data['name'].capitalize.gsub('-', ' ')
   @ability_descr = parsed_ability_data['effect_entries']
 
   @pokemon = parsed_ability_data['pokemon']

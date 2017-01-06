@@ -11,7 +11,7 @@
   </h4>
 
   <p>
-    <strong>Types:</strong> 
+    <strong>Type(s):</strong> 
     <% @full_data["types"].each_with_index do |type, index| %>
       <a href="/type/<%= type.downcase %>"><%= type %></a><% if index < (@full_data["types"].size - 1) %>, <% end %>
     <% end %>
@@ -19,13 +19,13 @@
 
   <p>
     <strong>Color:</strong> 
-    <a href="/color/<%= @full_data["color"] %>">
+    <a class="pd-colorBadge--<%= @full_data['color'] %>" href="/color/<%= @full_data["color"] %>">
       <%= @full_data["color"].capitalize %>  
     </a>
   </p>
 
   <p>
-    <strong>Growth Rate:</strong> <%= @full_data["growth_rate"].capitalize.sub('-', ' ') %>
+    <strong>Growth Rate:</strong> <%= @full_data["growth_rate"].capitalize.gsub('-', ' ') %>
   </p>
 
   <h5>
@@ -129,7 +129,7 @@
           <%= name %>
         </div>
 
-        <div style="width: <%= value.to_i / 2 %>%;" class="pd-stat__bar pd-stat__bar--<%= name.sub(' ', '-').downcase %>">
+        <div style="width: <%= value.to_i / 2 %>%;" class="pd-stat__bar pd-stat__bar--<%= name.gsub(' ', '-').downcase %>">
           <span class="pd-stat__barValue">
             <%= value %>
           </span>
@@ -151,7 +151,7 @@
 
       <div class="pd-entry pd-entry--<%= descr['version']['name'] %>">
         <div class="pd-entry__game">
-          <%= descr["version"]["name"].capitalize.sub('-', ' ') %>
+          <%= descr["version"]["name"].capitalize.gsub('-', ' ') %>
         </div>
         <div class="pd-entry__info">
           <%= descr["flavor_text"] %>
