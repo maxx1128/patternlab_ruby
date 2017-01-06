@@ -20,6 +20,7 @@ def get_pokemon_data(poke_id)
   pokemon = HTTParty.get("http://pokeapi.co/api/v2/pokemon/#{poke_id}")
   parsed_pokemon_data = JSON.parse(pokemon.body)
 
+
   poke_name = parsed_pokemon_data["forms"][0]["name"].split.map(&:capitalize).join(' ')
   id = parsed_pokemon_data["id"]
 
@@ -99,6 +100,7 @@ def get_pokemon_data(poke_id)
   }
 
   return full_pokemon_data
+
 end
 
 
@@ -198,6 +200,32 @@ post '/search' do
   pokemon_id = params[:poke_search]
 
   redirect '/pokemon/' + pokemon_id
+end
+
+
+
+not_found do
+  
+  @title = 'Page not found'
+  @alt_intro_text = "
+    <h2>
+      Not found!
+    </h2>
+
+    <img src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/289.png'>
+
+    <p>
+      Whatever page you went to hasn't been found. All that's here is this shiny Slaking.
+    </p>
+
+    <p>
+      Please search for another Pokemon below!
+    </p>
+  "
+
+  erb :index, {
+    :layout => :'templates/layout'
+  }
 end
 
 

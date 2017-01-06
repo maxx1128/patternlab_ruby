@@ -24,15 +24,15 @@
 // The evolution chain
 .pd-l-evolutions {
   @include clearfix();
-  @include syn(xs, 12, 0, ('float-l'));
-  @include syn(md, 9, 0, (''));
+  @include syn(xs, 12, 0, (float-l pad-vert-4));
+  @include syn(md, 8, 0, ('pad-vert-0'));
 }
 
 // The base stat information
 .pd-l-stats {
   @include clearfix();
   @include syn(xs, 12, 0, ('float-l'));
-  @include syn(md, 3, 0, (''));
+  @include syn(md, 4, 0, (''));
 }
 
 // The bottom nav to next Pokemon or the homepage

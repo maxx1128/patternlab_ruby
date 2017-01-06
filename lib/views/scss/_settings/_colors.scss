@@ -15,10 +15,10 @@
 
 $g-color--shade: 25%;
 
-$g-color--primary   : #6ab8cc;
-$g-color--secondary : #b0ba52;
-$g-color--action    : #ff826e;
-$g-color--mono      : #cbcbcb;
+$g-color--primary   : #104a7b;
+$g-color--secondary : #b4b462;
+$g-color--action    : #de4141;
+$g-color--mono      : #838383;
 
 
 // Map for storing all color variables
@@ -50,8 +50,8 @@ $color-map: (
   mono: (
     base: $g-color--mono,
 
-    light: #eee,
+    light: #fff,
 
-    dark: #111
+    dark: #393939
   )
 );
