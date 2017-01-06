@@ -28,7 +28,7 @@
 
       <% if item['evolution_details'][0]['trade_species'] %>
         
-        with <%= item['evolution_details'][0]['trade_species']['name'].sub('-', ' ') %> 
+        with <%= item['evolution_details'][0]['trade_species']['name'].gsub('-', ' ') %> 
         
       <% end %>
 
@@ -60,7 +60,7 @@
 
       <% if item['evolution_details'][0]['held_item'] %>
         
-        while holding <%= item['evolution_details'][0]['held_item']['name'].sub('-', ' ') %> 
+        while holding <%= item['evolution_details'][0]['held_item']['name'].gsub('-', ' ') %> 
         
       <% end %>
 
@@ -68,7 +68,7 @@
 
       <% if item['evolution_details'][0]['item'] %>
         
-        with <%= item['evolution_details'][0]['item']['name'].sub('-', ' ') %> 
+        with <%= item['evolution_details'][0]['item']['name'].gsub('-', ' ') %> 
         
       <% end %>
 
@@ -120,7 +120,7 @@
 
       <% if item['evolution_details'][0]['location'] %>
         
-        at <%= item['evolution_details'][0]['location']['name'].sub('-', ' ') %> 
+        at <%= item['evolution_details'][0]['location']['name'].gsub('-', ' ') %> 
         
       <% end %>
 
@@ -128,14 +128,14 @@
 
       <% if item['evolution_details'][0]['known_move'] %>
         
-        while knowing <%= item['evolution_details'][0]['known_move']['name'].sub('-', ' ') %> 
+        while knowing <%= item['evolution_details'][0]['known_move']['name'].gsub('-', ' ') %> 
         
       <% end %>
 
 
       <% if item['evolution_details'][0]['party_species'] %>
         
-        with <%= item['evolution_details'][0]['party_species']['name'].sub('-', ' ') %> in party
+        with <%= item['evolution_details'][0]['party_species']['name'].gsub('-', ' ') %> in party
         
       <% end %>
 

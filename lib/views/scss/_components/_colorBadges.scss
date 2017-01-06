@@ -1,31 +1,31 @@
 $colorBadge-list: (
-  black: red,
-  blue: red,
-  brown: red,
-  gray: red,
-  green: red,
-  pink: red,
-  purple: red,
-  red: red,
-  white: red,
-  yellow: red
+  black: #111,
+  blue: #0074d9,
+  brown: #241709,
+  gray: #aaaaaa,
+  green: #2ecc40,
+  pink: #f69acd,
+  purple: #b10dc9,
+  red: #ff4136,
+  white: #fff,
+  yellow: #FFDC00
 );
 
 @each $label, $color in $colorBadge-list {
   
   .pd-colorBadge--#{$label} {
-    display: inline-block;
-    padding: spacing(quart) spacing();
+    @include contra-color($color);
 
-    color: color(mono, light);
+    display: inline-block;
+    padding: (spacing(quart) / 2) spacing(half);
+
     font-size: type(font-size, small);
 
-    background-color: $color;
     border-radius: spacing();
+    border: 1px solid shade($color, 15%);
 
     @include hovers() {
-      color: color(mono, light);
-      background-color: shade($color, 15%);
+      @include contra-color(shade($color, 15%));
     }
   }
 }
