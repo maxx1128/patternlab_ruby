@@ -1,14 +1,14 @@
 $colorBadge-list: (
-  black: #111,
-  blue: #0074d9,
-  brown: #241709,
-  gray: #aaaaaa,
-  green: #2ecc40,
-  pink: #f69acd,
-  purple: #b10dc9,
-  red: #ff4136,
-  white: #fff,
-  yellow: #FFDC00
+  'black': #111,
+  'blue': #0074d9,
+  'brown': #241709,
+  'gray': #aaaaaa,
+  'green': #2ecc40,
+  'pink': #f69acd,
+  'purple': #b10dc9,
+  'red': #ff4136,
+  'white': #fff,
+  'yellow': #c29200
 );
 
 @each $label, $color in $colorBadge-list {
