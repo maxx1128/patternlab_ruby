@@ -1,3 +1,4 @@
+require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'httparty'
@@ -23,16 +24,12 @@ def get_pokemon_data(poke_id)
 
   if parsed_pokemon_data["detail"]
 
-    puts "No data!"
-
     full_pokemon_data = {
       "No_data" => true
     }
 
     return full_pokemon_data
   else
-
-    puts "We have data!"
 
     poke_name = parsed_pokemon_data["forms"][0]["name"].split.map(&:capitalize).join(' ')
     id = parsed_pokemon_data["id"]
@@ -236,7 +233,7 @@ end
 
 post '/search' do
 
-  pokemon_id = params[:poke_search].downcase!
+  pokemon_id = params[:poke_search].to_s.downcase
 
   redirect '/pokemon/' + pokemon_id
 end
