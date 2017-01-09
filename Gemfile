@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.3'
+ruby '2.2.6'
 
 # Specify your gem's dependencies in gothonweb.gemspec
 gem 'sinatra'
