@@ -236,7 +236,7 @@ end
 
 post '/search' do
 
-  pokemon_id = params[:poke_search]
+  pokemon_id = params[:poke_search].downcase!
 
   redirect '/pokemon/' + pokemon_id
 end
