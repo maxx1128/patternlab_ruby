@@ -1,7 +1,10 @@
-
 <% @subcategory_data.each do |item| %>
 
-  <%= erb :"#{item['path']}" %>
+  <h3>
+    <%= item['label'] %>
+  </h3>
+
+  <%= erb :"#{item['path'].chomp('/')}" %>
 
 <% end %>
 

@@ -61,7 +61,6 @@ def navStructure
   end
 
   return fullNav
-
 end
 
 
@@ -72,9 +71,7 @@ end
 get '/' do
 
   @title = 'Practice!'
-
   @nav = navStructure
-
 
   erb :index, {
     :layout => :'templates/layout'
@@ -85,13 +82,16 @@ end
 # For showing all patterns in a category
 get '/source/:lvl1/' do
 
-  @title = params[:lvl1]
-
+  @title = params[:lvl1].capitalize
   @nav = navStructure
+  @lvl1 = params[:lvl1]
 
-  file_contents = '/source/' + params[:lvl1] + '.erb'
+  navStructure.each_with_index do |item, index|
 
-  erb :index, {
+    @category_data = item['submenu'] if item['label'] == @lvl1
+  end
+
+  erb :category, {
     :layout => :'templates/layout'
   }
 end
@@ -100,10 +100,8 @@ end
 # Show showing all patterns in a subcategory
 get '/source/:lvl1/:lvl2/' do
 
-  @title = params[:lvl1] + ' > ' + params[:lvl2]
-
+  @title = params[:lvl2].capitalize
   @nav = navStructure
-
   @lvl1 = params[:lvl1]
   @lvl2 = params[:lvl2]
 
@@ -123,8 +121,6 @@ get '/source/:lvl1/:lvl2/' do
     end
   end
 
-  @subcategory_data.select { |item| item["path"] = item["path"].chomp('/') }
-
 
   erb :subcategory, {
     :layout => :'templates/layout'
@@ -135,8 +131,7 @@ end
 # For showing individual patterns on a single page
 get '/source/:lvl1/:lvl2/:lvl3/' do
 
-  @title = @title = params[:lvl1] + ' > ' + params[:lvl2] + ' > ' + params[:lvl3]
-
+  @title = params[:lvl3].capitalize
   @nav = navStructure
 
   file_contents = 'source/#{params[:lvl1]}/#{params[:lvl2]}/#{params[:lvl3]}'

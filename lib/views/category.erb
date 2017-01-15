@@ -1,0 +1,17 @@
+<% @category_data.each do |item| %>
+
+    <h2>
+      <%= item["label"] %>
+    </h2>
+
+      <% item["submenu"].each do |item2| %>
+        
+        <h3>
+          <%= item2["label"] %>
+        </h3>
+
+        <%= erb :"#{item2['path'].chomp('/')}" %>
+      <% end %>
+
+<% end %>
+

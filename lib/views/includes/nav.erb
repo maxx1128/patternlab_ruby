@@ -2,19 +2,19 @@
   <% @nav.each do |item| %>
     <li>
       <a href="<%= item['path'] %>">
-        <%= item['label'] %> - <%= item['path'] %>
+        <%= item['label'] %>
       </a>
       <ul>
         <% item['submenu'].each do |item2| %>
           <li>
             <a href="<%= item2['path'] %>">
-              <%= item2['label'] %> - <%= item2['path'] %>
+              <%= item2['label'] %>
             </a>
             <ul>
               <% item2['submenu'].each do |item3| %>
                 <li>
                   <a href="<%= item3['path'] %>">
-                    <%= item3['label'] %> - <%= item3['path'] %>
+                    <%= item3['label'] %>
                   </a>
                 </li>
               <% end %>
