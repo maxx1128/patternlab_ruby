@@ -5,8 +5,22 @@
   </head>
 
   <body>
-    
+
+    <h2>
+      <%= @title %>
+    </h2>
+
+    <%= erb :'includes/nav' %>
+
+    <br><br>
+
     <%= yield %>
+
+    <br><br>
+
+    <a href="/">
+      Homepage
+    </a>
 
   </body>
 </html>
