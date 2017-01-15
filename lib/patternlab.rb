@@ -27,8 +27,6 @@ def navStructure
   direct_root_start = direct_root.split('/')[1]
   titleLength = 13 + direct_root_start.length
 
-  puts titleLength
-
   levelOne.each_with_index do |item, index|
     
     twoPath = direct_root + item
@@ -71,7 +69,6 @@ end
 # Ones with three will always be showing individual ones, and will focus on that one file
 
 
-
 get '/' do
 
   @title = 'Practice!'
@@ -107,7 +104,29 @@ get '/source/:lvl1/:lvl2/' do
 
   @nav = navStructure
 
-  erb :index, {
+  @lvl1 = params[:lvl1]
+  @lvl2 = params[:lvl2]
+
+  @subcategory_data
+
+  navStructure.each_with_index do |item, index|
+
+    if item['label'] == @lvl1
+
+      item['submenu'].each_with_index do |item2, index2|
+
+        if item2['label']  == @lvl2
+
+          @subcategory_data = item2['submenu']
+        end
+      end
+    end
+  end
+
+  @subcategory_data.select { |item| item["path"] = item["path"].chomp('/') }
+
+
+  erb :subcategory, {
     :layout => :'templates/layout'
   }
 end
