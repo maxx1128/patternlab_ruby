@@ -2,6 +2,7 @@ require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'erb'
+require "rdiscount"
 require 'sass'
 
 require_relative "./functions"
@@ -19,7 +20,7 @@ end
 def navStructure
 
   direct_root = '../patternlab/lib/views/source/'
-  levelOne = Dir.entries(direct_root).select { |item| item[0,1] != '.' }
+  levelOne = Dir.entries(direct_root).select { |item| item[0,1] != '.' && !item.end_with?(".md") }
   levelTwo = []
   levelThree = []
   fullNav = []
@@ -30,7 +31,7 @@ def navStructure
   levelOne.each_with_index do |item, index|
     
     twoPath = direct_root + item
-    new_path2 = Dir.entries(twoPath).select { |item| item[0,1] != '.' }
+    new_path2 = Dir.entries(twoPath).select { |item| item[0,1] != '.' && !item.end_with?(".md") }
 
     fullNav[index] = {}
 
@@ -42,7 +43,7 @@ def navStructure
     new_path2.each_with_index do |item2, index2|
 
       threePath = twoPath + '/' + item2
-      new_path3 = Dir.entries(threePath).select { |item| item[0,1] != '.' }
+      new_path3 = Dir.entries(threePath).select { |item| item[0,1] != '.' && !item.end_with?(".md") }
 
       fullNav[index]['submenu'][index2] = {}
       fullNav[index]['submenu'][index2]['label'] = item2.chomp('.erb')
@@ -86,6 +87,10 @@ get '/source/:lvl1/' do
   @nav = navStructure
   @lvl1 = params[:lvl1]
 
+  puts @nav
+
+  @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}.md")
+
   navStructure.each_with_index do |item, index|
 
     @category_data = item['submenu'] if item['label'] == @lvl1
@@ -104,6 +109,8 @@ get '/source/:lvl1/:lvl2/' do
   @nav = navStructure
   @lvl1 = params[:lvl1]
   @lvl2 = params[:lvl2]
+
+  @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}/#{@lvl2}.md")
 
   @subcategory_data
 

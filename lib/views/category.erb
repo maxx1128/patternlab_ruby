@@ -1,17 +1,31 @@
+
+<% if @descr_exists %>
+  <%= markdown :"source/#{@title}" %>
+<% end %>
+
 <% @category_data.each do |item| %>
 
-    <h2>
-      <%= item["label"] %>
-    </h2>
+    <%= erb :'includes/pattern_embed', :locals => {
+      :header => "h3",
+      :label => item["label"],
+      :file_href => "#{@title}/#{item["label"]}",
+      :pattern_href => false
+    } %>
+
 
       <% item["submenu"].each do |item2| %>
-        
-        <h3>
-          <%= item2["label"] %>
-        </h3>
 
-        <%= erb :"#{item2['path'].chomp('/')}" %>
+        <%= erb :'includes/pattern_embed', :locals => {
+          :header => "h4",
+          :label => item2["label"],
+          :file_href => "#{@title}/#{item["label"]}/#{item2["label"]}",
+          :pattern_href => true
+        } %>
+
       <% end %>
 
+  <br>
+  <br>
+  <br>
 <% end %>
 

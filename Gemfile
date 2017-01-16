@@ -15,3 +15,6 @@ gem 'sass'
 
 # Liquid templating
 gem 'liquid'
+
+# Markdown templating
+gem 'rdiscount'

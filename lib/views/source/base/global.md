@@ -1,0 +1,1 @@
+All your wonderful global elements are belong to us!
