@@ -2,7 +2,65 @@
   "title" : "Pattern Lab",
   "htmlClass": "pl",
   "bodyClass": "body",
+
+
+  "header": {
+    "intro-text": "Welcome to the website!",
+    "top-menu": {
+      "links": [
+        {
+          "label": "Menu item 1",
+          "link": "javascript:void(0)"
+        },{
+          "label": "Menu item 2",
+          "link": "javascript:void(0)"
+        },{
+          "label": "Menu item 3",
+          "link": "javascript:void(0)"
+        },{
+          "label": "Menu item 4",
+          "link": "javascript:void(0)"
+        },{
+          "label": "Menu item 5",
+          "link": "javascript:void(0)"
+        }
+      ]
+    }
+  },
+
+
+  "footer": {
+    "menus": [
+      [
+        {
+          "label": "Menu item 1",
+          "link": "javascript:void(0)"
+        },{
+          "label": "Menu item 2",
+          "link": "javascript:void(0)"
+        },{
+          "label": "Menu item 3",
+          "link": "javascript:void(0)"
+        },{
+          "label": "Menu item 4",
+          "link": "javascript:void(0)"
+        },{
+          "label": "Menu item 5",
+          "link": "javascript:void(0)"
+        }
+      ]
+    ]
+  },
+
+
+
+
+
   "img": {
+    "logo": {
+      "src": "http://placeimg.com/150/150/nature",
+      "alt": "Logo"
+    },
     "landscape-4x3": {
       "src": "http://placeimg.com/400/300/nature",
       "alt": "4x3 Image"

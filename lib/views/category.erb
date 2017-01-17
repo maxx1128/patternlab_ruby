@@ -5,27 +5,35 @@
 
 <% @category_data.each do |item| %>
 
-    <%= erb :'includes/pattern_embed', :locals => {
-      :header => "h3",
-      :label => item["label"],
-      :file_href => "#{@title.downcase}/#{item["label"]}",
-      :pattern_href => false
-    } %>
+  <%= erb :'includes/pattern_embed', :locals => {
+    :header => "h3",
+    :label => item["label"],
+    :file_href => "#{@lvl1}/#{item["label"]}",
+    :pattern_href => false
+  } %>
 
 
-      <% item["submenu"].each do |item2| %>
+    <% item["submenu"].each do |item2| %>
+
+      <% if @lvl1 == 'templates' || @lvl1 == 'pages' %>
+
+        <%= erb :'includes/template_link', :locals => {
+          :header => "h4",
+          :label => item2["label"],
+          :file_href => "#{@lvl1}/#{item["label"]}/#{item2["label"]}",
+        } %>
+
+      <% else %>
 
         <%= erb :'includes/pattern_embed', :locals => {
           :header => "h4",
           :label => item2["label"],
-          :file_href => "#{@title.downcase}/#{item["label"]}/#{item2["label"]}",
+          :file_href => "#{@lvl1}/#{item["label"]}/#{item2["label"]}",
           :pattern_href => true
         } %>
 
       <% end %>
 
-  <br>
-  <br>
-  <br>
+    <% end %>
 <% end %>
 

@@ -1,0 +1,10 @@
+<ul class="pl-topMenu">
+
+  <% @data["header"]["top-menu"]["links"].each do |item| %>
+
+    <a href="<%= item["link"] %>">
+      <li class="pl-topMenu--item"><%= item["label"] %></li>
+    </a>
+
+  <% end %>
+</ul>

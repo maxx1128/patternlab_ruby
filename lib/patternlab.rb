@@ -63,10 +63,16 @@ def navStructure
   end
 
   return fullNav
+
+  # Is there a way to get the names of the last two folders and set them as the "templates" and "pages" group? This way if the name of the folders change, the logic around them all changes.
 end
 
-pattern_data_file = File.read("../patternlab/lib/views/data/data.json")
-pattern_data = JSON.parse(pattern_data_file)
+def get_data
+  pattern_data_file = File.read("../patternlab/lib/views/data/data.json")
+  pattern_data = JSON.parse(pattern_data_file)
+
+  return pattern_data
+end
 
 
 # For the different templates, have templates for items with one and two parameters before the file name work as listing all files in that listing?
@@ -79,7 +85,7 @@ get '/' do
   @nav = navStructure
 
   erb :index, {
-    :layout => :'templates/layout'
+    :layout => :'layouts/basic'
   }
 end
 
@@ -92,6 +98,7 @@ end
 
 
 
+
 # For showing all patterns in a category
 get '/source/:lvl1/' do
 
@@ -99,12 +106,10 @@ get '/source/:lvl1/' do
   @nav = navStructure
   @lvl1 = params[:lvl1]
 
-  puts @nav
-
   @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}.md")
   @data_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}.md")
 
-  @data = pattern_data
+  @data = get_data
 
   navStructure.each_with_index do |item, index|
 
@@ -112,7 +117,12 @@ get '/source/:lvl1/' do
   end
 
   erb :category, {
-    :layout => :'templates/layout'
+    :layout => :'layouts/basic'
+  }
+
+
+  erb :category, {
+    :layout => :'layouts/basic'
   }
 end
 
@@ -126,7 +136,7 @@ get '/source/:lvl1/:lvl2/' do
   @lvl2 = params[:lvl2]
 
   @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}/#{@lvl2}.md")
-  @data = pattern_data
+  @data = get_data
 
   @subcategory_data
 
@@ -136,19 +146,17 @@ get '/source/:lvl1/:lvl2/' do
 
       item['submenu'].each_with_index do |item2, index2|
 
-        if item2['label']  == @lvl2
-
-          @subcategory_data = item2['submenu']
-        end
+        @subcategory_data = item2['submenu'] if item2['label']  == @lvl2
       end
     end
   end
 
-
   erb :subcategory, {
-    :layout => :'templates/layout'
+    :layout => :'layouts/basic'
   }
 end
+
+
 
 
 # For showing individual patterns on a single page
@@ -157,29 +165,17 @@ get '/source/:lvl1/:lvl2/:lvl3/' do
   @title = params[:lvl3].capitalize
   @nav = navStructure
 
-  @data = pattern_data
+  @data = get_data
 
   file_contents = 'source/#{params[:lvl1]}/#{params[:lvl2]}/#{params[:lvl3]}'
 
 
+  # Conditional here to change @data if lvl1 equals "pages?"
+
   erb :"source/#{params[:lvl1]}/#{params[:lvl2]}/#{params[:lvl3]}", {
-    :layout => :'templates/layout'
+    :layout => :'layouts/page'
   }
 end
-
-
-# For templates of different pages
-get '/source/templates/:category/:name' do
-
-  @category = params[:category]
-  @name = params[:name]
-
-
-  erb :"source/#{@category}/#{@name}", {
-    :layout => :'templates/layout' # replace this with a different, simpler one later
-  }
-end
-
 
 
 
@@ -190,7 +186,7 @@ not_found do
   @title = 'Not found!'
 
   erb :index, {
-    :layout => :'templates/layout'
+    :layout => :'layouts/basic'
   }
 end
 

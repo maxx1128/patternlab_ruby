@@ -1,11 +1,32 @@
+
+<% if File.exist?("../patternlab/lib/views/source/#{@lvl1}/#{@lvl2}.md") %>
+
+
+  <%= markdown :"source/#{@lvl1}/#{@lvl2}" %>
+
+<% end %>
+
+
 <% @subcategory_data.each do |item| %>
 
-  <%= erb :'includes/pattern_embed', :locals => {
-    :header => "h3",
-    :label => item["label"],
-    :file_href => "#{@lvl1}/#{@title.downcase}/#{item["label"]}",
-    :pattern_href => true
-  } %>
+  <% if @lvl1 == 'templates' || @lvl1 == 'pages' %>
+
+    <%= erb :'includes/template_link', :locals => {
+      :header => "h3",
+      :label => item["label"],
+      :file_href => "#{@lvl1}/#{@title.downcase}/#{item["label"]}",
+    } %>
+
+  <% else %>
+
+    <%= erb :'includes/pattern_embed', :locals => {
+      :header => "h3",
+      :label => item["label"],
+      :file_href => "#{@lvl1}/#{@title.downcase}/#{item["label"]}",
+      :pattern_href => true
+    } %>
+
+  <% end %>
 
 <% end %>
 

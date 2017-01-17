@@ -1,0 +1,19 @@
+<html>
+  <%= erb :'includes/head' %>
+
+  <body>
+
+    <a href="/">
+      Homepage
+    </a>
+
+    <%= erb :'includes/nav' %>
+
+    <h1>
+      <%= @title %>
+    </h1>
+
+    <%= yield %>
+
+  </body>
+</html>

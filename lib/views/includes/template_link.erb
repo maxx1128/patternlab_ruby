@@ -1,16 +1,12 @@
-
 <<%= header %>>
   <%= label %>
 </<%= header %>>
-
 
 <% if File.exist?("../patternlab/lib/views/source/#{file_href}.md") %>
   <%= markdown :"source/#{file_href}" %>
 <% end %>
 
 
-<%= erb :"source/#{file_href}" unless pattern_href == false %>
-
 <a href="/source/<%= file_href %>/" target="_blank">
-  See this pattern in a separate page
+  Link to <%= label %> template
 </a>
