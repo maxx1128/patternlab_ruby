@@ -1,22 +1,22 @@
 {
   "header": {
-    "intro-text": "Welcome to the website!",
+    "intro-text": "Actual website!",
     "top-menu": {
       "links": [
         {
-          "label": "Menu item 1",
+          "label": "Real item 1",
           "link": "javascript:void(0)"
         },{
-          "label": "Menu item 2",
+          "label": "Real item 2",
           "link": "javascript:void(0)"
         },{
-          "label": "Menu item 3",
+          "label": "Real item 3",
           "link": "javascript:void(0)"
         },{
-          "label": "Menu item 4",
+          "label": "Real item 4",
           "link": "javascript:void(0)"
         },{
-          "label": "Menu item 5",
+          "label": "Real item 5",
           "link": "javascript:void(0)"
         }
       ]
@@ -28,19 +28,19 @@
     "menus": [
       [
         {
-          "label": "Menu item 1",
+          "label": "Real item 1",
           "link": "javascript:void(0)"
         },{
-          "label": "Menu item 2",
+          "label": "Real item 2",
           "link": "javascript:void(0)"
         },{
-          "label": "Menu item 3",
+          "label": "Real item 3",
           "link": "javascript:void(0)"
         },{
-          "label": "Menu item 4",
+          "label": "Real item 4",
           "link": "javascript:void(0)"
         },{
-          "label": "Menu item 5",
+          "label": "Real item 5",
           "link": "javascript:void(0)"
         }
       ]

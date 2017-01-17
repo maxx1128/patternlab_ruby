@@ -75,9 +75,6 @@ def get_data
 end
 
 
-# For the different templates, have templates for items with one and two parameters before the file name work as listing all files in that listing?
-# Ones with three will always be showing individual ones, and will focus on that one file
-
 
 get '/' do
 
@@ -168,14 +165,21 @@ get '/source/:lvl1/:lvl2/:lvl3/' do
   @lvl2 = params[:lvl2]
   @lvl3 = params[:lvl3]
 
-  @page_data_exists = File.exist?("../patternlab/lib/views/source/templates/#{@lvl2}/#{@lvl3}.json")
-  
-  puts @page_data_exists
+  page_data_path = "../patternlab/lib/views/source/templates/#{@lvl2}/#{@lvl3}.json"
+  @page_data_exists = File.exist?(page_data_path)
+
 
   if @lvl1 == 'pages' && @page_data_exists
 
     #include code here to change data for pages version of template
-    @data = get_data
+    
+    default_data = get_data
+
+    page_data_file = File.read(page_data_path)
+    page_data = JSON.parse(page_data_file)
+
+    @data = default_data.merge(page_data)
+
 
     erb :"source/templates/#{@lvl2}/#{@lvl3}", {
       :layout => :'layouts/page'
