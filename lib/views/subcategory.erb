@@ -1,10 +1,11 @@
 <% @subcategory_data.each do |item| %>
 
-  <h3>
-    <%= item['label'] %>
-  </h3>
-
-  <%= erb :"#{item['path'].chomp('/')}" %>
+  <%= erb :'includes/pattern_embed', :locals => {
+    :header => "h3",
+    :label => item["label"],
+    :file_href => "#{@lvl1}/#{@title.downcase}/#{item["label"]}",
+    :pattern_href => true
+  } %>
 
 <% end %>
 
