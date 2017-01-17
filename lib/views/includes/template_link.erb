@@ -10,3 +10,13 @@
 <a href="/source/<%= file_href %>/" target="_blank">
   Link to <%= label %> template
 </a>
+
+<br>
+<br>
+
+<% if File.exist?("../patternlab/lib/views/source/templates/#{partial_href}.json") %>
+  <a href="/source/pages/<%= partial_href %>/" target="_blank">
+    Link to full <%= label %> example
+  </a>
+<% end %>
+

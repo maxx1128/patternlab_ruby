@@ -21,7 +21,7 @@ end
 def navStructure
 
   direct_root = '../patternlab/lib/views/source/'
-  levelOne = Dir.entries(direct_root).select { |item| item[0,1] != '.' && !item.end_with?(".md") }
+  levelOne = Dir.entries(direct_root).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
   levelTwo = []
   levelThree = []
   fullNav = []
@@ -32,7 +32,7 @@ def navStructure
   levelOne.each_with_index do |item, index|
     
     twoPath = direct_root + item
-    new_path2 = Dir.entries(twoPath).select { |item| item[0,1] != '.' && !item.end_with?(".md") }
+    new_path2 = Dir.entries(twoPath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
 
     fullNav[index] = {}
 
@@ -44,7 +44,7 @@ def navStructure
     new_path2.each_with_index do |item2, index2|
 
       threePath = twoPath + '/' + item2
-      new_path3 = Dir.entries(threePath).select { |item| item[0,1] != '.' && !item.end_with?(".md") }
+      new_path3 = Dir.entries(threePath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
 
       fullNav[index]['submenu'][index2] = {}
       fullNav[index]['submenu'][index2]['label'] = item2.chomp('.erb')
@@ -164,17 +164,29 @@ get '/source/:lvl1/:lvl2/:lvl3/' do
 
   @title = params[:lvl3].capitalize
   @nav = navStructure
+  @lvl1 = params[:lvl1]
+  @lvl2 = params[:lvl2]
+  @lvl3 = params[:lvl3]
 
-  @data = get_data
+  @page_data_exists = File.exist?("../patternlab/lib/views/source/templates/#{@lvl2}/#{@lvl3}.json")
+  
+  puts @page_data_exists
 
-  file_contents = 'source/#{params[:lvl1]}/#{params[:lvl2]}/#{params[:lvl3]}'
+  if @lvl1 == 'pages' && @page_data_exists
 
+    #include code here to change data for pages version of template
+    @data = get_data
 
-  # Conditional here to change @data if lvl1 equals "pages?"
+    erb :"source/templates/#{@lvl2}/#{@lvl3}", {
+      :layout => :'layouts/page'
+    }
+  else
+    @data = get_data
 
-  erb :"source/#{params[:lvl1]}/#{params[:lvl2]}/#{params[:lvl3]}", {
-    :layout => :'layouts/page'
-  }
+    erb :"source/#{@lvl1}/#{@lvl2}/#{@lvl3}", {
+      :layout => :'layouts/page'
+    }
+  end 
 end
 
 
