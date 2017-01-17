@@ -4,6 +4,7 @@ require 'sinatra/reloader' if development?
 require 'erb'
 require "rdiscount"
 require 'sass'
+require 'json'
 
 require_relative "./functions"
 
@@ -64,6 +65,9 @@ def navStructure
   return fullNav
 end
 
+pattern_data_file = File.read("../patternlab/lib/views/data/data.json")
+pattern_data = JSON.parse(pattern_data_file)
+
 
 # For the different templates, have templates for items with one and two parameters before the file name work as listing all files in that listing?
 # Ones with three will always be showing individual ones, and will focus on that one file
@@ -80,6 +84,14 @@ get '/' do
 end
 
 
+
+# For the routes going to all components, link to the general JSON data.
+# Checks for local data to use next to that file? If not there, it uses the default data. Does this in the include file?
+
+# For the routes in templates, link to specific JSON data that's adjacent to the file with the same title but a JSON extension
+
+
+
 # For showing all patterns in a category
 get '/source/:lvl1/' do
 
@@ -90,6 +102,9 @@ get '/source/:lvl1/' do
   puts @nav
 
   @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}.md")
+  @data_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}.md")
+
+  @data = pattern_data
 
   navStructure.each_with_index do |item, index|
 
@@ -111,6 +126,7 @@ get '/source/:lvl1/:lvl2/' do
   @lvl2 = params[:lvl2]
 
   @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}/#{@lvl2}.md")
+  @data = pattern_data
 
   @subcategory_data
 
@@ -141,11 +157,26 @@ get '/source/:lvl1/:lvl2/:lvl3/' do
   @title = params[:lvl3].capitalize
   @nav = navStructure
 
+  @data = pattern_data
+
   file_contents = 'source/#{params[:lvl1]}/#{params[:lvl2]}/#{params[:lvl3]}'
 
 
   erb :"source/#{params[:lvl1]}/#{params[:lvl2]}/#{params[:lvl3]}", {
     :layout => :'templates/layout'
+  }
+end
+
+
+# For templates of different pages
+get '/source/templates/:category/:name' do
+
+  @category = params[:category]
+  @name = params[:name]
+
+
+  erb :"source/#{@category}/#{@name}", {
+    :layout => :'templates/layout' # replace this with a different, simpler one later
   }
 end
 

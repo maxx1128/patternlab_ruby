@@ -1,0 +1,130 @@
+{
+  "title" : "Pattern Lab",
+  "htmlClass": "pl",
+  "bodyClass": "body",
+  "img": {
+    "landscape-4x3": {
+      "src": "http://placeimg.com/400/300/nature",
+      "alt": "4x3 Image"
+    },
+    "landscape-16x9": {
+      "src": "http://placeimg.com/1600/900/nature",
+      "alt": "16x9 Image"
+    },
+    "square": {
+      "src": "http://placeimg.com/600/600/nature",
+      "alt": "Square Thumbnail"
+    },
+    "avatar" : {
+      "src" : "http://placeimg.com/200/200/people",
+      "alt" : "Person Name"
+    },
+    "banner": {
+      "src": "http://placeimg.com/900/300/nature",
+      "alt": "Banner"
+    }
+  },
+  "headline" : {
+    "short" : "Lorem ipsum dolor sit (37 characters)",
+    "medium" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. (72 characters)"
+  },
+  "excerpt" : {
+    "short" : "(I wonder what happened to that calm and cool composure he had earlier...) ...Why are you talking about food? Oh, wait. That's normal for you. THAT piece sir? (A poor detective being on the receiving end of a lash in your stead.)",
+    "medium" : "The lowest of the low. (Their debut single was just 2 minutes and 15 seconds long? What a rip-off!) Every time you do it, I have a mini-heart attack. It's like you're trying to kill me, pal. So see!? I've got nothing to do with this trial! At all! I expect all of your faces to be red when you realize this mistake!",
+    "long" : "What the hell was that wriggling piece of plywood!? Ack! Hey! Detective Gumshoe! S-Stop that! I can't be seen doing... that! (Um... didn't they all die?) Why did I become a lawyer in the first place...? Because someone has to look out for the people who have no one on their side. Uh, excuse me? (I bet I know who she picked 'Nick' from…) Of course! Except, I've been slacking off lately… I need to brave the elements and be forged anew under the rushing spring waters! I'm inclined to agree."
+  },
+  "description" : "So, setting about it as methodically as men might smoke out a wasps' nest, the Martians spread this strange stifling vapour over the Londonward country. The horns of the crescent slowly moved apart, until at last they formed a line from Hanwell to Coombe and Malden. All night through their destructive tubes advanced.",
+  "blockquote": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis necessitatibus nobis, fuga, id blanditiis numquam qui sed nostrum. Animi repellat explicabo sunt aspernatur, deleniti commodi laboriosam, maxime minus ipsam voluptatem.",
+  "url" : "javascript:void(0)",
+  "name" : {
+    "first": "Lacy",
+    "firsti": "L",
+    "middle": "Tommie",
+    "middlei": "T",
+    "last": "Way",
+    "lasti": "W"
+  },
+  "year" : {
+    "long": "2013",
+    "short": "13"
+  },
+  "month" : {
+    "long": "February",
+    "short": "Feb",
+    "digit": "02"
+  },
+  "dayofweek" : {
+    "long": "Monday",
+    "short": "Mon"
+  },
+  "day" : {
+    "long": "10",
+    "short": "10",
+    "ordinal": "th"
+  },
+  "hour" : {
+    "long": "01",
+    "short": "1",
+    "military": "13",
+    "ampm": "pm"
+  },
+  "minute" : {
+    "long": "20",
+    "short": "20"
+  },
+  "seconds" : "31",
+  "author" : {
+    "first-name": "Author",
+    "last-name": "Name"
+  },
+  "hero": true,
+  "emergency" : false,
+  "touts" : [
+    { },
+    { },
+    { }
+  ],
+  
+  "latest-posts" : [
+    {
+      "headline" : {
+        "short" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      },
+      "excerpt" : {
+        "medium" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam, itaque, vel. Esse sapiente at sint eius, illo odio in nulla. Id fugiat accusamus aliquid placeat illo animi corporis, fugit eius."
+      }
+    },
+    {
+      "headline" : {
+        "short" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      },
+      "excerpt" : {
+        "medium" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus sapiente a deleniti, architecto, rerum exercitationem accusamus amet eum reprehenderit saepe quasi fugit. Veniam qui possimus tempora asperiores expedita illum fuga!"
+      }
+    },
+    {
+      "headline" : {
+        "short" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      },
+      "excerpt" : {
+        "medium" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi incidunt, beatae odio quam labore at eveniet reiciendis voluptates aut dolorum, dolore, ratione? Assumenda quibusdam, nulla similique, perferendis distinctio suscipit aliquid."
+      }
+    },
+    {
+      "headline" : {
+        "short" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      },
+      "excerpt" : {
+        "medium" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem nobis molestias temporibus veniam ad qui excepturi saepe, magni similique aspernatur, dicta nulla a sed neque perspiciatis laudantium fuga illo adipisci."
+      }
+    },
+    {
+      "headline" : {
+        "short" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+      },
+      "excerpt" : {
+        "medium" : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat praesentium repudiandae, voluptatum. Deserunt sapiente dolorem necessitatibus numquam sed vel molestias, iste exercitationem corrupti. Reprehenderit odio unde iste enim corrupti ad."
+      }
+    }
+  ]
+}

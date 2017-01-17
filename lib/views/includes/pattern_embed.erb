@@ -1,6 +1,8 @@
+
 <<%= header %>>
   <%= label %>
 </<%= header %>>
+
 
 <% if File.exist?("../patternlab/lib/views/source/#{file_href}.md") %>
   <%= markdown :"source/#{file_href}" %>
