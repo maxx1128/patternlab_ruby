@@ -1,16 +1,27 @@
 require 'bundler/setup'
 require 'sinatra'
+require 'sinatra/base'
 require 'sinatra/reloader' if development?
 require 'erb'
 require "rdiscount"
-require 'sass'
 require 'json'
+
+require 'sass'
+require 'uglifier'
 
 require_relative "./functions"
 
 
+
+
+
+
+
+
+
+
 get '/css/:stylesheet.css' do |stylesheet|
-  scss :"scss/#{stylesheet}"
+  scss :"../assets/scss/#{stylesheet}"
 end
 
 

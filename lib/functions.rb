@@ -59,7 +59,7 @@ end
 # Doesn't include page-specific data
 def get_data
 
-  pattern_data_file = File.read("../patternlab/lib/views/data/data.json")
+  pattern_data_file = File.read("../patternlab/lib/assets/data/data.json")
   pattern_data = JSON.parse(pattern_data_file)
 
   data_files = Dir.glob("../patternlab/lib/views/data/*.json")

@@ -13,8 +13,12 @@ gem 'httparty'
 # Basic sass styles
 gem 'sass'
 
+# Basic javascript
+gem 'uglifier'
+
 # Liquid templating
 gem 'liquid'
 
 # Markdown templating
 gem 'rdiscount'
+
