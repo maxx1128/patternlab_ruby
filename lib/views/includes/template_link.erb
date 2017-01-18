@@ -1,5 +1,5 @@
 <<%= header %>>
-  <%= label %>
+  <%= label.capitalize.sub('-', ' ') %>
 </<%= header %>>
 
 <% if File.exist?("../patternlab/lib/views/source/#{file_href}.md") %>
@@ -15,8 +15,20 @@
 <br>
 
 <% if File.exist?("../patternlab/lib/views/source/templates/#{partial_href}.json") %>
-  <a href="/source/pages/<%= partial_href %>/" target="_blank">
-    Link to full <%= label %> example
+  
+<% end %>
+
+<br>
+<br>
+
+<% @data_files.each do |data| %>
+
+  <a href="/source/pages/<%= partial_href %>/<%= data[:link_name] %>/" target="_blank">
+    Link to full <%= data[:label] %> example
   </a>
+
+  <br>
+  <br>
+
 <% end %>
 

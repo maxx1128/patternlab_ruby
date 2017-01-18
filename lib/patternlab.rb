@@ -14,80 +14,9 @@ get '/css/:stylesheet.css' do |stylesheet|
 end
 
 
-
-
-
-
-
-def navStructure
-
-  direct_root = '../patternlab/lib/views/source/'
-  levelOne = Dir.entries(direct_root).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
-  levelTwo = []
-  levelThree = []
-  fullNav = []
-
-  direct_root_start = direct_root.split('/')[1]
-  titleLength = 13 + direct_root_start.length
-
-  levelOne.each_with_index do |item, index|
-    
-    twoPath = direct_root + item
-    new_path2 = Dir.entries(twoPath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
-
-    fullNav[index] = {}
-
-    fullNav[index]['label'] = item
-    fullNav[index]['path'] = twoPath.strip[titleLength..-1] + '/'
-    fullNav[index]['submenu'] = []
-
-
-    new_path2.each_with_index do |item2, index2|
-
-      threePath = twoPath + '/' + item2
-      new_path3 = Dir.entries(threePath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
-
-      fullNav[index]['submenu'][index2] = {}
-      fullNav[index]['submenu'][index2]['label'] = item2.chomp('.erb')
-      fullNav[index]['submenu'][index2]['path'] = threePath.strip[titleLength..-1].chomp('.erb') + '/'
-      fullNav[index]['submenu'][index2]['submenu'] = new_path3
-
-      new_path3.each_with_index do |item3, index3|
-
-        fourPath = threePath + '/' + item3
-
-        fullNav[index]['submenu'][index2]['submenu'][index3] = {}
-        fullNav[index]['submenu'][index2]['submenu'][index3]['label'] = item3.chomp('.erb')
-        fullNav[index]['submenu'][index2]['submenu'][index3]['path'] = fourPath.strip[titleLength..-1].chomp('.erb') + '/'
-      end
-    end
-  end
-
-  return fullNav
-
-  # Is there a way to get the names of the last two folders and set them as the "templates" and "pages" group? This way if the name of the folders change, the logic around them all changes.
-end
-
-
-
-def get_data
-
-  pattern_data_file = File.read("../patternlab/lib/views/data/data.json")
-  pattern_data = JSON.parse(pattern_data_file)
-
-  data_files = Dir.glob("../patternlab/lib/views/data/*.json")
-
-  data_files.each do |data|
-
-    data_name = data.split("/")[-1]
-    data_file = File.read(data)
-    data_hash = JSON.parse(data_file)
-
-    pattern_data = pattern_data.merge(data_hash) unless data_name == "data.json"
-  end
-
-  return pattern_data
-end
+# Two main tasks left
+# 1) Show the HTML for each pattern and template
+# 2) Create psuedo-pattern data for templates which merges additional data into the page JSON
 
 
 
@@ -114,7 +43,7 @@ end
 # For showing all patterns in a category
 get '/source/:lvl1/' do
 
-  @title = params[:lvl1].capitalize
+  @title = params[:lvl1].capitalize.sub('-', ' ')
   @nav = navStructure
   @lvl1 = params[:lvl1]
 
@@ -142,13 +71,33 @@ end
 # Show showing all patterns in a subcategory
 get '/source/:lvl1/:lvl2/' do
 
-  @title = params[:lvl2].capitalize
+  @title = params[:lvl2].capitalize.sub('-', ' ')
   @nav = navStructure
   @lvl1 = params[:lvl1]
   @lvl2 = params[:lvl2]
 
   @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}/#{@lvl2}.md")
   @data = get_data
+
+
+
+  @all_data_files = Dir.glob("../patternlab/lib/views/source/templates/#{@lvl2}/*.json")
+  @data_files = []
+
+  @all_data_files.map { |data| 
+
+    data_name = data.split("/")[-1]
+    @data_files.push(
+      {
+        "file_name": data_name,
+        "link_name": data_name.sub("~", "__").chomp(".json"),
+        "label": data_name.sub("~", " ").chomp(".json")
+      }
+    )
+  }
+
+  puts @data_files
+
 
   @subcategory_data
 
@@ -170,23 +119,21 @@ end
 
 
 
-
 # For showing individual patterns on a single page
 get '/source/:lvl1/:lvl2/:lvl3/' do
 
-  @title = params[:lvl3].capitalize
+  @title = params[:lvl3].capitalize.sub('-', ' ').sub('__', ' ')
   @nav = navStructure
   @lvl1 = params[:lvl1]
   @lvl2 = params[:lvl2]
   @lvl3 = params[:lvl3]
 
-  page_data_path = "../patternlab/lib/views/source/templates/#{@lvl2}/#{@lvl3}.json"
+
+  page_data_path = "../patternlab/lib/views/source/templates/#{@lvl2}/#{@lvl3.split("__").first}.json"
   @page_data_exists = File.exist?(page_data_path)
 
 
   if @lvl1 == 'pages' && @page_data_exists
-
-    #include code here to change data for pages version of template
     
     default_data = get_data
 
@@ -195,8 +142,17 @@ get '/source/:lvl1/:lvl2/:lvl3/' do
 
     @data = default_data.merge(page_data)
 
+    # If this is a psuedo pattern, also merge the extra data
+    if @lvl3.include? "__"
 
-    erb :"source/templates/#{@lvl2}/#{@lvl3}", {
+      psuedo_data_file = File.read("../patternlab/lib/views/source/templates/#{@lvl2}/#{@lvl3.sub("__", "~")}.json")
+      psuedo_data = JSON.parse(psuedo_data_file)
+
+      @data = default_data.merge(psuedo_data)
+
+    end
+
+    erb :"source/templates/#{@lvl2}/#{@lvl3.split("__").first}", {
       :layout => :'layouts/single'
     }
   else

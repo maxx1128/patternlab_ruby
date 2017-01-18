@@ -1,6 +1,6 @@
 
 <<%= header %>>
-  <%= label %>
+  <%= label.capitalize.sub('-', ' ') %>
 </<%= header %>>
 
 
@@ -11,10 +11,14 @@
 
 <%= erb :"source/#{file_href}" unless pattern_href == false %>
 
-<br>
+<% if pattern_href == true %>
+  
+  <br>
+  <br>
 
-<a href="/source/<%= file_href %>/" target="_blank">
-  See this pattern in a separate page
-</a>
+  <a href="/source/<%= file_href %>/" target="_blank">
+    See this pattern in a separate page
+  </a>
+<% end %>
 
 <hr>
