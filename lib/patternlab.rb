@@ -67,9 +67,23 @@ def navStructure
   # Is there a way to get the names of the last two folders and set them as the "templates" and "pages" group? This way if the name of the folders change, the logic around them all changes.
 end
 
+
+
 def get_data
+
   pattern_data_file = File.read("../patternlab/lib/views/data/data.json")
   pattern_data = JSON.parse(pattern_data_file)
+
+  data_files = Dir.glob("../patternlab/lib/views/data/*.json")
+
+  data_files.each do |data|
+
+    data_name = data.split("/")[-1]
+    data_file = File.read(data)
+    data_hash = JSON.parse(data_file)
+
+    pattern_data = pattern_data.merge(data_hash) unless data_name == "data.json"
+  end
 
   return pattern_data
 end
