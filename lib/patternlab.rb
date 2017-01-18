@@ -18,6 +18,7 @@ end
 
 
 
+
 def navStructure
 
   direct_root = '../patternlab/lib/views/source/'
@@ -196,13 +197,13 @@ get '/source/:lvl1/:lvl2/:lvl3/' do
 
 
     erb :"source/templates/#{@lvl2}/#{@lvl3}", {
-      :layout => :'layouts/page'
+      :layout => :'layouts/single'
     }
   else
     @data = get_data
 
     erb :"source/#{@lvl1}/#{@lvl2}/#{@lvl3}", {
-      :layout => :'layouts/page'
+      :layout => :'layouts/single'
     }
   end 
 end
