@@ -11,6 +11,10 @@
 
 <%= erb :"source/#{file_href}" unless pattern_href == false %>
 
+<!-- <pre>
+  <%= escape_html(erb :"source/#{file_href}") unless pattern_href == false %>
+</pre> -->
+
 <% if pattern_href == true %>
   
   <br>
