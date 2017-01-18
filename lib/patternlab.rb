@@ -48,18 +48,18 @@ get '/source/:lvl1/' do
   @lvl1 = params[:lvl1]
 
   @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}.md")
-  @data_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}.md")
 
   @data = get_data
 
+  @pageData_files = pages_data
+
+
+  # Get the nav items in this group to show as content
   navStructure.each_with_index do |item, index|
 
     @category_data = item['submenu'] if item['label'] == @lvl1
   end
 
-  erb :category, {
-    :layout => :'layouts/basic'
-  }
 
 
   erb :category, {
@@ -71,36 +71,24 @@ end
 # Show showing all patterns in a subcategory
 get '/source/:lvl1/:lvl2/' do
 
+  require_relative "./functions"
+
   @title = params[:lvl2].capitalize.sub('-', ' ')
   @nav = navStructure
   @lvl1 = params[:lvl1]
   @lvl2 = params[:lvl2]
 
   @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}/#{@lvl2}.md")
+  
   @data = get_data
 
+  @pageData_files = pages_data
+
+  puts @pageData_files
 
 
-  @all_data_files = Dir.glob("../patternlab/lib/views/source/templates/#{@lvl2}/*.json")
-  @data_files = []
 
-  @all_data_files.map { |data| 
-
-    data_name = data.split("/")[-1]
-    @data_files.push(
-      {
-        "file_name": data_name,
-        "link_name": data_name.sub("~", "__").chomp(".json"),
-        "label": data_name.sub("~", " ").chomp(".json")
-      }
-    )
-  }
-
-  puts @data_files
-
-
-  @subcategory_data
-
+  # Get the nav items in this group to show as content
   navStructure.each_with_index do |item, index|
 
     if item['label'] == @lvl1
@@ -111,6 +99,7 @@ get '/source/:lvl1/:lvl2/' do
       end
     end
   end
+
 
   erb :subcategory, {
     :layout => :'layouts/basic'
@@ -128,11 +117,10 @@ get '/source/:lvl1/:lvl2/:lvl3/' do
   @lvl2 = params[:lvl2]
   @lvl3 = params[:lvl3]
 
-
   page_data_path = "../patternlab/lib/views/source/templates/#{@lvl2}/#{@lvl3.split("__").first}.json"
   @page_data_exists = File.exist?(page_data_path)
 
-
+  # If it's a page, get the needed page or psuedo page data
   if @lvl1 == 'pages' && @page_data_exists
     
     default_data = get_data

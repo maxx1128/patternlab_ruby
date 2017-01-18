@@ -4,7 +4,7 @@ def math(num1, num2)
 end
 
 
-
+# Data for the main navigation
 def navStructure
 
   direct_root = '../patternlab/lib/views/source/'
@@ -55,7 +55,8 @@ def navStructure
 end
 
 
-
+# Getting the basic pattern data files merged and returned
+# Doesn't include page-specific data
 def get_data
 
   pattern_data_file = File.read("../patternlab/lib/views/data/data.json")
@@ -73,5 +74,27 @@ def get_data
   end
 
   return pattern_data
+end
+
+
+# Get data about for the templates, pages and psuedo pages
+def pages_data
+
+  all_data_files = Dir.glob("../patternlab/lib/views/source/templates/**/*.json")
+  pageData_files = []
+
+  all_data_files.map { |data| 
+
+    data_name = data.split("/")[-1]
+    pageData_files.push(
+      {
+        "file_name": data_name,
+        "link_name": data_name.sub("~", "__").chomp(".json"),
+        "label": data_name.sub("~", " ").chomp(".json")
+      }
+    )
+  }
+
+  return pageData_files
 end
 

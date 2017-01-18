@@ -1,4 +1,6 @@
 {
+  "psuedo" : true,
+
   "header": {
     "intro-text": "Psuedo website!",
     "top-menu": {
@@ -28,7 +30,6 @@
       ]
     }
   },
-
 
   "footer": {
     "menus": [

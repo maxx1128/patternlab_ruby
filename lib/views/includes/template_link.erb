@@ -21,14 +21,18 @@
 <br>
 <br>
 
-<% @data_files.each do |data| %>
+<% @pageData_files.each do |data| %>
 
-  <a href="/source/pages/<%= partial_href %>/<%= data[:link_name] %>/" target="_blank">
-    Link to full <%= data[:label] %> example
-  </a>
+  <% if label == data[:link_name].split("__")[0] %>
 
-  <br>
-  <br>
+    <a href="/source/pages/<%= partial_href %>/<%= data[:link_name] %>/">
+      Link to full <%= data[:label] %> example
+    </a>
+
+    <br>
+    <br>
+
+  <% end %>
 
 <% end %>
 
