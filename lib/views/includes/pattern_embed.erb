@@ -9,11 +9,22 @@
 <% end %>
 
 
-<%= erb :"source/#{file_href}" unless pattern_href == false %>
+<% if File.exist?("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')}.scss") %>
 
 <!-- <pre>
-  <%= escape_html(erb :"source/#{file_href}") unless pattern_href == false %>
+<%= scss :"../assets/scss/_#{file_href.gsub('/', '/_')}", {
+  :style => :expanded
+} %>
 </pre> -->
+
+<% end %>
+
+
+<%= erb :"source/#{file_href}" unless pattern_href == false %>
+
+  <!-- <pre>
+<%= escape_html(erb :"source/#{file_href}") unless pattern_href == false %>
+  </pre> -->
 
 <% if pattern_href == true %>
   

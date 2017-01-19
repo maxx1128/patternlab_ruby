@@ -17,9 +17,12 @@
 '_tools/_synapse.scss';
 
 @import
+'_generic/_body.scss',
 '_generic/_normalize.scss';
 
 @import
-'_base/_body.scss',
-'_base/_typography.scss';
+'_base/_global/_colors.scss',
+
+'_base/_typography/_anchors.scss',
+'_base/_typography/_headers.scss';
 

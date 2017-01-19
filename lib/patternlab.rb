@@ -7,13 +7,8 @@ require "rdiscount"
 require 'json'
 
 require 'sass'
-require 'uglifier'
 
 require_relative "./functions"
-
-
-
-
 
 
 
@@ -25,9 +20,7 @@ get '/css/:stylesheet.css' do |stylesheet|
 end
 
 
-# Two main tasks left
-# 1) Show the HTML for each pattern and template
-# 2) Create psuedo-pattern data for templates which merges additional data into the page JSON
+
 
 
 
@@ -95,8 +88,6 @@ get '/source/:lvl1/:lvl2/' do
 
   @pageData_files = pages_data
 
-  puts @pageData_files
-
 
 
   # Get the nav items in this group to show as content
@@ -163,7 +154,7 @@ get '/source/:lvl1/:lvl2/:lvl3/' do
   end 
 end
 
-
+ 
 
 
 
@@ -175,5 +166,4 @@ not_found do
     :layout => :'layouts/basic'
   }
 end
-
 

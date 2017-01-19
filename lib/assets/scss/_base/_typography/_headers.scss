@@ -12,10 +12,3 @@ $type-elements: h1, h2, h3, h4, h5, h6, p, small, tiny;
   }
 }
 
-a {
-  color: color(action);
-  text-decoration: none;
-
-  @include hovers() { color: color(action, dark); }
-}
-

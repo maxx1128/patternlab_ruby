@@ -1,0 +1,6 @@
+a {
+  color: color(action);
+  text-decoration: none;
+
+  @include hovers() { color: color(action, dark); }
+}

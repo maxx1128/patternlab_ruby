@@ -9,6 +9,7 @@
     :header => "h3",
     :label => item["label"],
     :file_href => "#{@lvl1}/#{item["label"]}",
+    :sass_href => "_#{@lvl1}/_#{item["label"]}",
     :pattern_href => false
   } %>
 
@@ -30,6 +31,7 @@
           :header => "h4",
           :label => item2["label"],
           :file_href => "#{@lvl1}/#{item["label"]}/#{item2["label"]}",
+          :sass_href => "_#{@lvl1}/_#{item["label"]}/_#{item2["label"]}",
           :pattern_href => true
         } %>
 
