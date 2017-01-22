@@ -22,4 +22,4 @@ gem 'liquid'
 # Markdown templating
 gem 'rdiscount'
 
-
+gem 'sprockets'
