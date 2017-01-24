@@ -6,6 +6,7 @@ module PL_functions
 
     direct_root = '../patternlab/lib/views/source/'
     levelOne = Dir.entries(direct_root).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
+
     levelTwo = []
     levelThree = []
     fullNav = []
@@ -77,7 +78,7 @@ module PL_functions
   # Get data about for the templates, pages and psuedo pages
   def pages_data
 
-    all_data_files = Dir.glob("../patternlab/lib/views/source/templates/**/*.json")
+    all_data_files = Dir.glob("../patternlab/lib/views/source/03-templates/**/*.json")
     pageData_files = []
 
     all_data_files.map { |data| 

@@ -16,11 +16,12 @@
 
     <% item["submenu"].each do |item2| %>
 
-      <% if @lvl1 == 'templates' || @lvl1 == 'pages' %>
+      <% if @lvl1[3..-1] == 'templates' || @lvl1[3..-1] == 'pages' %>
 
         <%= erb :'includes/template_link', :locals => {
           :header => "h4",
           :label => item2["label"],
+          :lvl1 => "#{@lvl1}",
           :file_href => "#{@lvl1}/#{item["label"]}/#{item2["label"]}",
           :partial_href => "#{item["label"]}"
         } %>

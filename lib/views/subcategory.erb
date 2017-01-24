@@ -9,11 +9,12 @@
 
 <% @subcategory_data.each do |item| %>
 
-  <% if @lvl1 == 'templates' || @lvl1 == 'pages' %>
+  <% if @lvl1[3..-1] == 'templates' || @lvl1[3..-1] == 'pages' %>
 
     <%= erb :'includes/template_link', :locals => {
       :header => "h3",
       :label => item["label"],
+      :lvl1 => @lvl1,
       :file_href => "#{@lvl1}/#{@title.downcase}/#{item["label"]}",
       :partial_href => "#{@title.downcase}"
     } %>
