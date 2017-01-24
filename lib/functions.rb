@@ -1,22 +1,21 @@
 
 module PL_functions
 
+  DIRECT_ROOT = '../patternlab/lib/views/source/'
+
   # Data for the main navigation
   def navStructure
 
-    direct_root = '../patternlab/lib/views/source/'
-    levelOne = Dir.entries(direct_root).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
+    levelOne = Dir.entries(DIRECT_ROOT).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
 
-    levelTwo = []
-    levelThree = []
     fullNav = []
 
-    direct_root_start = direct_root.split('/')[1]
+    direct_root_start = DIRECT_ROOT.split('/')[1]
     titleLength = 13 + direct_root_start.length
 
     levelOne.each_with_index do |item, index|
       
-      twoPath = direct_root + item
+      twoPath = DIRECT_ROOT + item
       new_path2 = Dir.entries(twoPath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
 
       fullNav[index] = {}
@@ -53,9 +52,11 @@ module PL_functions
   end
 
 
+
+
   # Getting the basic pattern data files merged and returned
   # Doesn't include page-specific data
-  def get_data
+  def get_data(lvl1_label="02-patterns")
 
     pattern_data_file = File.read("../patternlab/lib/assets/data/data.json")
     pattern_data = JSON.parse(pattern_data_file)
@@ -69,6 +70,31 @@ module PL_functions
       data_hash = JSON.parse(data_file)
 
       pattern_data = pattern_data.merge(data_hash) unless data_name == "data.json"
+    end
+
+
+
+    # For merging all data in this or previous levels
+    lvl1NavData = levelOne = Dir.entries(DIRECT_ROOT).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
+    reached_current_lvl = false
+
+    lvl1NavData.each do |nav_category|
+
+      if (reached_current_lvl == false)
+
+        puts nav_category
+        category_data = Dir.glob("../patternlab/lib/views/source/#{nav_category}/**/**/*.json")
+
+        category_data.each do |data|
+          data_name = data.split("/")[-1]
+          data_file = File.read(data)
+          data_hash = JSON.parse(data_file)
+
+          pattern_data = pattern_data.merge(data_hash)
+        end
+
+        reached_current_lvl = true if nav_category == lvl1_label
+      end
     end
 
     return pattern_data

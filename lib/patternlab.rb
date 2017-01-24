@@ -79,7 +79,7 @@ class PatternLab < PL_assets
 
     @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}.md")
 
-    @data = get_data
+    @data = get_data(@lvl1)
 
     @pageData_files = pages_data
 
@@ -111,7 +111,7 @@ class PatternLab < PL_assets
 
     @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}/#{@lvl2}.md")
     
-    @data = get_data
+    @data = get_data(@lvl1)
 
     @pageData_files = pages_data
 
@@ -152,7 +152,7 @@ class PatternLab < PL_assets
     # If it's a page, get the needed page or psuedo page data
     if @lvl1 == 'pages' && @page_data_exists
       
-      default_data = get_data
+      default_data = get_data('02-patterns') # Automatically get one before before this one?
 
       page_data_file = File.read(page_data_path)
       page_data = JSON.parse(page_data_file)
@@ -173,7 +173,7 @@ class PatternLab < PL_assets
         :layout => :'layouts/single'
       }
     else
-      @data = get_data
+      @data = get_data('02-patterns') # Automatically get one before before this one?
 
       erb :"source/#{@lvl1}/#{@lvl2}/#{@lvl3}", {
         :layout => :'layouts/single'
