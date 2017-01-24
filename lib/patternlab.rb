@@ -146,7 +146,7 @@ class PatternLab < PL_assets
     @lvl2 = params[:lvl2]
     @lvl3 = params[:lvl3]
 
-    page_data_path = "../patternlab/lib/views/source/templates/#{@lvl2}/#{@lvl3.split("__").first}.json"
+    page_data_path = "../patternlab/lib/views/source/03-templates/#{@lvl2}/#{@lvl3.split("__").first}.json"
     @page_data_exists = File.exist?(page_data_path)
 
     # If it's a page, get the needed page or psuedo page data
@@ -162,14 +162,14 @@ class PatternLab < PL_assets
       # If this is a psuedo pattern, also merge the extra data
       if @lvl3.include? "__"
 
-        psuedo_data_file = File.read("../patternlab/lib/views/source/templates/#{@lvl2}/#{@lvl3.sub("__", "~")}.json")
+        psuedo_data_file = File.read("../patternlab/lib/views/source/03-templates/#{@lvl2}/#{@lvl3.sub("__", "~")}.json")
         psuedo_data = JSON.parse(psuedo_data_file)
 
         @data = default_data.merge(psuedo_data)
 
       end
 
-      erb :"source/templates/#{@lvl2}/#{@lvl3.split("__").first}", {
+      erb :"source/03-templates/#{@lvl2}/#{@lvl3.split("__").first}", {
         :layout => :'layouts/single'
       }
     else
