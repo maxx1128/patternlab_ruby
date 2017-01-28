@@ -21,26 +21,6 @@ module PL_functions
 
     fullNav = []
 
-    # First get any static pages and add them to the top of the nav
-    pages = Dir.entries('../patternlab/lib/views/pages/').select { |item| item[0,1] != '.' }
-
-    puts pages
-
-    pages_root_start = PAGES_ROOT.split('/')[1]
-    pagesLength = 13 + pages_root_start.length
-
-    pages.each_with_index do |item, index|
-
-      item = item.split('.').first
-      fullNav[index] = {}
-
-      pagePath = PAGES_ROOT + item
-
-      fullNav[index]['label'] = item
-      fullNav[index]['path'] = pagePath.strip[pagesLength..-1] + '/'
-      fullNav[index]['submenu'] = []
-    end
-
 
     # Then get the nav for the Patterns and their files
 
@@ -50,8 +30,6 @@ module PL_functions
     titleLength = 13 + direct_root_start.length
 
     levelOne.each_with_index do |item, index|
-
-      index = index + fullNav.length
 
       twoPath = SOURCE_ROOT + item
       new_path2 = Dir.entries(twoPath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
@@ -83,6 +61,30 @@ module PL_functions
         end
       end
     end
+
+
+    # First get any static pages and add them to the top of the nav
+    pages = Dir.entries('../patternlab/lib/views/pages/').select { |item| item[0,1] != '.' }
+
+    pages_root_start = PAGES_ROOT.split('/')[1]
+    pagesLength = 13 + pages_root_start.length
+
+    pages.each_with_index.reverse_each do |item, index|
+
+      item = item.split('.').first
+
+      pagePath = PAGES_ROOT + item
+
+      fullNav.unshift(
+        {
+          "label" => item,
+          "path" => pagePath.strip[pagesLength..-1] + '/',
+          "submenu" => []
+        }
+      )
+    end
+
+    # How will page submenus be pushed here?
 
     return fullNav
 

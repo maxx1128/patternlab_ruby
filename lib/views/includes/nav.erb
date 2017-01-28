@@ -1,9 +1,29 @@
-<br><br>
-
-<% @nav.each do |item| %>
-  <%= item %>
-  <br><br>
-<% end %>
-
-<br>
-<br>
+<ul>
+  <% @nav.each do |item| %>
+    <li>
+      <a href="<%= item['path'] %>">
+        <%= item['label'][3..-1] %>
+      </a>
+      <% if item['submenu'] %>
+        <ul>
+          <% item['submenu'].each do |item2| %>
+            <li>
+              <a href="<%= item2['path'] %>">
+                <%= item2['label'] %>
+              </a>
+              <ul>
+                <% item2['submenu'].each do |item3| %>
+                  <li>
+                    <a href="<%= item3['path'] %>">
+                      <%= item3['label'] %>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
