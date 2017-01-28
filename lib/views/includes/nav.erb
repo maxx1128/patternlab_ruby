@@ -2,22 +2,24 @@
   <% @nav.each do |item| %>
     <li>
       <a href="<%= item['path'] %>">
-        <%= item['label'][3..-1] %>
+        <%= item['label'][3..-1].gsub('-', ' ').capitalize %>
       </a>
       <% if item['submenu'] %>
         <ul>
           <% item['submenu'].each do |item2| %>
             <li>
               <a href="<%= item2['path'] %>">
-                <%= item2['label'] %>
+                <%= item2['label'].gsub('-', ' ').capitalize %>
               </a>
               <ul>
-                <% item2['submenu'].each do |item3| %>
-                  <li>
-                    <a href="<%= item3['path'] %>">
-                      <%= item3['label'] %>
-                    </a>
-                  </li>
+                <% if item2['submenu'] %>
+                  <% item2['submenu'].each do |item3| %>
+                    <li>
+                      <a href="<%= item3['path'] %>">
+                        <%= item3['label'].gsub('-', ' ').capitalize %>
+                      </a>
+                    </li>
+                  <% end %>
                 <% end %>
               </ul>
             </li>

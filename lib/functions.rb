@@ -64,7 +64,7 @@ module PL_functions
 
 
     # First get any static pages and add them to the top of the nav
-    pages = Dir.entries('../patternlab/lib/views/pages/').select { |item| item[0,1] != '.' }
+    pages = Dir.entries(PAGES_ROOT).select { |item| item[0,1] != '.' && item.end_with?(".erb") }
 
     pages_root_start = PAGES_ROOT.split('/')[1]
     pagesLength = 13 + pages_root_start.length
@@ -72,14 +72,37 @@ module PL_functions
     pages.each_with_index.reverse_each do |item, index|
 
       item = item.split('.').first
-
       pagePath = PAGES_ROOT + item
+      item_submenu = []
+
+
+      if File.exists? PAGES_ROOT + item + '/'
+
+        page_submenus = Dir.entries(PAGES_ROOT + item + '/').select { |item| item[0,1] != '.' }
+
+        page_submenus.each_with_index do |subitem, index|
+
+          item_submenu[index] = {}
+          item_submenu[index]["label"] = subitem.split('.')[0][3..-1].gsub('-', ' ')
+          item_submenu[index]["path"] = pagePath.strip[pagesLength..-1] + '/' + subitem.sub('.erb', '/')
+        end
+
+      end
+
+
+
+      
+
+
+
+      
+      
 
       fullNav.unshift(
         {
           "label" => item,
           "path" => pagePath.strip[pagesLength..-1] + '/',
-          "submenu" => []
+          "submenu" => item_submenu
         }
       )
     end

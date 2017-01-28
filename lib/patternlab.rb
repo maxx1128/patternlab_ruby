@@ -72,13 +72,24 @@ class PatternLab < PL_assets
 
 
   # For static pages
-  get '/page/:title/' do
+  get '/pages/:title/' do
 
-    @title = params[:title].capitalize
+    @title = params[:title].gsub('-', ' ')[3..-1].capitalize
     @nav = navStructure
 
 
-    erb :"pages/#{@title}", {
+    erb :"pages/#{params[:title]}", {
+      :layout => :'layouts/page'
+    }
+  end
+
+  get '/pages/:parent/:title/' do
+
+    @title = params[:title].gsub('-', ' ')[3..-1].capitalize
+    @nav = navStructure
+
+
+    erb :"pages/#{params[:parent]}/#{params[:title]}", {
       :layout => :'layouts/page'
     }
   end
@@ -88,7 +99,7 @@ class PatternLab < PL_assets
   # For showing all patterns and subcategories in a category
   get '/source/:lvl1/' do
 
-    @title = params[:lvl1].capitalize.sub('-', ' ')[3..-1]
+    @title = params[:lvl1].gsub('-', ' ')[3..-1].capitalize
     @nav = navStructure
     @lvl1 = params[:lvl1]
 
@@ -119,7 +130,7 @@ class PatternLab < PL_assets
 
     require_relative "./functions"
 
-    @title = params[:lvl2].capitalize.sub('-', ' ')
+    @title = params[:lvl2].gsub('-', ' ').capitalize
     @nav = navStructure
     @lvl1 = params[:lvl1]
     @lvl2 = params[:lvl2]
@@ -158,7 +169,7 @@ class PatternLab < PL_assets
     config = config_data
     templates = config["templates_page"]
 
-    @title = params[:lvl3].capitalize.sub('-', ' ').sub('__', ' ')
+    @title = params[:lvl3].gsub('-', ' ').sub('__', ' ').capitalize
     @nav = navStructure
     @lvl1 = params[:lvl1]
     @lvl2 = params[:lvl2]
