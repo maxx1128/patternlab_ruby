@@ -1,21 +1,59 @@
 
 module PL_functions
 
-  DIRECT_ROOT = '../patternlab/lib/views/source/'
+  SOURCE_ROOT = '../patternlab/lib/views/source/'
+  PAGES_ROOT = '../patternlab/lib/views/pages/'
+  CONFIG_ROOT = '../patternlab/lib/config.json'
+
+  config_file = File.read(CONFIG_ROOT)
+  config_data = JSON.parse(config_file)
+  
+
+  def config_data
+    config_file = File.read(CONFIG_ROOT)
+    config_data = JSON.parse(config_file)
+
+    return config_data
+  end
 
   # Data for the main navigation
   def navStructure
 
-    levelOne = Dir.entries(DIRECT_ROOT).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
-
     fullNav = []
 
-    direct_root_start = DIRECT_ROOT.split('/')[1]
+    # First get any static pages and add them to the top of the nav
+    pages = Dir.entries('../patternlab/lib/views/pages/').select { |item| item[0,1] != '.' }
+
+    puts pages
+
+    pages_root_start = PAGES_ROOT.split('/')[1]
+    pagesLength = 13 + pages_root_start.length
+
+    pages.each_with_index do |item, index|
+
+      item = item.split('.').first
+      fullNav[index] = {}
+
+      pagePath = PAGES_ROOT + item
+
+      fullNav[index]['label'] = item
+      fullNav[index]['path'] = pagePath.strip[pagesLength..-1] + '/'
+      fullNav[index]['submenu'] = []
+    end
+
+
+    # Then get the nav for the Patterns and their files
+
+    levelOne = Dir.entries(SOURCE_ROOT).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
+
+    direct_root_start = SOURCE_ROOT.split('/')[1]
     titleLength = 13 + direct_root_start.length
 
     levelOne.each_with_index do |item, index|
-      
-      twoPath = DIRECT_ROOT + item
+
+      index = index + fullNav.length
+
+      twoPath = SOURCE_ROOT + item
       new_path2 = Dir.entries(twoPath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
 
       fullNav[index] = {}
@@ -75,14 +113,13 @@ module PL_functions
 
 
     # For merging all data in this or previous levels
-    lvl1NavData = levelOne = Dir.entries(DIRECT_ROOT).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
+    lvl1NavData = levelOne = Dir.entries(SOURCE_ROOT).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
     reached_current_lvl = false
 
     lvl1NavData.each do |nav_category|
 
       if (reached_current_lvl == false)
 
-        puts nav_category
         category_data = Dir.glob("../patternlab/lib/views/source/#{nav_category}/**/**/*.json")
 
         category_data.each do |data|

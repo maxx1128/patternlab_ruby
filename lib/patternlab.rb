@@ -63,8 +63,23 @@ class PatternLab < PL_assets
     @title = 'Practice!'
     @nav = navStructure
 
+    config = config_data
+
     erb :index, {
       :layout => :'layouts/basic'
+    }
+  end
+
+
+  # For static pages
+  get '/page/:title/' do
+
+    @title = params[:title].capitalize
+    @nav = navStructure
+
+
+    erb :"pages/#{@title}", {
+      :layout => :'layouts/page'
     }
   end
 
@@ -140,13 +155,16 @@ class PatternLab < PL_assets
   # For showing individual patterns on a single page
   get '/source/:lvl1/:lvl2/:lvl3/' do
 
+    config = config_data
+    templates = config["templates_page"]
+
     @title = params[:lvl3].capitalize.sub('-', ' ').sub('__', ' ')
     @nav = navStructure
     @lvl1 = params[:lvl1]
     @lvl2 = params[:lvl2]
     @lvl3 = params[:lvl3]
 
-    page_data_path = "../patternlab/lib/views/source/03-templates/#{@lvl2}/#{@lvl3.split("__").first}.json"
+    page_data_path = "../patternlab/lib/views/source/#{templates}/#{@lvl2}/#{@lvl3.split("__").first}.json"
     @page_data_exists = File.exist?(page_data_path)
 
     # If it's a page, get the needed page or psuedo page data
@@ -162,14 +180,14 @@ class PatternLab < PL_assets
       # If this is a psuedo pattern, also merge the extra data
       if @lvl3.include? "__"
 
-        psuedo_data_file = File.read("../patternlab/lib/views/source/03-templates/#{@lvl2}/#{@lvl3.sub("__", "~")}.json")
+        psuedo_data_file = File.read("../patternlab/lib/views/source/#{templates}/#{@lvl2}/#{@lvl3.sub("__", "~")}.json")
         psuedo_data = JSON.parse(psuedo_data_file)
 
         @data = default_data.merge(psuedo_data)
 
       end
 
-      erb :"source/03-templates/#{@lvl2}/#{@lvl3.split("__").first}", {
+      erb :"source/#{templates}/#{@lvl2}/#{@lvl3.split("__").first}", {
         :layout => :'layouts/single'
       }
     else

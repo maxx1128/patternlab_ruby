@@ -1,0 +1,21 @@
+<html>
+  <%= erb :'includes/head' %>
+
+  <body>
+
+    <h2>
+      Static page: <%= @title %>
+    </h2>
+
+    <%= yield %>
+
+    <hr>
+
+    <a href="/">
+      Homepage
+    </a>
+
+    <%= erb :'includes/nav' %>
+
+  </body>
+</html>
