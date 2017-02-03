@@ -1,0 +1,32 @@
+// These are the tabs to show the HTML, SCSS, and JS for each component
+
+
+// Wrapper for the entire tabs component
+.sg-tabs {
+  margin-bottom: spacing();
+}
+
+
+// The container for the top tabs
+.sg-tabs__links {
+  display: flex;
+}
+
+
+// The tabs that toggle the different areas of code
+.sg-tabs__link {
+  flex: 0 1 auto;
+  padding: spacing(half) spacing();
+
+  &.sg-tabs__link--active { font-weight: type(font-weight, bold); }
+}
+
+
+// The content areas that contain the actual code
+.sg-tabs__content-item {
+  display: none;
+  max-height: rem(200px);
+  overflow: scroll;
+
+  &.sg-tabs__content-item--active { display: block; }
+}

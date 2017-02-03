@@ -9,52 +9,92 @@
 <% end %>
 
 
+
+
+
 <!-- Conditional for showing the underlying code -->
 <% if pattern_href != false %>
 
-  <!-- HTML markup of the pattern -->
-  <pre>
-    <code class="language-html">
+<%
+  sass_path = "../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.scss"
+  sass_exists = File.exist?(sass_path)  
+
+  js_path = "../patternlab/lib/assets/js/#{file_href[3..-1]}.js" 
+  js_exists = File.exist?(js_path)
+%>
+
+<div class="sg-tabs">
+
+  <div class="sg-tabs__links">
+    <div tabs-link-id="html" class="sg-tabs__link">HTML</div>
+    
+    <% if sass_exists %>
+      <div tabs-link-id="scss" class="sg-tabs__link">SCSS</div>
+    <% end %>
+
+    <% if js_exists %>
+      <div tabs-link-id="js" class="sg-tabs__link">JS</div>
+    <% end %>
+
+    <div tabs-link-id="none" class="sg-tabs__link">Hide All</div>
+  </div>
+
+  <div class="sg-tabs__content">
+
+    <!-- HTML markup -->
+    <div class="sg-tabs__content-item" tabs-content-id="html">
+      <pre>
+        <code class="language-html">
 
 <%= escape_html(erb :"source/#{file_href}")%>
 
-    </code>
-  </pre>
+        </code>
+      </pre>
+    </div>
 
 
-  <!-- The Sass partial -->
-  <% if File.exist?("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.scss") %>
+    <!-- The Sass partial -->
+    <% if sass_exists %>
+      <div class="sg-tabs__content-item" tabs-content-id="scss">
 
-  <pre>
-    <code class="language-css">
-
-<%=
-File.read("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.scss")
-%>
-
-    </code>
-  </pre>
-
-  <% end %>
-
-
-  <!-- The containerized JS -->
-  <% if File.exist?("../patternlab/lib/assets/js/#{file_href[3..-1]}.js") %>
-
-  <pre>
-    <code class="language-javascript">
+        <pre>
+          <code class="language-css">
 
 <%=
-File.read("../patternlab/lib/assets/js/#{file_href[3..-1]}.js")
+File.read(sass_path)
 %>
 
-    </code>
-  </pre>
+          </code>
+        </pre>
+ 
+      </div>
+    <% end %>
 
-  <% end %>
 
+    <!-- The containerized JS -->  
+    <% if js_exists %>
+      <div class="sg-tabs__content-item" tabs-content-id="js">
 
+        <pre>
+          <code class="language-javascript">
+
+<%=
+File.read(js_path)
+%>
+
+          </code>
+        </pre>
+ 
+      </div>
+    <% end %>
+
+  </div>
+</div>
 <% end %> <!-- End code conditional -->
+
+
+
+
 
 <!-- The actual pattern -->
 <%= erb :"source/#{file_href}" unless pattern_href == false %>

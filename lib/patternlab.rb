@@ -18,11 +18,9 @@ require_relative "functions"
 
 
 
-# Use prism.js for the HTML, Sass, and JS code in the components?
-
-# Reference separate CSS and JS files that are specifically for the styleguide?
-# Are entirely separate files
-
+# Universal controls stuck to the bottom right that can be expanded or collapsed?
+# Control the code tabs being shown for all elements on the page?
+# Could this carry over using Ruby data somehow?
 
 
 class PatternLab < Sinatra::Base

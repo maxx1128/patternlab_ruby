@@ -1,0 +1,21 @@
+// Styles for the pattern library itself, not the content of it
+
+@import
+'_tools/_calc.scss';
+
+@import
+'_settings/layout.scss',
+'_settings/colors.scss',
+'_settings/grid.scss',
+'_settings/typography.scss',
+'_settings/containers.scss';
+
+@import
+'_tools/_colors.scss',
+'_tools/_layout.scss',
+'_tools/_mixins.scss',
+'_tools/_selectors.scss',
+'_tools/_synapse.scss';
+
+@import
+'styleguide/_tabs.scss';
