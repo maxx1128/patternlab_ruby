@@ -83,7 +83,7 @@ class PatternLab < Sinatra::Base
     @nav = navStructure
     @lvl1 = params[:lvl1]
 
-    @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}.md")
+    @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1[3..-1]}.md")
 
     @data = get_data(@lvl1)
 

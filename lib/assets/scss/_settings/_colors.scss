@@ -48,10 +48,12 @@ $color-map: (
   ),
 
   mono: (
+    black: #111,
+    dark: #393939,
+
     base: $g-color--mono,
 
     light: #eee,
-
-    dark: #393939
+    blank: #fff
   )
 );

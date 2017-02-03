@@ -1,16 +1,21 @@
 // These are the tabs to show the HTML, SCSS, and JS for each component
 
 
+$tab-colors: (
+  html: blue,
+  css: purple,
+  javascript: red 
+);
+
+$tab-border-width: rem(2px);
+
+
 // Wrapper for the entire tabs component
-.sg-tabs {
-  margin-bottom: spacing();
-}
+.sg-tabs { margin-bottom: spacing(); }
 
 
 // The container for the top tabs
-.sg-tabs__links {
-  display: flex;
-}
+.sg-tabs__links { display: flex; }
 
 
 // The tabs that toggle the different areas of code
@@ -20,7 +25,26 @@
 
   cursor: pointer;
 
-  &.sg-tabs__link--active { font-weight: type(font-weight, bold); }
+  background-color: color(mono, blank);
+  border-top-left-radius: spacing();
+  border-top-right-radius: spacing();
+
+  &.sg-tabs__link--active {
+    position: relative;
+
+    font-weight: type(font-weight, bold);
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      height: $tab-border-width;
+
+      background-color: color(mono, blank); 
+    }
+  }
 }
 
 
@@ -31,4 +55,23 @@
   overflow: scroll;
 
   &.sg-tabs__content-item--active { display: block; }
+
+  pre {
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    background-color: color(mono, blank);
+  }
+}
+
+// Creating the unique border colors for tabs
+@each $label, $color in $tab-colors {
+
+  .sg-tabs__content-item--active.sg-tabs__content-item--#{$label}{ border: $tab-border-width solid $color; }
+
+  .sg-tabs__link--#{$label}.sg-tabs__link--active {
+    border: $tab-border-width solid $color;
+    border-bottom-width: 0;
+  }
 }

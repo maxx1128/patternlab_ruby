@@ -26,23 +26,21 @@
 <div class="sg-tabs">
 
   <div class="sg-tabs__links">
-    <div tabs-link-id="html" class="sg-tabs__link">HTML</div>
+    <div tabs-link-id="html" class="sg-tabs__link sg-tabs__link--html">HTML</div>
     
     <% if sass_exists %>
-      <div tabs-link-id="scss" class="sg-tabs__link">SCSS</div>
+      <div tabs-link-id="scss" class="sg-tabs__link sg-tabs__link--css">SCSS</div>
     <% end %>
 
     <% if js_exists %>
-      <div tabs-link-id="js" class="sg-tabs__link">JS</div>
+      <div tabs-link-id="js" class="sg-tabs__link sg-tabs__link--javascript">JS</div>
     <% end %>
-
-    <div tabs-link-id="none" class="sg-tabs__link">Hide All</div>
   </div>
 
   <div class="sg-tabs__content">
 
     <!-- HTML markup -->
-    <div class="sg-tabs__content-item" tabs-content-id="html">
+    <div class="sg-tabs__content-item sg-tabs__content-item--html" tabs-content-id="html">
       <pre>
         <code class="language-html">
 
@@ -55,7 +53,7 @@
 
     <!-- The Sass partial -->
     <% if sass_exists %>
-      <div class="sg-tabs__content-item" tabs-content-id="scss">
+      <div class="sg-tabs__content-item sg-tabs__content-item--css" tabs-content-id="scss">
 
         <pre>
           <code class="language-css">
@@ -73,7 +71,7 @@ File.read(sass_path)
 
     <!-- The containerized JS -->  
     <% if js_exists %>
-      <div class="sg-tabs__content-item" tabs-content-id="js">
+      <div class="sg-tabs__content-item sg-tabs__content-item--javascript" tabs-content-id="js">
 
         <pre>
           <code class="language-javascript">
