@@ -1,4 +1,5 @@
 require 'bundler/setup'
+Bundler.setup :default
 require 'sinatra'
 require 'sinatra/base'
 require 'sinatra/reloader' if development?
@@ -6,6 +7,11 @@ require 'erb'
 require "rdiscount"
 require 'json'
 require 'sass'
+
+require 'sprockets'
+require 'uglifier'
+
+require 'byebug'
 
 require_relative "assets"
 require_relative "functions"
@@ -45,7 +51,7 @@ For individual pattern data:
 
 
 
-class PatternLab < PL_assets
+class PatternLab < Sinatra::Base
 
   # Include the needed functions
   include PL_functions
@@ -59,6 +65,8 @@ class PatternLab < PL_assets
 
   # Homepage
   get '/' do
+
+    # `byebug
 
     @title = 'Practice!'
     @nav = navStructure

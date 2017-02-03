@@ -2,6 +2,11 @@ GEM
   remote: https://rubygems.org/
   specs:
     backports (3.6.8)
+    byebug (9.0.6)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.10.0)
     concurrent-ruby (1.0.4)
     execjs (2.7.0)
     httparty (0.13.7)
@@ -40,6 +45,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
+  coffee-script
   httparty
   liquid
   rdiscount

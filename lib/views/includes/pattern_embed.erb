@@ -3,29 +3,50 @@
   <%= label.capitalize.sub('-', ' ') %>
 </<%= header %>>
 
-
+<!-- The description -->
 <% if File.exist?("../patternlab/lib/views/source/#{file_href}.md") %>
   <%= markdown :"source/#{file_href}" %>
 <% end %>
 
+<hr>
 
-<% if File.exist?("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')}.scss") %>
+<!-- HTML markup of the pattern -->
+<pre>
+<%= escape_html(erb :"source/#{file_href}") unless pattern_href == false %>
+</pre>
 
-  <p>
-    <strong>
-      Sass files here! Find better SCSS template for them though...
-    </strong>
-  </p>
+
+<!-- The Sass partial -->
+<% if File.exist?("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.scss") %>
+
+<pre>
+<%=
+File.read("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.scss")
+%>
+</pre>
 
 <% end %>
 
 
+
+
+<!-- The containerized JS -->
+<% if File.exist?("../patternlab/lib/assets/js/_#{file_href.gsub('/', '/_')[3..-1]}.js") %>
+
+<pre>
+<%=
+File.read("../patternlab/lib/assets/js/_#{file_href.gsub('/', '/_')[3..-1]}.js")
+%>
+</pre>
+
+<% end %>
+
+
+<!-- The actual pattern -->
 <%= erb :"source/#{file_href}" unless pattern_href == false %>
 
-  <!-- <pre>
-<%= escape_html(erb :"source/#{file_href}") unless pattern_href == false %>
-  </pre> -->
 
+<!-- Optional link to full page page -->
 <% if pattern_href == true %>
   
   <br>

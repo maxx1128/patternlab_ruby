@@ -14,6 +14,7 @@ gem 'httparty'
 gem 'sass'
 
 # Basic javascript
+gem 'coffee-script'
 gem 'uglifier'
 
 # Liquid templating
@@ -23,3 +24,9 @@ gem 'liquid'
 gem 'rdiscount'
 
 gem 'sprockets'
+
+group :development do
+  gem 'byebug'
+end
+
+
