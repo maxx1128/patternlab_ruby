@@ -1,3 +1,5 @@
 .body {
   color: red;
+
+  @include hovers() { text-decoration: none; }
 }

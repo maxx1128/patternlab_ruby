@@ -9,35 +9,52 @@
 <% end %>
 
 
-<!-- HTML markup of the pattern -->
-<pre>
-<%= escape_html(erb :"source/#{file_href}") unless pattern_href == false %>
-</pre>
+<!-- Conditional for showing the underlying code -->
+<% if pattern_href != false %>
+
+  <!-- HTML markup of the pattern -->
+  <pre>
+    <code class="language-html">
+
+<%= escape_html(erb :"source/#{file_href}")%>
+
+    </code>
+  </pre>
 
 
-<!-- The Sass partial -->
-<% if File.exist?("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.scss") %>
+  <!-- The Sass partial -->
+  <% if File.exist?("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.scss") %>
 
-<pre>
+  <pre>
+    <code class="language-css">
+
 <%=
 File.read("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.scss")
 %>
-</pre>
 
-<% end %>
+    </code>
+  </pre>
+
+  <% end %>
 
 
-<!-- The containerized JS -->
-<% if File.exist?("../patternlab/lib/assets/js/#{file_href[3..-1]}.js") %>
+  <!-- The containerized JS -->
+  <% if File.exist?("../patternlab/lib/assets/js/#{file_href[3..-1]}.js") %>
 
-<pre>
+  <pre>
+    <code class="language-javascript">
+
 <%=
 File.read("../patternlab/lib/assets/js/#{file_href[3..-1]}.js")
 %>
-</pre>
 
-<% end %>
+    </code>
+  </pre>
 
+  <% end %>
+
+
+<% end %> <!-- End code conditional -->
 
 <!-- The actual pattern -->
 <%= erb :"source/#{file_href}" unless pattern_href == false %>

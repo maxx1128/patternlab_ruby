@@ -18,36 +18,10 @@ require_relative "functions"
 
 
 
-=begin
+# Use prism.js for the HTML, Sass, and JS code in the components?
 
-Prepend numbers to lvl1 category folders, but remove these for all the output?
-
-Purpose is to control the order of the folders, not let it be alphabetical
-
-=end
-
-
-
-=begin
-
-For individual pattern data:
-
-1) Look at all the levels below it (base for components) and merge all the custom pattern data for each of those
-2) Then merge all the current custom pattern data over that as well
-
-* Goes through ALL of the patterns to ensure no custom data is overlooked. Same for individual and category pages to ensure all relevant data is merged.
-
-* Take the level
-* Get all JSON files in the below file structures
-* Merge each one
-* Take all the JSON files from the current level
-* Merge each of those
-* Save the JSON merging for template and page data to the end?
-
-* Put this into a custom function that only needs the current level as the argument? Returns the merged data. Use this function to set the @data value?
-
-=end
-
+# Reference separate CSS and JS files that are specifically for the styleguide?
+# Are entirely separate files
 
 
 
