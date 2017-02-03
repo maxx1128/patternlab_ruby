@@ -8,7 +8,6 @@
   <%= markdown :"source/#{file_href}" %>
 <% end %>
 
-<hr>
 
 <!-- HTML markup of the pattern -->
 <pre>
@@ -28,14 +27,12 @@ File.read("../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.sc
 <% end %>
 
 
-
-
 <!-- The containerized JS -->
-<% if File.exist?("../patternlab/lib/assets/js/_#{file_href.gsub('/', '/_')[3..-1]}.js") %>
+<% if File.exist?("../patternlab/lib/assets/js/#{file_href[3..-1]}.js") %>
 
 <pre>
 <%=
-File.read("../patternlab/lib/assets/js/_#{file_href.gsub('/', '/_')[3..-1]}.js")
+File.read("../patternlab/lib/assets/js/#{file_href[3..-1]}.js")
 %>
 </pre>
 
