@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    autoprefixer-rails (6.7.2)
+      execjs
     backports (3.6.8)
     byebug (9.0.6)
     coffee-script (2.4.1)
@@ -45,6 +47,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
   byebug
   coffee-script
   httparty

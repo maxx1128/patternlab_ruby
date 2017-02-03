@@ -18,6 +18,8 @@
   flex: 0 1 auto;
   padding: spacing(half) spacing();
 
+  cursor: pointer;
+
   &.sg-tabs__link--active { font-weight: type(font-weight, bold); }
 }
 

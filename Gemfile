@@ -10,8 +10,12 @@ gem 'sinatra-contrib'
 # We're using this for API calls
 gem 'httparty'
 
+# Asset management
+gem 'sprockets'
+
 # Basic sass styles
 gem 'sass'
+gem 'autoprefixer-rails'
 
 # Basic javascript
 gem 'coffee-script'
@@ -22,8 +26,6 @@ gem 'liquid'
 
 # Markdown templating
 gem 'rdiscount'
-
-gem 'sprockets'
 
 group :development do
   gem 'byebug'
