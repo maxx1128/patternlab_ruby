@@ -1,6 +1,6 @@
 
 <<%= header %>>
-  <%= label.capitalize.sub('-', ' ') %>
+  <%= label[3..-1].capitalize.sub('-', ' ') %>
 </<%= header %>>
 
 <!-- The description -->
@@ -10,16 +10,14 @@
 
 
 
-
-
 <!-- Conditional for showing the underlying code -->
 <% if pattern_href != false %>
 
 <%
-  sass_path = "../patternlab/lib/assets/scss/_#{file_href.gsub('/', '/_')[3..-1]}.scss"
+  sass_path = "../patternlab/lib/assets/scss/_#{asset_href.gsub('/', '/_')}.scss"
   sass_exists = File.exist?(sass_path)  
 
-  js_path = "../patternlab/lib/assets/js/#{file_href[3..-1]}.js" 
+  js_path = "../patternlab/lib/assets/js/#{asset_href}.js" 
   js_exists = File.exist?(js_path)
 %>
 

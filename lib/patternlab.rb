@@ -110,7 +110,8 @@ class PatternLab < Sinatra::Base
 
     require_relative "./functions"
 
-    @title = params[:lvl2].gsub('-', ' ').capitalize
+    @title = params[:lvl2][3..-1].gsub('-', ' ').capitalize
+    @title_raw = params[:lvl2]
     @nav = navStructure
     @lvl1 = params[:lvl1]
     @lvl2 = params[:lvl2]
@@ -149,7 +150,7 @@ class PatternLab < Sinatra::Base
     config = config_data
     templates = config["templates_page"]
 
-    @title = params[:lvl3].gsub('-', ' ').sub('__', ' ').capitalize
+    @title = params[:lvl3][3..-1].gsub('-', ' ').sub('__', ' ').capitalize
     @nav = navStructure
     @lvl1 = params[:lvl1]
     @lvl2 = params[:lvl2]

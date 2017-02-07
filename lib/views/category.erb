@@ -9,7 +9,7 @@
     :header => "h3",
     :label => item["label"],
     :file_href => "#{@lvl1}/#{item["label"]}",
-    :sass_href => "_#{@lvl1}/_#{item["label"]}",
+    :asset_href => "#{@lvl1[3..-1]}/#{item["label"][3..-1]}",
     :pattern_href => false
   } %>
 
@@ -32,7 +32,7 @@
           :header => "h4",
           :label => item2["label"],
           :file_href => "#{@lvl1}/#{item["label"]}/#{item2["label"]}",
-          :sass_href => "_#{@lvl1}/_#{item["label"]}/_#{item2["label"]}",
+          :asset_href => "#{@lvl1[3..-1]}/#{item["label"][3..-1]}/#{item2["label"][3..-1]}",
           :pattern_href => true
         } %>
 

@@ -83,7 +83,7 @@ module PL_functions
         page_submenus.each_with_index do |subitem, index|
 
           item_submenu[index] = {}
-          item_submenu[index]["label"] = subitem.split('.')[0][3..-1].gsub('-', ' ')
+          item_submenu[index]["label"] = subitem.split('.')[0].gsub('-', ' ')
           item_submenu[index]["path"] = pagePath.strip[pagesLength..-1] + '/' + subitem.sub('.erb', '/')
         end
 
