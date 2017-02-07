@@ -3,12 +3,8 @@
   <%= label[3..-1].capitalize.sub('-', ' ') %>
 </<%= header %>>
 
+
 <!-- The description -->
-<% if File.exist?("../patternlab/lib/views/source/#{file_href}.md") %>
-  <%= markdown :"source/#{file_href}" %>
-<% end %>
-
-
 
 <!-- Conditional for showing the underlying code -->
 <% if pattern_href != false %>
@@ -24,6 +20,8 @@
 <div class="sg-tabs">
 
   <div class="sg-tabs__links">
+    <div tabs-link-id="info" class="sg-tabs__link sg-tabs__link--info">Info</div>
+
     <div tabs-link-id="html" class="sg-tabs__link sg-tabs__link--html">HTML</div>
     
     <% if sass_exists %>
@@ -36,6 +34,17 @@
   </div>
 
   <div class="sg-tabs__content">
+
+    <!-- Pattern Info -->
+    <div class="sg-tabs__content-item sg-tabs__content-item--info" tabs-content-id="info">
+      <% if File.exist?("../patternlab/lib/views/source/#{file_href}.md") %>
+        <%= markdown :"source/#{file_href}" %>
+      <% else %>
+        <p>
+          No description found for this file. How sad :(
+        </p>
+      <% end %>
+    </div>
 
     <!-- HTML markup -->
     <div class="sg-tabs__content-item sg-tabs__content-item--html" tabs-content-id="html">
@@ -87,6 +96,8 @@ File.read(js_path)
   </div>
 </div>
 <% end %> <!-- End code conditional -->
+
+
 
 
 

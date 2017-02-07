@@ -2,6 +2,7 @@
 
 
 $tab-colors: (
+  info: black,
   html: blue,
   css: purple,
   javascript: red 
@@ -51,8 +52,11 @@ $tab-border-width: rem(2px);
 // The content areas that contain the actual code
 .sg-tabs__content-item {
   display: none;
-  max-height: rem(200px);
+  min-height: rem(150px);
+  max-height: rem(150px);
   overflow: scroll;
+
+  background-color: color(mono, blank);
 
   &.sg-tabs__content-item--active { display: block; }
 
@@ -67,6 +71,13 @@ $tab-border-width: rem(2px);
 
 // Creating the unique border colors for tabs
 @each $label, $color in $tab-colors {
+
+  @if $label == 'info' {
+    .sg-tabs__content-item--#{$label} {
+      padding: spacing();
+      box-sizing: border-box;
+    }
+  }
 
   .sg-tabs__content-item--active.sg-tabs__content-item--#{$label}{ border: $tab-border-width solid $color; }
 
