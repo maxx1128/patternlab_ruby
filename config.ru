@@ -12,6 +12,7 @@ map '/assets' do
 
   environment.append_path './lib/assets/js'
   environment.append_path './lib/assets/scss'
+  environment.append_path './lib/assets/img'
 
   environment.js_compressor  = :uglify
 
