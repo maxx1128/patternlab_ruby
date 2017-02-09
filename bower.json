@@ -1,0 +1,28 @@
+{
+  "name": "patternlab",
+  "authors": [
+    "Max Antonucci <maxx1128@gmail.com>"
+  ],
+  "description": "Ruby-based pattern library",
+  "main": "lib/patternlab.rb",
+  "moduleType": [],
+  "keywords": [
+    "ruby",
+    "pattern",
+    "lab",
+    "library",
+    "style",
+    "guide",
+    "sass",
+    "js",
+    "sinatra",
+    "sprockets"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "~3.1.1",
+    "prism": "~1.6.0"
+  }
+}

@@ -10,6 +10,7 @@ map '/assets' do
   environment = Sprockets::Environment.new
   AutoprefixerRails.install(environment)
 
+  environment.append_path './bower_components'
   environment.append_path './lib/assets/js'
   environment.append_path './lib/assets/scss'
   environment.append_path './lib/assets/img'
