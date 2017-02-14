@@ -41,7 +41,7 @@ class PatternLab < Sinatra::Base
     # `byebug
 
     @config = config_data
-    @title = 'Practice!'
+    @title = 'Homepage!'
     @nav = navStructure
 
 
@@ -56,6 +56,7 @@ class PatternLab < Sinatra::Base
 
     @config = config_data
     @title = params[:title].gsub('-', ' ')[3..-1].capitalize
+    @title_raw = params[:title]
     @nav = navStructure
 
 
@@ -69,6 +70,7 @@ class PatternLab < Sinatra::Base
 
     @config = config_data
     @title = params[:title].gsub('-', ' ')[3..-1].capitalize
+    @title_raw = params[:title]
     @nav = navStructure
 
 
@@ -85,11 +87,12 @@ class PatternLab < Sinatra::Base
 
     @config = config_data
     @title = params[:lvl1].gsub('-', ' ')[3..-1].capitalize
+    @title_raw = params[:lvl1]
     @nav = navStructure
     @lvl1 = params[:lvl1]
 
 
-    @descr_exists = File.exist?("../#{@config["name"]}/lib/views/source/#{@lvl1[3..-1]}.md")
+    @descr_exists = File.exist?("../#{@config["name"]}/lib/views/source/#{@lvl1}.md")
 
     @data = get_data(@lvl1)
 

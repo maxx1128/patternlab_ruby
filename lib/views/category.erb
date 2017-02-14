@@ -1,12 +1,12 @@
 
 <% if @descr_exists %>
-  <%= markdown :"source/#{@title}" %>
+  <%= markdown :"source/#{@title_raw}" %>
 <% end %>
 
 <% @category_data.each do |item| %>
 
   <%= erb :'includes/pattern_embed', :locals => {
-    :header => "h3",
+    :header => "h2",
     :label => item["label"],
     :file_href => "#{@lvl1}/#{item["label"]}",
     :asset_href => "#{@lvl1[3..-1]}/#{item["label"][3..-1]}",

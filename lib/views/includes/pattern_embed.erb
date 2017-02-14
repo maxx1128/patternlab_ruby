@@ -3,6 +3,16 @@
   <%= label[3..-1].capitalize.sub('-', ' ') %>
 </<%= header %>>
 
+<% if pattern_href == false %>
+
+  <% if File.exist?("../#{@config["name"]}/lib/views/source/#{@lvl1}/#{label}.md") %>
+
+    <%= markdown :"source/#{@lvl1}/#{label}" %>
+
+  <% end %>
+
+<% end %>
+
 
 <!-- The description -->
 
@@ -15,8 +25,6 @@
 
   sass_settings_path = "../#{@config["name"]}/lib/assets/scss/_settings/_#{label[3..-1].sub('-', ' ')}.scss"
   sass_settings_exists = File.exist?(sass_settings_path)
-
-  puts sass_settings_exists
 
   js_path = "../#{@config["name"]}/lib/assets/js/#{asset_href}.js" 
   js_exists = File.exist?(js_path)

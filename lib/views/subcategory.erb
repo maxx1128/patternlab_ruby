@@ -1,5 +1,5 @@
 
-<% if File.exist?("../patternlab/lib/views/source/#{@lvl1}/#{@lvl2}.md") %>
+<% if File.exist?("../#{@config["name"]}/lib/views/source/#{@lvl1}/#{@lvl2}.md") %>
 
 
   <%= markdown :"source/#{@lvl1}/#{@lvl2}" %>
