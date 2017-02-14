@@ -1,12 +1,15 @@
 
 module PL_functions
 
+  CONFIG_ROOT = '../patternlab/lib/config.json'
+  CONFIG_FILE = File.read(CONFIG_ROOT)
+  CONFIG_DATA = JSON.parse(CONFIG_FILE)
+
+  PROJECT_NAME = CONFIG_DATA["name"]
+
   SOURCE_ROOT = '../patternlab/lib/views/source/'
   PAGES_ROOT = '../patternlab/lib/views/pages/'
-  CONFIG_ROOT = '../patternlab/lib/config.json'
 
-  config_file = File.read(CONFIG_ROOT)
-  config_data = JSON.parse(config_file)
   
 
   def config_data
@@ -22,7 +25,7 @@ module PL_functions
     fullNav = []
 
 
-    # Then get the nav for the Patterns and their files
+    # Get the nav for the Patterns and their files
 
     levelOne = Dir.entries(SOURCE_ROOT).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
 
@@ -63,8 +66,8 @@ module PL_functions
     end
 
 
-    # First get any static pages and add them to the top of the nav
-    pages = Dir.entries(PAGES_ROOT).select { |item| item[0,1] != '.' && item.end_with?(".erb") }
+    # Get any static pages and add them to the top of the nav
+    pages = Dir.entries(PAGES_ROOT).select { |item| item[0,1] != '.' && item.end_with?(".md") }
 
     pages_root_start = PAGES_ROOT.split('/')[1]
     pagesLength = 13 + pages_root_start.length
@@ -84,19 +87,13 @@ module PL_functions
 
           item_submenu[index] = {}
           item_submenu[index]["label"] = subitem.split('.')[0].gsub('-', ' ')
-          item_submenu[index]["path"] = pagePath.strip[pagesLength..-1] + '/' + subitem.sub('.erb', '/')
+          item_submenu[index]["path"] = pagePath.strip[pagesLength..-1] + '/' + subitem.sub('.md', '/')
         end
 
       end
 
 
 
-      
-
-
-
-      
-      
 
       fullNav.unshift(
         {
@@ -121,10 +118,10 @@ module PL_functions
   # Doesn't include page-specific data
   def get_data(lvl1_label="02-patterns")
 
-    pattern_data_file = File.read("../patternlab/lib/assets/data/data.json")
+    pattern_data_file = File.read("../#{PROJECT_NAME}/lib/assets/data/data.json")
     pattern_data = JSON.parse(pattern_data_file)
 
-    data_files = Dir.glob("../patternlab/lib/views/data/*.json")
+    data_files = Dir.glob("../#{PROJECT_NAME}/lib/views/data/*.json")
 
     data_files.each do |data|
 
@@ -145,7 +142,7 @@ module PL_functions
 
       if (reached_current_lvl == false)
 
-        category_data = Dir.glob("../patternlab/lib/views/source/#{nav_category}/**/**/*.json")
+        category_data = Dir.glob("../#{PROJECT_NAME}/lib/views/source/#{nav_category}/**/**/*.json")
 
         category_data.each do |data|
           data_name = data.split("/")[-1]
@@ -166,7 +163,7 @@ module PL_functions
   # Get data about for the templates, pages and psuedo pages
   def pages_data
 
-    all_data_files = Dir.glob("../patternlab/lib/views/source/03-templates/**/*.json")
+    all_data_files = Dir.glob("../#{PROJECT_NAME}/lib/views/source/03-templates/**/*.json")
     pageData_files = []
 
     all_data_files.map { |data| 

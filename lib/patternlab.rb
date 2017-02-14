@@ -40,10 +40,10 @@ class PatternLab < Sinatra::Base
 
     # `byebug
 
+    @config = config_data
     @title = 'Practice!'
     @nav = navStructure
 
-    config = config_data
 
     erb :index, {
       :layout => :'layouts/basic'
@@ -54,23 +54,27 @@ class PatternLab < Sinatra::Base
   # For static pages
   get '/pages/:title/' do
 
+    @config = config_data
     @title = params[:title].gsub('-', ' ')[3..-1].capitalize
     @nav = navStructure
 
 
-    erb :"pages/#{params[:title]}", {
-      :layout => :'layouts/page'
+    markdown :"pages/#{params[:title]}", {
+      :layout => :'layouts/page',
+      :layout_engine => :erb
     }
   end
 
   get '/pages/:parent/:title/' do
 
+    @config = config_data
     @title = params[:title].gsub('-', ' ')[3..-1].capitalize
     @nav = navStructure
 
 
-    erb :"pages/#{params[:parent]}/#{params[:title]}", {
-      :layout => :'layouts/page'
+    markdown :"pages/#{params[:parent]}/#{params[:title]}", {
+      :layout => :'layouts/page',
+      :layout_engine => :erb
     }
   end
 
@@ -79,11 +83,13 @@ class PatternLab < Sinatra::Base
   # For showing all patterns and subcategories in a category
   get '/source/:lvl1/' do
 
+    @config = config_data
     @title = params[:lvl1].gsub('-', ' ')[3..-1].capitalize
     @nav = navStructure
     @lvl1 = params[:lvl1]
 
-    @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1[3..-1]}.md")
+
+    @descr_exists = File.exist?("../#{@config["name"]}/lib/views/source/#{@lvl1[3..-1]}.md")
 
     @data = get_data(@lvl1)
 
@@ -110,13 +116,15 @@ class PatternLab < Sinatra::Base
 
     require_relative "./functions"
 
+    @config = config_data
     @title = params[:lvl2][3..-1].gsub('-', ' ').capitalize
     @title_raw = params[:lvl2]
     @nav = navStructure
     @lvl1 = params[:lvl1]
     @lvl2 = params[:lvl2]
 
-    @descr_exists = File.exist?("../patternlab/lib/views/source/#{@lvl1}/#{@lvl2}.md")
+
+    @descr_exists = File.exist?("../#{@config["name"]}/lib/views/source/#{@lvl1}/#{@lvl2}.md")
     
     @data = get_data(@lvl1)
 
@@ -147,16 +155,19 @@ class PatternLab < Sinatra::Base
   # For showing individual patterns on a single page
   get '/source/:lvl1/:lvl2/:lvl3/' do
 
-    config = config_data
-    templates = config["templates_page"]
+    @config = config_data
+    templates = @config["templates_page"]
 
     @title = params[:lvl3][3..-1].gsub('-', ' ').sub('__', ' ').capitalize
+    @title_raw = params[:lvl3].gsub('-', ' ').sub('__', ' ').capitalize
     @nav = navStructure
     @lvl1 = params[:lvl1]
     @lvl2 = params[:lvl2]
     @lvl3 = params[:lvl3]
 
-    page_data_path = "../patternlab/lib/views/source/#{templates}/#{@lvl2}/#{@lvl3.split("__").first}.json"
+
+    page_data_path = "../#{@config["name"]}/lib/views/source/#{templates}/#{@lvl2}/#{@lvl3.split("__").first}.json"
+
     @page_data_exists = File.exist?(page_data_path)
 
     # If it's a page, get the needed page or psuedo page data
@@ -172,7 +183,7 @@ class PatternLab < Sinatra::Base
       # If this is a psuedo pattern, also merge the extra data
       if @lvl3.include? "__"
 
-        psuedo_data_file = File.read("../patternlab/lib/views/source/#{templates}/#{@lvl2}/#{@lvl3.sub("__", "~")}.json")
+        psuedo_data_file = File.read("../#{@config["name"]}/lib/views/source/#{templates}/#{@lvl2}/#{@lvl3.sub("__", "~")}.json")
         psuedo_data = JSON.parse(psuedo_data_file)
 
         @data = default_data.merge(psuedo_data)

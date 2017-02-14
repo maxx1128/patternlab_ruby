@@ -10,10 +10,15 @@
 <% if pattern_href != false %>
 
 <%
-  sass_path = "../patternlab/lib/assets/scss/_#{asset_href.gsub('/', '/_')}.scss"
+  sass_path = "../#{@config["name"]}/lib/assets/scss/_#{asset_href.gsub('/', '/_')}.scss"
   sass_exists = File.exist?(sass_path)  
 
-  js_path = "../patternlab/lib/assets/js/#{asset_href}.js" 
+  sass_settings_path = "../#{@config["name"]}/lib/assets/scss/_settings/_#{label[3..-1].sub('-', ' ')}.scss"
+  sass_settings_exists = File.exist?(sass_settings_path)
+
+  puts sass_settings_exists
+
+  js_path = "../#{@config["name"]}/lib/assets/js/#{asset_href}.js" 
   js_exists = File.exist?(js_path)
 %>
 
@@ -28,6 +33,10 @@
       <div tabs-link-id="scss" class="sg-tabs__link sg-tabs__link--css">SCSS</div>
     <% end %>
 
+    <% if sass_settings_exists %>
+      <div tabs-link-id="vars" class="sg-tabs__link sg-tabs__link--vars">Variables</div>
+    <% end %>
+
     <% if js_exists %>
       <div tabs-link-id="js" class="sg-tabs__link sg-tabs__link--javascript">JS</div>
     <% end %>
@@ -37,7 +46,7 @@
 
     <!-- Pattern Info -->
     <div class="sg-tabs__content-item sg-tabs__content-item--info" tabs-content-id="info">
-      <% if File.exist?("../patternlab/lib/views/source/#{file_href}.md") %>
+      <% if File.exist?("../#{@config["name"]}/lib/views/source/#{file_href}.md") %>
         <%= markdown :"source/#{file_href}" %>
       <% else %>
         <p>
@@ -50,9 +59,7 @@
     <div class="sg-tabs__content-item sg-tabs__content-item--html" tabs-content-id="html">
       <pre>
         <code class="language-html">
-
 <%= escape_html(erb :"source/#{file_href}")%>
-
         </code>
       </pre>
     </div>
@@ -64,11 +71,25 @@
 
         <pre>
           <code class="language-css">
-
 <%=
 File.read(sass_path)
 %>
+          </code>
+        </pre>
+ 
+      </div>
+    <% end %>
 
+
+    <!-- Sass Variables, if they're included -->
+    <% if sass_settings_exists %>
+      <div class="sg-tabs__content-item sg-tabs__content-item--vars" tabs-content-id="vars">
+
+        <pre>
+          <code class="language-css">
+<%=
+File.read(sass_settings_path)
+%>
           </code>
         </pre>
  
@@ -82,11 +103,9 @@ File.read(sass_path)
 
         <pre>
           <code class="language-javascript">
-
 <%=
 File.read(js_path)
 %>
-
           </code>
         </pre>
  

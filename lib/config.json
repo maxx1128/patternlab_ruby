@@ -1,4 +1,7 @@
 {
+
+  "name": "patternlab",
+
   "static_pages": [
     "introduction",
     "about"
