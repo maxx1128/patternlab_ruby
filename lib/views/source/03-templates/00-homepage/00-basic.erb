@@ -1,4 +1,6 @@
-<%= erb :"source/02-patterns/00-global/00-header" %>
+<%= erb :"source/02-patterns/00-global/00-header", :locals =>{
+  :p_header_data => @data['p-header']
+} %>
 
 
 <% if @data["psuedo"] %>
@@ -8,4 +10,6 @@
 <% end %>
 
 
-<%= erb :"source/02-patterns/00-global/01-footer" %>
+<%= erb :"source/02-patterns/00-global/01-footer", :locals =>{
+  :c_footerNav_data => @data['p-footer']
+} %>

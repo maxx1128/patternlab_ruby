@@ -1,6 +1,9 @@
+
+<% c_topMenu_data ||= @data["header"] %>
+
 <ul class="pl-topMenu">
 
-  <% @data["header"]["top-menu"]["links"].each do |item| %>
+  <% c_topMenu_data["top-menu"]["links"].each do |item| %>
 
     <a href="<%= item["link"] %>">
       <li class="pl-topMenu--item"><%= item["label"] %></li>

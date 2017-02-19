@@ -1,6 +1,10 @@
+
+<% c_footerNav_data ||= @data["footer"] %>
+
+
 <ul class="pl-footerNav">
-  <% @data["footer"]["menus"].each do |menu| %>
-  <% menu.each do |item| %>
+  <% c_footerNav_data['menus'].each do |menus| %>
+  <% menus.each do |item| %>
     <a href="<%= item["link"] %>">
       <li class="pl-footerNav--item"><%= item["label"] %></li>
     </a>

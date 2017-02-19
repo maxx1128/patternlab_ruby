@@ -1,7 +1,7 @@
 {
   "psuedo" : true,
 
-  "header": {
+  "p-header": {
     "intro-text": "Psuedo website!",
     "top-menu": {
       "links": [
@@ -31,7 +31,7 @@
     }
   },
 
-  "footer": {
+  "p-footer": {
     "menus": [
       [
         {

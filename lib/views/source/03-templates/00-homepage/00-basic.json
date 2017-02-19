@@ -1,5 +1,5 @@
 {
-  "header": {
+  "p-header": {
     "intro-text": "Actual website!",
     "top-menu": {
       "links": [
@@ -24,7 +24,7 @@
   },
 
 
-  "footer": {
+  "p-footer": {
     "menus": [
       [
         {

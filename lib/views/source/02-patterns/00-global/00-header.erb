@@ -1,6 +1,13 @@
+
+<% p_header_data ||= @data["header"] %>
+
 <div class="pl-header">
   <%= erb :"source/01-components/01-images/00-logo" %>
-  <%= erb :"source/01-components/00-text/00-intro-text" %>
+  <%= erb :"source/01-components/00-text/00-intro-text", :locals =>{
+    :c_introText_data => p_header_data
+  } %>
 
-  <%= erb :"source/01-components/02-navigation/00-top-menu" %>
+  <%= erb :"source/01-components/02-navigation/00-top-menu", :locals =>{
+    :c_topMenu_data => p_header_data
+  } %>
 </div>
