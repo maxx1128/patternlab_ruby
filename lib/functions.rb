@@ -1,20 +1,24 @@
 
 module PL_functions
 
-  CONFIG_ROOT = '../patternlab/lib/config.json'
+  ROOT_DIR = File.basename(Dir.getwd)
+
+  CONFIG_ROOT = "../#{ROOT_DIR}/lib/config.json"
+  SOURCE_ROOT = "../#{ROOT_DIR}/lib/views/source/"
+  PAGES_ROOT = "../#{ROOT_DIR}/lib/views/pages/"
+  
   CONFIG_FILE = File.read(CONFIG_ROOT)
   CONFIG_DATA = JSON.parse(CONFIG_FILE)
 
-  PROJECT_NAME = CONFIG_DATA["name"]
-
-  SOURCE_ROOT = '../patternlab/lib/views/source/'
-  PAGES_ROOT = '../patternlab/lib/views/pages/'
+  
 
   
 
   def config_data
     config_file = File.read(CONFIG_ROOT)
     config_data = JSON.parse(config_file)
+
+    config_data["name"] = ROOT_DIR
 
     return config_data
   end
@@ -47,20 +51,22 @@ module PL_functions
       new_path2.each_with_index do |item2, index2|
 
         threePath = twoPath + '/' + item2
-        new_path3 = Dir.entries(threePath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
+        new_path3 = Dir.entries(threePath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") } if File.directory?(threePath)
 
         fullNav[index]['submenu'][index2] = {}
         fullNav[index]['submenu'][index2]['label'] = item2.chomp('.erb')
         fullNav[index]['submenu'][index2]['path'] = threePath.strip[titleLength..-1].chomp('.erb') + '/'
         fullNav[index]['submenu'][index2]['submenu'] = new_path3
 
-        new_path3.each_with_index do |item3, index3|
+        if new_path3
+          new_path3.each_with_index do |item3, index3|
 
-          fourPath = threePath + '/' + item3
+            fourPath = threePath + '/' + item3
 
-          fullNav[index]['submenu'][index2]['submenu'][index3] = {}
-          fullNav[index]['submenu'][index2]['submenu'][index3]['label'] = item3.chomp('.erb')
-          fullNav[index]['submenu'][index2]['submenu'][index3]['path'] = fourPath.strip[titleLength..-1].chomp('.erb') + '/'
+            fullNav[index]['submenu'][index2]['submenu'][index3] = {}
+            fullNav[index]['submenu'][index2]['submenu'][index3]['label'] = item3.chomp('.erb')
+            fullNav[index]['submenu'][index2]['submenu'][index3]['path'] = fourPath.strip[titleLength..-1].chomp('.erb') + '/'
+          end
         end
       end
     end
@@ -118,10 +124,10 @@ module PL_functions
   # Doesn't include page-specific data
   def get_data(lvl1_label="02-patterns")
 
-    pattern_data_file = File.read("../#{PROJECT_NAME}/lib/assets/data/data.json")
+    pattern_data_file = File.read("../#{ROOT_DIR}/lib/assets/data/data.json")
     pattern_data = JSON.parse(pattern_data_file)
 
-    data_files = Dir.glob("../#{PROJECT_NAME}/lib/views/data/*.json")
+    data_files = Dir.glob("../#{ROOT_DIR}/lib/views/data/*.json")
 
     data_files.each do |data|
 
@@ -142,7 +148,7 @@ module PL_functions
 
       if (reached_current_lvl == false)
 
-        category_data = Dir.glob("../#{PROJECT_NAME}/lib/views/source/#{nav_category}/**/**/*.json")
+        category_data = Dir.glob("../#{ROOT_DIR}/lib/views/source/#{nav_category}/**/**/*.json")
 
         category_data.each do |data|
           data_name = data.split("/")[-1]
@@ -163,7 +169,11 @@ module PL_functions
   # Get data about for the templates, pages and psuedo pages
   def pages_data
 
-    all_data_files = Dir.glob("../#{PROJECT_NAME}/lib/views/source/03-templates/**/*.json")
+    config_file = File.read(CONFIG_ROOT)
+    config_data = JSON.parse(config_file)
+
+    all_data_files = Dir.glob("../#{ROOT_DIR}/lib/views/source/#{config_data["templates_page"]}/**/*.json")
+
     pageData_files = []
 
     all_data_files.map { |data| 

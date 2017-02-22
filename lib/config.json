@@ -1,11 +1,4 @@
 {
 
-  "name": "patternlab",
-
-  "static_pages": [
-    "introduction",
-    "about"
-  ],
-
   "templates_page": "03-templates"
 }
