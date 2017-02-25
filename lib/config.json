@@ -1,11 +1,5 @@
 {
-
   "title": "Pattern Lab",
-
-  "static_pages": [
-    "introduction",
-    "about"
-  ],
 
   "last_component_folder": "02-patterns",
   "templates_page": "03-templates"
