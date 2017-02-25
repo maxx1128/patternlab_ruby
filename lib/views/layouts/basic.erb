@@ -10,7 +10,7 @@
     <%= erb :'includes/nav' %>
 
     <h1>
-      <%= @title %>
+      <%= @title.gsub(/[0-9]+-/, "") %>
     </h1>
 
     <%= yield %>

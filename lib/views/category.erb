@@ -7,32 +7,32 @@
 
   <%= erb :'includes/pattern_embed', :locals => {
     :header => "h2",
-    :label => item["label"],
-    :file_href => "#{@lvl1}/#{item["label"]}",
-    :asset_href => "#{@lvl1[3..-1]}/#{item["label"][3..-1]}",
+    :label => item[:label],
+    :file_href => "#{@lvl1}/#{item[:label]}",
+    :asset_href => "#{@lvl1.gsub(/[0-9]+-/, "")}/#{item[:label].gsub(/[0-9]+-/, "")}",
     :pattern_href => false
   } %>
 
 
-    <% item["submenu"].each do |item2| %>
+    <% item[:submenu].each do |item2| %>
 
-      <% if @lvl1[3..-1] == 'templates' || @lvl1[3..-1] == 'pages' %>
+      <% if @lvl1.gsub(/[0-9]+-/, "") == 'templates' || @lvl1.gsub(/[0-9]+-/, "") == 'pages' %>
 
         <%= erb :'includes/template_link', :locals => {
           :header => "h4",
-          :label => item2["label"],
+          :label => item2[:label],
           :lvl1 => "#{@lvl1}",
-          :file_href => "#{@lvl1}/#{item["label"]}/#{item2["label"]}",
-          :partial_href => "#{item["label"]}"
+          :file_href => "#{@lvl1}/#{item[:label]}/#{item2[:label]}",
+          :partial_href => "#{item[:label]}"
         } %>
 
       <% else %>
 
         <%= erb :'includes/pattern_embed', :locals => {
           :header => "h4",
-          :label => item2["label"],
-          :file_href => "#{@lvl1}/#{item["label"]}/#{item2["label"]}",
-          :asset_href => "#{@lvl1[3..-1]}/#{item["label"][3..-1]}/#{item2["label"][3..-1]}",
+          :label => item2[:label],
+          :file_href => "#{@lvl1}/#{item[:label]}/#{item2[:label]}",
+          :asset_href => "#{@lvl1.gsub(/[0-9]+-/, "")}/#{item[:label].gsub(/[0-9]+-/, "")}/#{item2[:label].gsub(/[0-9]+-/, "")}",
           :pattern_href => true
         } %>
 
