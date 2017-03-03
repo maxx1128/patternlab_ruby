@@ -1,5 +1,5 @@
 
-<% if File.exist?("../#{@config["name"]}/lib/views/source/#{@lvl1}/#{@lvl2}.md") %>
+<% if File.exist?("../#{@config[:name]}/lib/views/source/#{@lvl1}/#{@lvl2}.md") %>
 
 
   <%= markdown :"source/#{@lvl1}/#{@lvl2}" %>
@@ -9,13 +9,13 @@
 
 <% @subcategory_data.each do |item| %>
 
-  <% if @lvl1[3..-1] == 'templates' || @lvl1[3..-1] == 'pages' %>
+  <% if @lvl1.gsub(/[0-9]+-/, "") == 'templates' || @lvl1.gsub(/[0-9]+-/, "") == 'pages' %>
 
     <%= erb :'includes/template_link', :locals => {
       :header => "h3",
-      :label => item["label"],
+      :label => item[:label],
       :lvl1 => @lvl1,
-      :file_href => "#{@lvl1}/#{@title_raw.downcase}/#{item["label"]}",
+      :file_href => "#{@lvl1}/#{@title_raw.downcase}/#{item[:label]}",
       :partial_href => "#{@title_raw.downcase}"
     } %>
 
@@ -23,9 +23,9 @@
 
     <%= erb :'includes/pattern_embed', :locals => {
       :header => "h3",
-      :label => item["label"],
-      :file_href => "#{@lvl1}/#{@title_raw.downcase}/#{item["label"]}",
-      :asset_href => "#{@lvl1[3..-1]}/#{@title_raw[3..-1].downcase}/#{item["label"][3..-1]}",
+      :label => item[:label],
+      :file_href => "#{@lvl1}/#{@title_raw.downcase}/#{item[:label]}",
+      :asset_href => "#{@lvl1.gsub(/[0-9]+-/, "")}/#{@title_raw.gsub(/[0-9]+-/, "").downcase}/#{item[:label].gsub(/[0-9]+-/, "")}",
       :pattern_href => true
     } %>
 

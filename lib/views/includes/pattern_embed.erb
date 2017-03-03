@@ -1,6 +1,6 @@
 
 <<%= header %>>
-  <%= label[3..-1].capitalize.sub('-', ' ') %>
+  <%= label.gsub(/[0-9]+-/, "").capitalize.sub('-', ' ') %>
 </<%= header %>>
 
 <% if pattern_href == false %>
@@ -23,7 +23,7 @@
   sass_path = "../#{@config["name"]}/lib/assets/scss/_#{asset_href.gsub('/', '/_')}.scss"
   sass_exists = File.exist?(sass_path)  
 
-  sass_settings_path = "../#{@config["name"]}/lib/assets/scss/_settings/_#{label[3..-1].sub('-', ' ')}.scss"
+  sass_settings_path = "../#{@config["name"]}/lib/assets/scss/_settings/_#{label.gsub(/[0-9]+-/, "").sub('-', ' ')}.scss"
   sass_settings_exists = File.exist?(sass_settings_path)
 
   js_path = "../#{@config["name"]}/lib/assets/js/#{asset_href}.js" 

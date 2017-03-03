@@ -1,5 +1,5 @@
 <<%= header %>>
-  <%= label[3..-1].capitalize.sub('-', ' ') %>
+  <%= label.gsub(/[0-9]+-/, "").capitalize.sub('-', ' ') %>
 </<%= header %>>
 
 <% if File.exist?("../patternlab/lib/views/source/#{file_href}.md") %>
@@ -8,7 +8,7 @@
 
 
 <a href="/source/<%= file_href %>/">
-  Link to <%= label[3..-1] %> template
+  Link to <%= label.gsub(/[0-9]+-/, "") %> template
 </a>
 
 
@@ -20,13 +20,12 @@
   <% if label == data[:link_name].split("__")[0] %>
 
     <a href="/source/pages/<%= partial_href %>/<%= data[:link_name] %>/">
-      Link to full <%= data[:label][3..-1] %> example
+      Link to full <%= data[:label].gsub(/[0-9]+-/, "") %> example
     </a>
 
     <br>
     <br>
 
   <% end %>
-
 <% end %>
 
