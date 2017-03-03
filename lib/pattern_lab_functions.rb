@@ -1,132 +1,87 @@
 
 module PatternLabFunctions
 
-  ROOT_DIR = File.basename(Dir.getwd).freeze
+  ROOT_DIR = File.basename(Dir.getwd)
 
-  CONFIG_ROOT = "../#{ROOT_DIR}/lib/config.json".freeze
-  SOURCE_ROOT = "../#{ROOT_DIR}/lib/views/source/".freeze
-  PAGES_ROOT = "../#{ROOT_DIR}/lib/views/pages/".freeze
+  CONFIG_ROOT = "../#{ROOT_DIR}/lib/config.json"
+  SOURCE_ROOT = "../#{ROOT_DIR}/lib/views/source/"
+  PAGES_ROOT = "../#{ROOT_DIR}/lib/views/pages/"
   
-  CONFIG_FILE = File.read(CONFIG_ROOT).freeze
-  CONFIG_DATA = JSON.parse(CONFIG_FILE).freeze
-
-  
+  CONFIG_FILE = File.read(CONFIG_ROOT)
+  CONFIG_DATA = JSON.parse(CONFIG_FILE)
 
   
 
-  def config_data
+  
+
+  def get_config_data
     config_file = File.read(CONFIG_ROOT)
     config_data = JSON.parse(config_file)
 
-    config_data["name"] = ROOT_DIR
-
-    return config_data
+    config_data
   end
 
-  # Data for the main navigation
-  def navStructure
-
-    fullNav = []
 
 
-    # Get the nav for the Patterns and their files
 
-    levelOne = Dir.entries(SOURCE_ROOT).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
+  def nav_structure
+    nav = []
+    create_nav(PAGES_ROOT, 'pages', nav)
+    create_nav(SOURCE_ROOT, 'source', nav)
 
-    direct_root_start = SOURCE_ROOT.split('/')[1]
-    titleLength = 13 + direct_root_start.length
+    nav = nav.uniq { |nav_item| nav_item[:label] }
 
-    levelOne.each_with_index do |item, index|
-
-      twoPath = SOURCE_ROOT + item
-      new_path2 = Dir.entries(twoPath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") }
-
-      fullNav[index] = {}
-
-      fullNav[index]['label'] = item
-      fullNav[index]['path'] = twoPath.strip[titleLength..-1] + '/'
-      fullNav[index]['submenu'] = []
+    nav
+  end
 
 
-      new_path2.each_with_index do |item2, index2|
 
-        threePath = twoPath + '/' + item2
-        new_path3 = Dir.entries(threePath).select { |item| item[0,1] != '.' && !item.end_with?(".md") && !item.end_with?(".json") } if File.directory?(threePath)
+  def create_nav(dir, dir_root, nav_set, dir_lead = nil)
 
-        fullNav[index]['submenu'][index2] = {}
-        fullNav[index]['submenu'][index2]['label'] = item2.chomp('.erb')
-        fullNav[index]['submenu'][index2]['path'] = threePath.strip[titleLength..-1].chomp('.erb') + '/'
-        fullNav[index]['submenu'][index2]['submenu'] = new_path3
-
-        if new_path3
-          new_path3.each_with_index do |item3, index3|
-
-            fourPath = threePath + '/' + item3
-
-            fullNav[index]['submenu'][index2]['submenu'][index3] = {}
-            fullNav[index]['submenu'][index2]['submenu'][index3]['label'] = item3.chomp('.erb')
-            fullNav[index]['submenu'][index2]['submenu'][index3]['path'] = fourPath.strip[titleLength..-1].chomp('.erb') + '/'
-          end
-        end
-      end
+    if dir_root === "source"
+      entries_files = Dir.entries(dir).reject { |str| str =~ /^\.{1,2}/ || str.end_with?('.md') || str.end_with?('.json') }
+    else
+      entries_files = Dir.entries(dir).reject { |str| str =~ /^\.{1,2}/ }
     end
 
 
-    # Get any static pages and add them to the top of the nav
-    pages = Dir.entries(PAGES_ROOT).select { |item| item[0,1] != '.' && item.end_with?(".md") }
+    entries_files.each do |entry|
 
-    pages_root_start = PAGES_ROOT.split('/')[1]
-    pagesLength = 13 + pages_root_start.length
+      entry_path = File.join(dir, entry)
+      
+      if File.directory?(entry_path)
+        nav_set << { path: "/#{dir_root}#{dir_lead}/#{entry}/",
+                     label: File.basename(entry, File.extname(entry)),
+                     label_display: File.basename(entry, File.extname(entry)).gsub(/[0-9]+-/, "").gsub('-', ' ').split.map(&:capitalize).join(' '),
+                     section: dir_root,
+                     submenu: [] }
+        create_nav(entry_path, dir_root, nav_set.last[:submenu], "#{dir_lead}/#{entry}")
+      
+      else
+        entry = entry.gsub(".erb", "").gsub(".md", "")
 
-    pages.each_with_index.reverse_each do |item, index|
-
-      item = item.split('.').first
-      pagePath = PAGES_ROOT + item
-      item_submenu = []
-
-
-      if File.exists? PAGES_ROOT + item + '/'
-
-        page_submenus = Dir.entries(PAGES_ROOT + item + '/').select { |item| item[0,1] != '.' }
-
-        page_submenus.each_with_index do |subitem, index|
-
-          item_submenu[index] = {}
-          item_submenu[index]["label"] = subitem.split('.')[0].gsub('-', ' ')
-          item_submenu[index]["path"] = pagePath.strip[pagesLength..-1] + '/' + subitem.sub('.md', '/')
-        end
+        nav_set << { path: "/#{dir_root}#{dir_lead}/#{entry}/", 
+                     label: entry,
+                     label_display: entry.gsub(/[0-9]+-/, "").gsub('-', ' ').split.map(&:capitalize).join(' '),
+                     section: dir_root, submenu: [] }
       end
-
-
-
-
-      fullNav.unshift(
-        {
-          "label" => item,
-          "path" => pagePath.strip[pagesLength..-1] + '/',
-          "submenu" => item_submenu
-        }
-      )
+      nav_set
     end
-
-    # How will page submenus be pushed here?
-
-    return fullNav
-
-    # Is there a way to get the names of the last two folders and set them as the "templates" and "pages" group? This way if the name of the folders change, the logic around them all changes.
   end
+
+
 
 
 
 
   # Getting the basic pattern data files merged and returned
   # Doesn't include page-specific data
-  def get_data(lvl1_label="02-patterns")
+  def get_data(lvl1_label)
 
     pattern_data_file = File.read("../#{ROOT_DIR}/lib/assets/data/data.json")
     pattern_data = JSON.parse(pattern_data_file)
 
-    data_files = Dir.glob("../#{ROOT_DIR}/lib/views/data/*.json")
+    data_files = Dir.glob("../#{ROOT_DIR}/lib/assets/data/**/**/*.json")
 
     data_files.each do |data|
 
@@ -168,8 +123,7 @@ module PatternLabFunctions
   # Get data about for the templates, pages and psuedo pages
   def pages_data
 
-    config_file = File.read(CONFIG_ROOT)
-    config_data = JSON.parse(config_file)
+    config_data = get_config_data
 
     all_data_files = Dir.glob("../#{ROOT_DIR}/lib/views/source/#{config_data["templates_page"]}/**/*.json")
 
@@ -189,5 +143,4 @@ module PatternLabFunctions
 
     return pageData_files
   end
-
 end
