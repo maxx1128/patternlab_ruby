@@ -1,14 +1,14 @@
 
-module PL_functions
+module PatternLabFunctions
 
-  ROOT_DIR = File.basename(Dir.getwd)
+  ROOT_DIR = File.basename(Dir.getwd).freeze
 
-  CONFIG_ROOT = "../#{ROOT_DIR}/lib/config.json"
-  SOURCE_ROOT = "../#{ROOT_DIR}/lib/views/source/"
-  PAGES_ROOT = "../#{ROOT_DIR}/lib/views/pages/"
+  CONFIG_ROOT = "../#{ROOT_DIR}/lib/config.json".freeze
+  SOURCE_ROOT = "../#{ROOT_DIR}/lib/views/source/".freeze
+  PAGES_ROOT = "../#{ROOT_DIR}/lib/views/pages/".freeze
   
-  CONFIG_FILE = File.read(CONFIG_ROOT)
-  CONFIG_DATA = JSON.parse(CONFIG_FILE)
+  CONFIG_FILE = File.read(CONFIG_ROOT).freeze
+  CONFIG_DATA = JSON.parse(CONFIG_FILE).freeze
 
   
 
@@ -95,7 +95,6 @@ module PL_functions
           item_submenu[index]["label"] = subitem.split('.')[0].gsub('-', ' ')
           item_submenu[index]["path"] = pagePath.strip[pagesLength..-1] + '/' + subitem.sub('.md', '/')
         end
-
       end
 
 

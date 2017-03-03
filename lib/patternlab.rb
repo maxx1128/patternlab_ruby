@@ -14,7 +14,7 @@ require 'uglifier'
 require 'byebug'
 
 require_relative "assets"
-require_relative "functions"
+require_relative "pattern_lab_functions"
 
 
 
@@ -26,7 +26,7 @@ require_relative "functions"
 class PatternLab < Sinatra::Base
 
   # Include the needed functions
-  include PL_functions
+  include PatternLabFunctions
 
   # Setup reloader whenever changes are saved
   configure :development do
